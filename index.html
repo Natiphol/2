@@ -16,19 +16,26 @@
       color: #333;
     }
 
-    img.logo {
-      max-width: 120px;
+    .logo-container {
+      display: flex;
+      justify-content: center;
       margin-bottom: 1rem;
-      border-radius: 10px;
+    }
+
+    img.logo {
+      max-width: 140px;
+      border-radius: 12px;
     }
 
     h1 {
       font-size: 1.8rem;
+      text-align: center;
       margin-bottom: 0.3rem;
     }
 
     p.subtext {
       font-size: 1rem;
+      text-align: center;
       color: #888;
       margin-bottom: 1.5rem;
     }
@@ -69,14 +76,16 @@
     canvas {
       width: 100%;
       height: 80px;
-      background: #f1e9f9;
-      border-radius: 10px;
+      background: #e9d8f0;
+      border-radius: 12px;
       margin-top: 1rem;
+      box-shadow: inset 0 0 10px rgba(156, 39, 176, 0.3);
     }
 
     #status {
       margin-top: 1rem;
       font-weight: 600;
+      text-align: center;
     }
 
     .note {
@@ -91,7 +100,9 @@
 </head>
 <body>
 
-  <img class="logo" src="https://i.imgur.com/n0DtfkQ.jpg" alt="logo" />
+  <div class="logo-container">
+    <img class="logo" src="https://i.imgur.com/n0DtfkQ.jpg" alt="logo" />
+  </div>
   <h1>ฝากเสียงอวยพรงานแต่ง</h1>
   <p class="subtext">จะฮา จะซึ้ง จะร้องเพลงก็ได้ ขอแค่พูดถึงเจ้าบ่าวเจ้าสาวบ้างก็พอ 😄❤️</p>
 
@@ -138,7 +149,6 @@
     let analyser, dataArray, source;
     let introAudio = new Audio("https://natiphol.github.io/33/Test.mp3");
 
-    // ฟังเสียงทักทาย
     playIntroBtn.onclick = () => {
       playIntroBtn.disabled = true;
       introAudio.play();
@@ -186,13 +196,14 @@
     }
 
     function resetUI() {
-      startBtn.disabled = true;
+      startBtn.disabled = false;
       stopBtn.disabled = true;
       uploadBtn.disabled = true;
       audioPlayer.src = "";
       audioChunks = [];
       audioBlob = null;
       statusDiv.textContent = "";
+      startRecording();
     }
 
     async function uploadAudio() {
@@ -234,16 +245,16 @@
       function draw() {
         requestAnimationFrame(draw);
         analyser.getByteTimeDomainData(dataArray);
-        ctx.fillStyle = '#f1e9f9';
+        ctx.fillStyle = '#e9d8f0';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = '#9c27b0';
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = '#ab47bc';
         ctx.beginPath();
-        const sliceWidth = canvas.width * 1.0 / bufferLength;
+        const sliceWidth = canvas.width / bufferLength;
         let x = 0;
         for (let i = 0; i < bufferLength; i++) {
           const v = dataArray[i] / 128.0;
-          const y = v * canvas.height / 2;
+          const y = (v * canvas.height) / 2;
           if (i === 0) ctx.moveTo(x, y);
           else ctx.lineTo(x, y);
           x += sliceWidth;
