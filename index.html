@@ -122,20 +122,20 @@
 
       try {
         stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        statusDiv.textContent += "\n✅ เข้าถึงไมโครโฟนสำเร็จ";
+        statusDiv.textContent = "✅ เข้าถึงไมโครโฟนสำเร็จ";
 
         if (isIOS()) {
           const audioContext = new (window.AudioContext || window.webkitAudioContext)();
           const source = audioContext.createMediaStreamSource(stream);
           recorder = new Recorder(source, { numChannels: 1 });
           recorder.record();
-          statusDiv.textContent += "\n🎙️ กำลังอัดเสียง (iOS) ...";
+          statusDiv.textContent = "🎙️ กำลังอัดเสียง (iOS) ...";
         } else {
           mediaRecorder = new MediaRecorder(stream);
           audioChunks = [];
           mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
           mediaRecorder.start();
-          statusDiv.textContent += "\n🎙️ กำลังอัดเสียง ...";
+          statusDiv.textContent = "🎙️ กำลังอัดเสียง ...";
         }
 
         startBtn.disabled = true;
@@ -143,7 +143,7 @@
         uploadBtn.disabled = true;
         audioPlayer.src = "";
       } catch (err) {
-        statusDiv.textContent += `\n❌ ไม่สามารถเข้าถึงไมโครโฟนได้: ${err.message}`;
+        statusDiv.textContent = `❌ ไม่สามารถเข้าถึงไมโครโฟนได้: ${err.message}`;
         console.error("getUserMedia error:", err);
         alert("ไม่สามารถเข้าถึงไมโครโฟนได้ กรุณาตรวจสอบการอนุญาตในเบราว์เซอร์และตั้งค่า iOS");
       }
@@ -162,10 +162,10 @@
             audioPlayer.src = url;
             audioPlayer.load();
             uploadBtn.disabled = false;
-            statusDiv.textContent += "\n✅ หยุดอัดเสียงแล้ว พร้อมอัปโหลด (iOS WAV)";
+            statusDiv.textContent = "✅ หยุดอัดเสียงแล้ว พร้อมอัปโหลด (iOS WAV)";
           });
         } else {
-          statusDiv.textContent += "\n❌ ตัวแปร recorder ยังไม่ได้ถูกสร้าง";
+          statusDiv.textContent = "❌ ตัวแปร recorder ยังไม่ได้ถูกสร้าง";
         }
       } else {
         if (mediaRecorder) {
@@ -176,10 +176,10 @@
             audioPlayer.src = url;
             audioPlayer.load();
             uploadBtn.disabled = false;
-            statusDiv.textContent += "\n✅ หยุดอัดเสียงแล้ว พร้อมอัปโหลด";
+            statusDiv.textContent = "✅ หยุดอัดเสียงแล้ว พร้อมอัปโหลด";
           };
         } else {
-          statusDiv.textContent += "\n❌ ตัวแปร mediaRecorder ยังไม่ได้ถูกสร้าง";
+          statusDiv.textContent = "❌ ตัวแปร mediaRecorder ยังไม่ได้ถูกสร้าง";
         }
       }
     };
@@ -192,7 +192,7 @@
       const name = nameInput.value.trim();
       const group = groupSelect.value;
 
-      statusDiv.textContent += "\n⏳ กำลังอัปโหลด...";
+      statusDiv.textContent = "⏳ กำลังอัปโหลด...";
       uploadBtn.disabled = true;
 
       const reader = new FileReader();
@@ -213,7 +213,7 @@
           const result = await response.json();
 
           if (result.success) {
-            statusDiv.innerHTML += `<br>✅ อัปโหลดสำเร็จ!<br><a href="${result.url}" target="_blank">เปิดไฟล์เสียง</a>`;
+            statusDiv.innerHTML = `✅ อัปโหลดสำเร็จ!<br><a href="${result.url}" target="_blank">เปิดไฟล์เสียง</a>`;
             uploadBtn.disabled = true;
             startBtn.disabled = false;
           } else {
@@ -221,7 +221,7 @@
           }
         } catch (error) {
           console.error(error);
-          statusDiv.textContent += "\n❌ อัปโหลดไม่สำเร็จ: " + error.message;
+          statusDiv.textContent = "❌ อัปโหลดไม่สำเร็จ: " + error.message;
           uploadBtn.disabled = false;
         }
       };
