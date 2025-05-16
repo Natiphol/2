@@ -3,60 +3,114 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ฝากเสียงงานแต่ง </title>
+  <title>ฝากเสียงอวยพรงานแต่ง</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
     body {
       font-family: 'Kanit', sans-serif;
-      max-width: 400px;
-      margin: 2rem auto;
-      padding: 1rem;
+      background: linear-gradient(to bottom, #fdfcf9, #f2f5ff);
+      max-width: 480px;
+      margin: 0.5rem auto 2rem;
+      padding: 1.2rem;
+      border-radius: 16px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.08);
+      color: #0a2540;
       text-align: center;
-      background: #f9f9f9;
-      border-radius: 8px;
-      box-shadow: 0 0 10px #ccc;
+      border: 2px solid #d4af37;
+    }
+    h1 {
+      color: #1a1a1a;
+      margin-bottom: 0.5rem;
+    }
+    .subtitle {
+      font-size: 0.95rem;
+      color: #666;
+      margin-bottom: 1.5rem;
+    }
+    img.logo {
+      max-width: 100px;
+      margin-bottom: 0.5rem;
     }
     input, select, button {
       font-size: 1rem;
-      padding: 0.6rem;
-      margin: 0.5rem 0;
+      padding: 0.7rem;
       width: 100%;
       box-sizing: border-box;
-      border-radius: 5px;
-      border: 1px solid #ccc;
+      border-radius: 6px;
+      border: 1px solid #d4af37;
+      margin: 0.5rem 0;
+    }
+    select {
+      background-color: #fffaf2;
     }
     button {
-      cursor: pointer;
-      background: #0066cc;
-      color: white;
+      background-color: #d4af37;
+      color: #fff;
       border: none;
-      transition: background 0.3s;
-    }
-    button:disabled {
-      background: #999;
-      cursor: not-allowed;
+      transition: background-color 0.3s;
+      cursor: pointer;
     }
     button:hover:not(:disabled) {
-      background: #004999;
+      background-color: #b18c28;
     }
-    audio {
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    #buttonsContainer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 0.5rem;
+    }
+    #buttonsContainer button {
+      flex: 1 1 calc(50% - 5px);
+    }
+    #uploadBtn {
       margin-top: 1rem;
       width: 100%;
+    }
+    #visualizer {
+      width: 100%;
+      height: 70px;
+      background: linear-gradient(90deg, #faf7f0, #f1f1f1);
+      border-radius: 10px;
+      margin-top: 1rem;
     }
     #status {
       margin-top: 1rem;
       min-height: 2rem;
       font-weight: bold;
-      color: #333;
-      white-space: pre-line;
-      text-align: left;
+      color: #003366;
+    }
+    #timer {
+      font-weight: bold;
+      margin-top: 0.3rem;
+      color: #b22222;
+    }
+    #progressRose {
+      margin: 1rem auto 0;
+      width: 50px;
+      height: 50px;
+      background-image: url('https://i.imgur.com/n0DtfkQ.jpg');
+      background-size: cover;
+      animation: spin 1.2s linear infinite;
+      display: none;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
   </style>
 </head>
 <body>
 
+  <img src="https://i.imgur.com/n0DtfkQ.jpg" alt="โลโก้งานแต่ง" class="logo" />
+  <h1>ฝากเสียงอวยพรงานแต่ง</h1>
+  <div class="subtitle">จะฮา จะซึ้ง จะร้องเพลงก็ได้ ขอแค่พูดถึงเจ้าบ่าวเจ้าสาวบ้างก็พอ 😄❤️</div>
 
-  <input type="text" id="name" placeholder="ชื่อของคุณ (เช่น ป้าแอ๊ด)" />
-  <select id="group" title="เลือกกลุ่มของคุณ">
+  <input type="text" id="name" placeholder="ชื่อของคุณ (เฉพาะภาษาอังกฤษ)" />
+  <select id="group">
     <option value="">-- เลือกกลุ่ม --</option>
     <option value="groom_family">ครอบครัวเจ้าบ่าว</option>
     <option value="bride_family">ครอบครัวเจ้าสาว</option>
@@ -64,169 +118,212 @@
     <option value="bride_friends">เพื่อนเจ้าสาว</option>
   </select>
 
-  <button id="startBtn">🎤 เริ่มอัดเสียง</button>
-  <button id="stopBtn" disabled>⏹️ หยุดอัด</button>
+  <button id="playGreetingBtn">▶️ ฟังเสียงทักทาย</button>
+
+  <div id="buttonsContainer">
+    <button id="startBtn" disabled>🎤 เริ่มอัดเสียง</button>
+    <button id="stopBtn" disabled>⏹️ หยุดอัดเสียง</button>
+    <button id="resetBtn" disabled>🔁 อัดใหม่</button>
+  </div>
   <button id="uploadBtn" disabled>📤 อัปโหลด</button>
 
+  <div id="timer"></div>
+  <canvas id="visualizer"></canvas>
   <audio id="audioPlayer" controls></audio>
-
   <div id="status"></div>
+  <div id="progressRose"></div>
 
-  <!-- Recorder.js ไลบรารี สำหรับ iOS -->
-  <script src="https://cdn.jsdelivr.net/npm/recorder-js@1.0.2/dist/recorder.min.js"></script>
+<script>
+const playGreetingBtn = document.getElementById('playGreetingBtn');
+const startBtn = document.getElementById('startBtn');
+const stopBtn = document.getElementById('stopBtn');
+const resetBtn = document.getElementById('resetBtn');
+const uploadBtn = document.getElementById('uploadBtn');
+const audioPlayer = document.getElementById('audioPlayer');
+const statusDiv = document.getElementById('status');
+const timerDiv = document.getElementById('timer');
+const nameInput = document.getElementById('name');
+const groupSelect = document.getElementById('group');
+const progressRose = document.getElementById('progressRose');
+const canvas = document.getElementById('visualizer');
+const ctx = canvas.getContext('2d');
 
-  <script>
-    const startBtn = document.getElementById('startBtn');
-    const stopBtn = document.getElementById('stopBtn');
-    const uploadBtn = document.getElementById('uploadBtn');
-    const audioPlayer = document.getElementById('audioPlayer');
-    const statusDiv = document.getElementById('status');
-    const nameInput = document.getElementById('name');
-    const groupSelect = document.getElementById('group');
+let audioChunks = [], audioBlob, stream, mediaRecorder;
+let recordingTimer, timeElapsed = 0, animationId;
+let audioContext, analyser, sourceNode;
+let greetingPlayed = false;
 
-    let mediaRecorder;
-    let recorder; // Recorder.js instance สำหรับ iOS
-    let audioChunks = [];
-    let audioBlob;
-    let stream;
+function resizeCanvas() {
+  canvas.width = canvas.clientWidth;
+  canvas.height = canvas.clientHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
 
-    function isIOS() {
-      return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    }
+nameInput.addEventListener('input', () => {
+  nameInput.value = nameInput.value.replace(/[^a-zA-Z\s]/g, '');
+});
 
-    async function checkMicPermission() {
-      if (!navigator.permissions) {
-        statusDiv.textContent = "⚠️ เบราว์เซอร์ไม่รองรับ Permissions API";
-        return;
-      }
-      try {
-        const status = await navigator.permissions.query({ name: 'microphone' });
-        statusDiv.textContent = `🎧 สถานะสิทธิ์ไมโครโฟน: ${status.state}`;
-        status.onchange = () => {
-          statusDiv.textContent = `🎧 สถานะสิทธิ์ไมโครโฟนเปลี่ยนเป็น: ${status.state}`;
-        };
-      } catch (e) {
-        statusDiv.textContent = `❌ ไม่สามารถตรวจสอบสิทธิ์ไมโครโฟน: ${e.message}`;
-      }
-    }
+playGreetingBtn.addEventListener('click', () => {
+  if (greetingPlayed) return;
+  const audio = new Audio('https://natiphol.github.io/33/Test.mp3');
+  audio.play();
+  playGreetingBtn.disabled = true;
+  audio.onended = () => {
+    greetingPlayed = true;
+    startBtn.disabled = false;
+    statusDiv.textContent = "🎧 ฟังเสียงทักทายเสร็จแล้ว กดเริ่มอัดเสียงได้เลย";
+  }
+});
 
-    startBtn.onclick = async () => {
-      if (!nameInput.value.trim() || !groupSelect.value) {
-        alert("กรุณากรอกชื่อและเลือกกลุ่มก่อนเริ่มอัดเสียง");
-        return;
-      }
+async function startRecording() {
+  if (!nameInput.value.trim()) return alert("กรุณากรอกชื่อของคุณ");
+  if (!/^[a-zA-Z\s]+$/.test(nameInput.value.trim())) return alert("ชื่อใช้ได้เฉพาะภาษาอังกฤษเท่านั้น");
+  if (!groupSelect.value) return alert("กรุณาเลือกกลุ่มของคุณ");
 
-      statusDiv.textContent = "⏳ กำลังตรวจสอบสิทธิ์ไมโครโฟน...";
-      await checkMicPermission();
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  } catch (err) {
+    alert("⚠️ ไม่สามารถเข้าถึงไมโครโฟนได้");
+    return;
+  }
 
-      try {
-        stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        statusDiv.textContent = "✅ เข้าถึงไมโครโฟนสำเร็จ";
+  audioChunks = [];
+  let options = { mimeType: '' };
+  if (MediaRecorder.isTypeSupported('audio/mp4')) {
+    options.mimeType = 'audio/mp4';
+  } else if (MediaRecorder.isTypeSupported('audio/webm')) {
+    options.mimeType = 'audio/webm';
+  }
 
-        if (isIOS()) {
-          const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-          const source = audioContext.createMediaStreamSource(stream);
-          recorder = new Recorder(source, { numChannels: 1 });
-          recorder.record();
-          statusDiv.textContent = "🎙️ กำลังอัดเสียง (iOS) ...";
-        } else {
-          mediaRecorder = new MediaRecorder(stream);
-          audioChunks = [];
-          mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
-          mediaRecorder.start();
-          statusDiv.textContent = "🎙️ กำลังอัดเสียง ...";
-        }
+  mediaRecorder = new MediaRecorder(stream, options);
+  mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+  mediaRecorder.onstop = () => {
+    audioBlob = new Blob(audioChunks, { type: options.mimeType || 'audio/mp4' });
+    audioPlayer.src = URL.createObjectURL(audioBlob);
+    resetBtn.disabled = false;
+    uploadBtn.disabled = false;
+    stopBtn.disabled = true;
+    timerDiv.textContent = "";
+    stream.getTracks().forEach(t => t.stop());
+    clearInterval(recordingTimer);
+    clearVisualizer();
+  }
 
-        startBtn.disabled = true;
-        stopBtn.disabled = false;
-        uploadBtn.disabled = true;
-        audioPlayer.src = "";
-      } catch (err) {
-        statusDiv.textContent = `❌ ไม่สามารถเข้าถึงไมโครโฟนได้: ${err.message}`;
-        console.error("getUserMedia error:", err);
-        alert("ไม่สามารถเข้าถึงไมโครโฟนได้ กรุณาตรวจสอบการอนุญาตในเบราว์เซอร์และตั้งค่า iOS");
-      }
-    };
+  mediaRecorder.start();
+  startBtn.disabled = true;
+  stopBtn.disabled = false;
+  uploadBtn.disabled = true;
+  resetBtn.disabled = true;
+  statusDiv.textContent = "🎙️ กำลังอัดเสียง...";
 
-    stopBtn.onclick = () => {
-      stopBtn.disabled = true;
-      startBtn.disabled = false;
+  timeElapsed = 0;
+  timerDiv.textContent = "⏱️ เวลาอัดเสียง: 00:00";
+  recordingTimer = setInterval(() => {
+    timeElapsed++;
+    const m = Math.floor(timeElapsed / 60).toString().padStart(2, '0');
+    const s = (timeElapsed % 60).toString().padStart(2, '0');
+    timerDiv.textContent = `⏱️ เวลาอัดเสียง: ${m}:${s}`;
+    if (timeElapsed >= 180) stopRecording();
+  }, 1000);
+  startVisualizer();
+}
 
-      if (isIOS()) {
-        if (recorder) {
-          recorder.stop();
-          recorder.exportWAV(blob => {
-            audioBlob = blob;
-            const url = URL.createObjectURL(blob);
-            audioPlayer.src = url;
-            audioPlayer.load();
-            uploadBtn.disabled = false;
-            statusDiv.textContent = "✅ หยุดอัดเสียงแล้ว พร้อมอัปโหลด (iOS WAV)";
-          });
-        } else {
-          statusDiv.textContent = "❌ ตัวแปร recorder ยังไม่ได้ถูกสร้าง";
-        }
+function stopRecording() {
+  if (mediaRecorder?.state === 'recording') mediaRecorder.stop();
+}
+
+function resetRecording() {
+  if (confirm("คุณต้องการอัดใหม่หรือไม่?")) {
+    greetingPlayed = true;
+    audioBlob = null;
+    audioChunks = [];
+    audioPlayer.src = "";
+    statusDiv.textContent = "";
+    resetBtn.disabled = true;
+    uploadBtn.disabled = true;
+    startBtn.disabled = false;
+    stopBtn.disabled = true;
+    timerDiv.textContent = "";
+    clearVisualizer();
+  }
+}
+
+async function uploadAudio() {
+  if (!audioBlob) return alert("ยังไม่มีไฟล์เสียง");
+  const name = nameInput.value.trim();
+  const group = groupSelect.value;
+
+  statusDiv.textContent = "⏳ กำลังอัปโหลด...";
+  uploadBtn.disabled = true;
+  progressRose.style.display = "block";
+
+  const reader = new FileReader();
+  reader.onloadend = async () => {
+    try {
+      const base64Audio = reader.result.split(',')[1];
+      const response = await fetch("https://script.google.com/macros/s/AKfycbxE_TYcDqqheROL652jb8wHmg3K9IHujV6nwrXADVlYqX-RSJNfp1TfdyZdL4Zm7oODMw/exec", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ name, group, audio: base64Audio })
+      });
+      const result = await response.json();
+      if (result.success) {
+        statusDiv.innerHTML = `✅ อัปโหลดสำเร็จ!<br><a href="${result.url}" target="_blank">เปิดไฟล์เสียง</a>`;
       } else {
-        if (mediaRecorder) {
-          mediaRecorder.stop();
-          mediaRecorder.onstop = () => {
-            audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-            const url = URL.createObjectURL(audioBlob);
-            audioPlayer.src = url;
-            audioPlayer.load();
-            uploadBtn.disabled = false;
-            statusDiv.textContent = "✅ หยุดอัดเสียงแล้ว พร้อมอัปโหลด";
-          };
-        } else {
-          statusDiv.textContent = "❌ ตัวแปร mediaRecorder ยังไม่ได้ถูกสร้าง";
-        }
+        throw new Error(result.message || "อัปโหลดไม่สำเร็จ");
       }
-    };
+    } catch (e) {
+      statusDiv.textContent = "❌ อัปโหลดล้มเหลว: " + e.message;
+    } finally {
+      progressRose.style.display = "none";
+      uploadBtn.disabled = false;
+    }
+  };
+  reader.readAsDataURL(audioBlob);
+}
 
-    uploadBtn.onclick = () => {
-      if (!audioBlob) {
-        alert("กรุณาอัดเสียงก่อนอัปโหลด");
-        return;
-      }
-      const name = nameInput.value.trim();
-      const group = groupSelect.value;
+function startVisualizer() {
+  audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  analyser = audioContext.createAnalyser();
+  sourceNode = audioContext.createMediaStreamSource(stream);
+  sourceNode.connect(analyser);
+  analyser.fftSize = 2048;
+  const bufferLength = analyser.fftSize;
+  const dataArray = new Uint8Array(bufferLength);
 
-      statusDiv.textContent = "⏳ กำลังอัปโหลด...";
-      uploadBtn.disabled = true;
+  function draw() {
+    animationId = requestAnimationFrame(draw);
+    analyser.getByteTimeDomainData(dataArray);
+    ctx.fillStyle = '#fdfaf5';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = '#d4af37';
+    ctx.beginPath();
+    const sliceWidth = canvas.width * 1.0 / bufferLength;
+    let x = 0;
+    for (let i = 0; i < bufferLength; i++) {
+      const v = dataArray[i] / 128.0;
+      const y = v * canvas.height / 2;
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+      x += sliceWidth;
+    }
+    ctx.lineTo(canvas.width, canvas.height / 2);
+    ctx.stroke();
+  }
+  draw();
+}
 
-      const reader = new FileReader();
-      reader.onloadend = async () => {
-        const base64Audio = reader.result.split(',')[1];
+function clearVisualizer() {
+  if (animationId) cancelAnimationFrame(animationId);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
 
-        try {
-          const response = await fetch("https://script.google.com/macros/s/AKfycbxE_TYcDqqheROL652jb8wHmg3K9IHujV6nwrXADVlYqX-RSJNfp1TfdyZdL4Zm7oODMw/exec", {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: new URLSearchParams({
-              name,
-              group,
-              audio: base64Audio
-            })
-          });
-
-          const result = await response.json();
-
-          if (result.success) {
-            statusDiv.innerHTML = `✅ อัปโหลดสำเร็จ!<br><a href="${result.url}" target="_blank">เปิดไฟล์เสียง</a>`;
-            uploadBtn.disabled = true;
-            startBtn.disabled = false;
-          } else {
-            throw new Error(result.message || "เกิดข้อผิดพลาดไม่ทราบสาเหตุ");
-          }
-        } catch (error) {
-          console.error(error);
-          statusDiv.textContent = "❌ อัปโหลดไม่สำเร็จ: " + error.message;
-          uploadBtn.disabled = false;
-        }
-      };
-
-      reader.readAsDataURL(audioBlob);
-    };
-  </script>
+startBtn.addEventListener('click', startRecording);
+stopBtn.addEventListener('click', stopRecording);
+resetBtn.addEventListener('click', resetRecording);
+uploadBtn.addEventListener('click', uploadAudio);
+</script>
 </body>
 </html>
