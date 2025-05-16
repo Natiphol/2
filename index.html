@@ -50,12 +50,19 @@
 
     startBtn.onclick = async () => {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      mediaRecorder = new MediaRecorder(stream);
+
+      try {
+        mediaRecorder = new MediaRecorder(stream); // ใช้ default MIME (Safari รองรับ wav)
+      } catch (e) {
+        alert("เบราว์เซอร์ของคุณไม่รองรับการอัดเสียง");
+        return;
+      }
+
       audioChunks = [];
 
       mediaRecorder.ondataavailable = event => audioChunks.push(event.data);
       mediaRecorder.onstop = () => {
-        const audioBlob = new Blob(audioChunks, { type: 'audio/m4a' });
+        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
         const audioUrl = URL.createObjectURL(audioBlob);
         audioPlayer.src = audioUrl;
         audioPlayer.load();
@@ -87,7 +94,7 @@
       statusDiv.innerText = "⏳ กำลังอัปโหลด...";
       uploadBtn.disabled = true;
 
-      const audioBlob = new Blob(audioChunks, { type: 'audio/m4a' });
+      const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
       const reader = new FileReader();
       reader.onloadend = async () => {
         const base64Audio = reader.result.split(',')[1];
