@@ -220,13 +220,25 @@ async function setupRecorder() {
     analyser.fftSize = 2048;
     sourceNode.connect(analyser);
     mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
-    mediaRecorder.onstop = () => {
+    mediaRecorder.onstop = async () => {
       audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+
+      audioPlayback.pause();
+      audioPlayback.removeAttribute('src');
+      audioPlayback.load();
+
       audioUrl = URL.createObjectURL(audioBlob);
       audioPlayback.src = audioUrl;
+
+      try {
+        await audioPlayback.play(); // ✅ สำคัญสำหรับ iOS
+      } catch (err) {
+        console.warn('Audio auto-play failed, user may need to tap Play:', err);
+      }
+
       playBtn.disabled = false;
       uploadBtn.disabled = false;
-      retryBtn.disabled = false;
+      retryBtn.disabled = true;
       stopBtn.disabled = true;
       startBtn.disabled = false;
       cancelAnimationFrame(animationId);
@@ -282,15 +294,34 @@ stopBtn.addEventListener('click', () => {
 });
 
 retryBtn.addEventListener('click', () => {
-  audioPlayback.src = '';
+  audioPlayback.pause();
+  audioPlayback.removeAttribute('src');
+  audioPlayback.load();
+
   playBtn.disabled = true;
   uploadBtn.disabled = true;
   retryBtn.disabled = true;
   greetingText.textContent = 'จะฮา จะซึ้ง จะร้องเพลงก็ได้ ขอแค่พูดถึงเจ้าบ่าวเจ้าสาวบ้างก็พอ 😄❤️';
 });
 
-playBtn.addEventListener('click', () => {
-  if (audioPlayback.src) audioPlayback.play();
+playBtn.addEventListener('click', async () => {
+  if (audioPlayback.src) {
+    try {
+      await audioPlayback.play();
+    } catch (error) {
+      console.log('Error playing audio:', error);
+    }
+  }
+});
+
+playBtn.addEventListener('touchend', async () => {
+  if (audioPlayback.src && audioPlayback.paused) {
+    try {
+      await audioPlayback.play();
+    } catch (error) {
+      console.log('Error playing audio on touchend:', error);
+    }
+  }
 });
 
 uploadBtn.addEventListener('click', async () => {
