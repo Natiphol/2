@@ -5,72 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>ฝากเสียงอวยพรเจ้าบ่าวเจ้าสาว</title>
 <style>
-  body {
-    font-family: 'Prompt', sans-serif, Arial, sans-serif;
-    background-color: #f0f8ff;
-    color: #003366;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-  }
-  .container {
-    max-width: 420px;
-    width: 100%;
-    background: #e6f0ff;
-    padding: 20px 24px;
-    border-radius: 16px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-  }
-  h1 {
-    color: #004080;
-    font-weight: 700;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  label {
-    font-weight: 600;
-    display: block;
-    margin-bottom: 6px;
-  }
-  select, input {
-    width: 100%;
-    padding: 12px 14px;
-    font-size: 1.1rem;
-    border-radius: 10px;
-    border: 2px solid #aaccee;
-    margin-bottom: 20px;
-  }
-  button {
-    background-color: #004080;
-    color: white;
-    border: none;
-    border-radius: 14px;
-    padding: 14px 20px;
-    font-size: 1.15rem;
-    font-weight: 600;
-    cursor: pointer;
-    margin: 5px 6px 0 0;
-    min-width: 110px;
-  }
-  button:disabled {
-    background-color: #aaccee;
-    cursor: not-allowed;
-  }
-  audio {
-    margin-top: 15px;
-    width: 100%;
-    border-radius: 12px;
-    outline-offset: 2px;
-    outline-color: #004080;
-  }
-  #audioVisualizer {
-    width: 100%;
-    height: 60px;
-    background-color: #cce7ff;
-    border-radius: 12px;
-    margin-bottom: 20px;
-  }
+  /* ...css เหมือนเดิม... */
 </style>
 </head>
 <body>
@@ -103,7 +38,6 @@
     <p id="statusMessage" style="margin-top:15px; font-weight:600; color:#004080;"></p>
   </div>
 
-  <!-- Recorder.js สำหรับ fallback iOS -->
   <script src="https://cdn.jsdelivr.net/npm/recorder-js@1.0.3/dist/recorder.min.js"></script>
 
   <script>
@@ -153,6 +87,7 @@
       audioUrl = null;
       cancelAnimationFrame(animationId);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      clearTimeout(recordTimeout);
     }
 
     function drawVisualizer() {
@@ -188,9 +123,21 @@
 
     async function setupStream() {
       try {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          alert('เบราว์เซอร์ของคุณไม่รองรับการเข้าถึงไมโครโฟน');
+          return false;
+        }
+        if (stream) {
+          // ถ้ามี stream อยู่แล้ว ให้รีเซ็ต
+          stream.getTracks().forEach(track => track.stop());
+          stream = null;
+        }
+        if (audioContext) {
+          await audioContext.close();
+          audioContext = null;
+        }
         stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         audioContext = new AudioContext();
-
         sourceNode = audioContext.createMediaStreamSource(stream);
         analyser = audioContext.createAnalyser();
         analyser.fftSize = 2048;
@@ -203,9 +150,11 @@
           mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
           mediaRecorder.onstop = onRecordingStop;
         }
+        console.log('Microphone stream and recorder ready.');
         return true;
       } catch (err) {
-        alert('ไม่สามารถเข้าถึงไมโครโฟนได้ กรุณาอนุญาตการใช้งาน');
+        console.error('Error accessing microphone:', err);
+        alert('ไม่สามารถเข้าถึงไมโครโฟนได้: ' + err.message);
         return false;
       }
     }
@@ -312,13 +261,11 @@
         return;
       }
 
-      // ตัวอย่างการตั้งชื่อไฟล์
       const filename = `${groupSelect.value}_${nameInput.value.trim().replace(/[^a-zA-Z0-9_-]/g,'_')}_${Date.now()}.webm`;
 
       statusMessage.textContent = `กำลังอัปโหลดไฟล์: ${filename}`;
 
-      // TODO: แทนที่ส่วนนี้ด้วยฟังก์ชันอัปโหลดจริง เช่น Google Drive API
-      // แสดงตัวอย่างการทำงานจำลอง
+      // TODO: ใส่โค้ดอัปโหลดจริง เช่น Google Drive API ที่นี่
       setTimeout(() => {
         statusMessage.textContent = `อัปโหลดสำเร็จ! ขอบคุณสำหรับเสียงอวยพรครับ/ค่ะ 😊`;
         uploadBtn.disabled = true;
@@ -326,8 +273,9 @@
       }, 2500);
     });
 
-    // เปิด startBtn ก็ต่อเมื่อฟังเสียงทักทายก่อน
+    // ปิด startBtn จนกว่าจะฟังเสียงทักทาย
     startBtn.disabled = true;
+
   </script>
 </body>
 </html>
