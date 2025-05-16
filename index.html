@@ -48,10 +48,6 @@
     button:hover:not(:disabled) {
       background-color: #004999;
     }
-    audio {
-      margin-top: 1rem;
-      width: 100%;
-    }
     canvas {
       width: 100%;
       height: 100px;
@@ -76,6 +72,13 @@
     @keyframes spin {
       100% { transform: rotate(360deg); }
     }
+    #timer {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin: 1rem 0 0.5rem;
+      color: #ff4081;
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -94,9 +97,11 @@
 
 <button id="greetingBtn">▶️ ฟังเสียงทักทาย</button>
 <button id="startBtn" disabled>🎤 เริ่มอัดเสียง</button>
+<button id="stopBtn" disabled>⏹️ หยุดอัด</button>
 <button id="resetBtn" disabled>🔁 อัดใหม่</button>
 <button id="uploadBtn" disabled>📤 อัปโหลด</button>
 
+<div id="timer">⏱️ 0 วินาที</div>
 <canvas id="visualizer"></canvas>
 <audio id="audioPlayer" controls></audio>
 
@@ -115,10 +120,12 @@
   const groupSelect = document.getElementById('group');
   const visualizerCanvas = document.getElementById('visualizer');
   const roseSpinner = document.getElementById('roseSpinner');
+  const timerEl = document.getElementById('timer');
 
   let mediaRecorder, stream, audioChunks = [], audioBlob;
   let audioCtx, analyser, dataArray, source, animationId;
   let greetingPlayed = false;
+  let timerInterval, seconds = 0;
 
   function showVisualizer(stream) {
     visualizerCanvas.style.display = 'block';
@@ -160,6 +167,21 @@
     if (audioCtx) audioCtx.close();
   }
 
+  function startTimer() {
+    seconds = 0;
+    timerEl.textContent = `⏱️ 0 วินาที`;
+    timerEl.style.display = 'block';
+    timerInterval = setInterval(() => {
+      seconds++;
+      timerEl.textContent = `⏱️ ${seconds} วินาที`;
+    }, 1000);
+  }
+
+  function stopTimer() {
+    clearInterval(timerInterval);
+    timerEl.style.display = 'none';
+  }
+
   async function startRecording() {
     try {
       stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -171,11 +193,14 @@
         audioPlayer.src = URL.createObjectURL(audioBlob);
         uploadBtn.disabled = false;
         resetBtn.disabled = false;
+        stopTimer();
+        stopVisualizer();
         statusDiv.textContent = "✅ หยุดอัดเสียงแล้ว พร้อมอัปโหลด";
       };
       mediaRecorder.start();
       statusDiv.textContent = "🎙️ กำลังอัดเสียง...";
       showVisualizer(stream);
+      startTimer();
     } catch (err) {
       alert("ไม่สามารถเข้าถึงไมโครโฟนได้");
       console.error(err);
@@ -189,20 +214,13 @@
     if (stream) {
       stream.getTracks().forEach(t => t.stop());
     }
-    stopVisualizer();
   }
 
   async function uploadAudio() {
-    if (!audioBlob) {
-      alert("กรุณาอัดเสียงก่อนอัปโหลด");
-      return;
-    }
+    if (!audioBlob) return alert("กรุณาอัดเสียงก่อน");
     const name = nameInput.value.trim();
     const group = groupSelect.value;
-    if (!name || !group) {
-      alert("กรุณากรอกชื่อและเลือกกลุ่มก่อนอัปโหลด");
-      return;
-    }
+    if (!name || !group) return alert("กรุณากรอกชื่อและเลือกกลุ่ม");
 
     roseSpinner.style.display = 'block';
     statusDiv.textContent = "⏳ กำลังอัปโหลด...";
@@ -212,17 +230,15 @@
     reader.onloadend = async () => {
       const base64Audio = reader.result.split(',')[1];
       try {
-        const response = await fetch("https://script.google.com/macros/s/AKfycbxE_TYcDqqheROL652jb8wHmg3K9IHujV6nwrXADVlYqX-RSJNfp1TfdyZdL4Zm7oODMw/exec", {
+        const res = await fetch("https://script.google.com/macros/s/AKfycbxE_TYcDqqheROL652jb8wHmg3K9IHujV6nwrXADVlYqX-RSJNfp1TfdyZdL4Zm7oODMw/exec", {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
           body: new URLSearchParams({ name, group, audio: base64Audio })
         });
-        const result = await response.json();
+        const result = await res.json();
         if (result.success) {
           statusDiv.innerHTML = `🌹 ขอบคุณทุกคนนนน ❤️<br><a href="${result.url}" target="_blank">เปิดไฟล์เสียง</a>`;
-        } else {
-          throw new Error(result.message || "เกิดข้อผิดพลาด");
-        }
+        } else throw new Error(result.message || "เกิดข้อผิดพลาด");
       } catch (err) {
         statusDiv.textContent = "❌ อัปโหลดไม่สำเร็จ: " + err.message;
         uploadBtn.disabled = false;
@@ -249,8 +265,15 @@
     startBtn.disabled = true;
     greetingBtn.disabled = true;
     resetBtn.disabled = false;
+    stopBtn.disabled = false;
     uploadBtn.disabled = true;
     startRecording();
+  };
+
+  stopBtn.onclick = () => {
+    stopBtn.disabled = true;
+    startBtn.disabled = true;
+    stopRecording();
   };
 
   resetBtn.onclick = () => {
@@ -259,9 +282,11 @@
     audioPlayer.src = "";
     audioBlob = null;
     uploadBtn.disabled = true;
+    stopBtn.disabled = true;
     startBtn.disabled = false;
-    greetingBtn.disabled = true; // ห้ามฟังใหม่
+    greetingBtn.disabled = true;
     statusDiv.textContent = "🔁 พร้อมเริ่มอัดใหม่";
+    stopTimer();
   };
 
   uploadBtn.onclick = uploadAudio;
