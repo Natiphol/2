@@ -28,14 +28,14 @@
 
 <button id="playGreetingBtn">▶️ เล่นเสียงทักทายก่อน</button>
 <button id="startRecordBtn" disabled>🎙 เริ่มอัดเสียง</button>
-<button id="stopRecordBtn" disabled>⏹ หยุดอัด</button>
+<button id="stopRecordBtn" disabled>⏹ หยุดอัดเสียง</button>
 <button id="playRecordBtn" disabled>🔊 ฟังเสียงที่อัด</button>
 <button id="resetBtn" disabled>🔁 อัดใหม่</button>
 
 <canvas id="visualizer" width="500" height="100"></canvas>
 <audio id="recordedAudio" controls></audio>
 
-<audio id="greetingAudio" src="https://natiphol.github.io/33/Test.mp3"></audio>
+<audio id="greetingAudio" preload="auto" src="https://natiphol.github.io/33/Test.mp3"></audio>
 
 <script>
   const groupSelect = document.getElementById('group');
@@ -54,6 +54,7 @@
   let audioChunks = [];
   let audioContext, analyser, source;
   let animationId;
+  let recordTimeout;
 
   function drawVisualizer() {
     const bufferLength = analyser.fftSize;
@@ -99,6 +100,8 @@
     }
 
     playGreetingBtn.disabled = true;
+
+    // เล่นเสียงทักทาย
     greetingAudio.play().catch(err => {
       alert('ไม่สามารถเล่นเสียงทักทายได้: ' + err.message);
       playGreetingBtn.disabled = false;
@@ -115,6 +118,7 @@
       alert('เบราว์เซอร์นี้ไม่รองรับการบันทึกเสียง');
       return;
     }
+
     startRecordBtn.disabled = true;
     stopRecordBtn.disabled = false;
     playRecordBtn.disabled = true;
@@ -125,11 +129,13 @@
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       mediaRecorder = new MediaRecorder(stream);
-      audioContext = new AudioContext();
+
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
       source = audioContext.createMediaStreamSource(stream);
       analyser = audioContext.createAnalyser();
       analyser.fftSize = 2048;
       source.connect(analyser);
+
       drawVisualizer();
 
       mediaRecorder.ondataavailable = e => {
@@ -146,12 +152,13 @@
         resetBtn.disabled = false;
         stopRecordBtn.disabled = true;
         startRecordBtn.disabled = false;
+        clearTimeout(recordTimeout);
       };
 
       mediaRecorder.start();
 
       // บันทึกได้ไม่เกิน 3 นาที
-      setTimeout(() => {
+      recordTimeout = setTimeout(() => {
         if (mediaRecorder && mediaRecorder.state === 'recording') {
           mediaRecorder.stop();
           alert('หมดเวลาบันทึกเสียง 3 นาที');
