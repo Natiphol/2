@@ -98,9 +98,9 @@
       <option value="bride_friends">เพื่อนเจ้าสาว</option>
     </select>
 
-    <audio id="greetingAudio" controls>
+    <button id="playGreetingBtn">▶️ ฟังคำแนะนำ</button>
+    <audio id="greetingAudio" class="hidden">
       <source src="https://yourdomain.com/Test.mp3" type="audio/mpeg">
-      เบราว์เซอร์ของคุณไม่รองรับการเล่นเสียง
     </audio>
 
     <button id="startBtn">🎤 เริ่มบันทึกเสียง</button>
@@ -120,8 +120,10 @@
     const ctx = visualizer.getContext('2d');
     const thankYou = document.getElementById('thankYou');
     const greetingAudio = document.getElementById('greetingAudio');
+    const playGreetingBtn = document.getElementById('playGreetingBtn');
     const groupSelector = document.getElementById('group');
 
+    let greetingFinished = false;
     let mediaRecorder;
     let audioChunks = [];
     let audioBlob;
@@ -129,6 +131,17 @@
     let stream;
     let animationId;
     let analyser, source;
+
+    playGreetingBtn.onclick = () => {
+      greetingAudio.play();
+      playGreetingBtn.disabled = true;
+      playGreetingBtn.textContent = "▶️ กำลังเล่นคำแนะนำ...";
+    };
+
+    greetingAudio.onended = () => {
+      greetingFinished = true;
+      playGreetingBtn.textContent = "✅ ฟังคำแนะนำแล้ว";
+    };
 
     function drawVisualizer() {
       analyser.fftSize = 256;
@@ -188,7 +201,7 @@
     }
 
     startBtn.onclick = () => {
-      if (!greetingAudio.ended) {
+      if (!greetingFinished) {
         alert('กรุณาฟังคำแนะนำให้จบก่อนเริ่มอัดเสียง');
         return;
       }
