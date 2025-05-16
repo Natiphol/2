@@ -8,94 +8,96 @@
   @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;700&display=swap');
   body {
     font-family: 'Kanit', sans-serif;
-    max-width: 600px;
+    max-width: 620px;
     margin: 3rem auto 4rem;
-    padding: 2.5rem 2rem 3rem;
-    background: linear-gradient(135deg, #1a1a3d, #0d0d29);
-    color: #f7f1e3;
+    padding: 3rem 2.5rem 3rem;
+    background: linear-gradient(135deg, #0b123d, #171c49);
+    color: #f8f6f1;
+    border-radius: 24px;
+    box-shadow: 0 12px 32px rgba(255, 215, 0, 0.5);
+    user-select: none;
     text-align: center;
-    border-radius: 20px;
-    box-shadow: 0 15px 40px rgba(255, 215, 0, 0.3);
   }
   h1 {
-    font-weight: 700;
-    font-size: 2.8rem;
-    margin-bottom: 0.25rem;
+    font-weight: 900;
+    font-size: 3.2rem;
+    margin-bottom: 0.3rem;
     color: #ffd700;
-    text-shadow: 0 0 8px #ffd700aa;
+    text-shadow: 0 0 12px #ffd700cc;
+    letter-spacing: 0.1em;
   }
   select, input[type="text"] {
     width: 48%;
-    padding: 0.85rem 1.2rem;
-    font-size: 1.2rem;
-    border-radius: 12px;
-    border: 2.5px solid #ffd700;
-    margin: 0.3rem 1% 1.2rem;
-    outline-offset: 3px;
-    background: #222244;
-    color: #fffbe6;
-    transition: border-color 0.4s ease;
-    box-shadow: 0 0 8px #ffd70044;
+    padding: 1rem 1.3rem;
+    font-size: 1.3rem;
+    border-radius: 14px;
+    border: 3px solid #ffd700;
+    margin: 0.5rem 1% 1.5rem;
+    background: #0d134d;
+    color: #fffbea;
+    outline-offset: 4px;
+    box-shadow: 0 0 14px #ffd70044;
+    transition: border-color 0.3s ease;
   }
   select:focus, input[type="text"]:focus {
-    border-color: #ffec72;
-    box-shadow: 0 0 14px #ffec72cc;
-    background: #2a2a55;
+    border-color: #ffef72;
+    box-shadow: 0 0 18px #ffef72cc;
+    background: #22295a;
   }
   .buttons {
-    margin: 2rem 0 1rem;
+    margin: 2.5rem 0 1.5rem;
   }
   button {
-    background: linear-gradient(45deg, #ffd700, #ffb300);
+    background: linear-gradient(45deg, #ffd700, #ffb800);
     color: #1a1a3d;
     border: none;
-    border-radius: 14px;
-    padding: 1rem 2.3rem;
-    font-size: 1.2rem;
-    margin: 0 0.5rem 1rem;
+    border-radius: 18px;
+    padding: 1.1rem 2.8rem;
+    font-size: 1.25rem;
+    margin: 0 0.7rem 1rem;
     cursor: pointer;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    box-shadow: 0 8px 18px rgba(255, 215, 0, 0.7);
-    transition: all 0.3s ease;
+    font-weight: 900;
+    letter-spacing: 0.07em;
+    box-shadow: 0 10px 26px rgba(255, 215, 0, 0.85);
     user-select: none;
+    transition: all 0.3s ease;
   }
   button:hover:not(:disabled) {
-    background: linear-gradient(45deg, #ffec72, #ffda3b);
-    box-shadow: 0 10px 28px rgba(255, 223, 36, 0.9);
-    transform: translateY(-2px);
+    background: linear-gradient(45deg, #ffed70, #ffc817);
+    box-shadow: 0 14px 36px rgba(255, 215, 0, 1);
+    transform: translateY(-2.5px);
   }
   button:disabled {
     background: #555566;
-    color: #aaaabb;
+    color: #bbbccf;
     cursor: not-allowed;
     box-shadow: none;
     transform: none;
   }
   #progress-container {
     width: 100%;
-    background: #444466;
-    border-radius: 12px;
+    background: #282e5b;
+    border-radius: 16px;
     overflow: hidden;
-    margin: 1rem 0 2rem;
-    height: 22px;
-    box-shadow: inset 0 0 8px #222244;
+    margin: 1.5rem 0 2.5rem;
+    height: 24px;
+    box-shadow: inset 0 0 14px #1a1a3d;
     display: none;
   }
   #progress-bar {
     height: 100%;
     width: 0%;
     background: linear-gradient(90deg, #ffd700, #ffb300);
-    transition: width 0.3s ease;
+    transition: width 0.25s ease;
   }
   #msg {
-    margin-top: 1.4rem;
-    font-weight: 700;
-    font-size: 1.2rem;
-    min-height: 1.5rem;
+    margin-top: 1.8rem;
+    font-weight: 800;
+    font-size: 1.3rem;
+    min-height: 1.6rem;
     color: #ffdb58;
+    text-shadow: 0 0 14px #ffdb58bb;
     user-select: none;
-    text-shadow: 0 0 10px #ffdb58cc;
   }
 </style>
 </head>
@@ -109,7 +111,7 @@
     <option value="groom_friends">เพื่อนเจ้าบ่าว</option>
     <option value="bride_friends">เพื่อนเจ้าสาว</option>
   </select>
-  <input type="text" id="name" placeholder="ชื่อของคุณ (ภาษาอังกฤษเท่านั้น)" aria-label="ชื่อของคุณ" pattern="[A-Za-z\s]+" title="กรุณากรอกชื่อเป็นภาษาอังกฤษเท่านั้น" />
+  <input type="text" id="name" placeholder="ชื่อของคุณ (ภาษาอังกฤษเท่านั้น)" aria-label="ชื่อของคุณ" pattern="[A-Za-z\s]+" title="กรุณากรอกชื่อเป็นภาษาอังกฤษเท่านั้น" autocomplete="off" />
 
   <div class="buttons">
     <button id="start" disabled>▶️ เริ่มอัด (ฟังเสียงทักทายก่อน)</button>
@@ -122,169 +124,174 @@
   <p id="msg"></p>
 
 <script>
-const startBtn = document.getElementById("start");
-const stopBtn = document.getElementById("stop");
-const uploadBtn = document.getElementById("upload");
-const msg = document.getElementById("msg");
-const nameInput = document.getElementById("name");
-const groupSelect = document.getElementById("group");
-const progressContainer = document.getElementById("progress-container");
-const progressBar = document.getElementById("progress-bar");
+  const startBtn = document.getElementById("start");
+  const stopBtn = document.getElementById("stop");
+  const uploadBtn = document.getElementById("upload");
+  const msg = document.getElementById("msg");
+  const nameInput = document.getElementById("name");
+  const groupSelect = document.getElementById("group");
+  const progressContainer = document.getElementById("progress-container");
+  const progressBar = document.getElementById("progress-bar");
 
-const greetingAudio = new Audio("https://natiphol.github.io/33/Test.mp3");
+  const greetingAudio = new Audio("https://natiphol.github.io/33/Test.mp3");
 
-let mediaRecorder;
-let recordedChunks = [];
-let audioBlob;
+  let mediaRecorder;
+  let recordedChunks = [];
+  let audioBlob;
 
-const MAX_RECORD_TIME_MS = 180000; // 3 นาที
-const UPLOAD_URL = "https://script.google.com/macros/s/AKfycbxy-KeKpfN3asYpuRsozRgDn1WIA-oy2Dn7X1gRGKReqJBKKerUHLZrUyN7e3Ddg0C7/exec";
+  const MAX_RECORD_TIME_MS = 180000; // 3 นาที
 
-// ฟังก์ชันตรวจสอบ input และเปิดปุ่มเริ่มอัด
-function checkInputs() {
-  const nameValid = /^[A-Za-z\s]+$/.test(nameInput.value.trim());
-  startBtn.disabled = !(nameValid && groupSelect.value);
-  uploadBtn.disabled = true;
-  stopBtn.disabled = true;
-}
-nameInput.addEventListener("input", checkInputs);
-groupSelect.addEventListener("change", checkInputs);
+  // เปลี่ยนเป็น URL Google Apps Script ของคุณ
+  const UPLOAD_URL = "https://script.google.com/macros/s/AKfycbxy-KeKpfN3asYpuRsozRgDn1WIA-oy2Dn7X1gRGKReqJBKKerUHLZrUyN7e3Ddg0C7/exec";
 
-// เริ่มเล่นเสียงทักทายก่อน แล้วเริ่มอัด
-startBtn.addEventListener("click", () => {
-  startBtn.disabled = true;
-  msg.textContent = "กำลังเล่นเสียงทักทาย...";
-  greetingAudio.play();
-  greetingAudio.onended = () => {
-    startRecording();
-  };
-});
-
-// เริ่มอัดเสียง
-async function startRecording() {
-  recordedChunks = [];
-  msg.textContent = "กำลังอัดเสียง... (สูงสุด 3 นาที)";
-  stopBtn.disabled = false;
-
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    mediaRecorder = new MediaRecorder(stream);
-
-    mediaRecorder.ondataavailable = e => {
-      if (e.data.size > 0) recordedChunks.push(e.data);
-    };
-
-    mediaRecorder.onstop = () => {
-      audioBlob = new Blob(recordedChunks, { type: "audio/webm" });
-      msg.textContent = "หยุดอัดแล้ว กดส่งเพื่ออัปโหลด";
-      uploadBtn.disabled = false;
-      stopBtn.disabled = true;
-    };
-
-    mediaRecorder.start();
-
-    // ตั้งเวลาหยุดอัตโนมัติ 3 นาที
-    setTimeout(() => {
-      if (mediaRecorder.state === "recording") {
-        mediaRecorder.stop();
-      }
-    }, MAX_RECORD_TIME_MS);
-
-  } catch (err) {
-    msg.textContent = "ไม่สามารถใช้งานไมโครโฟนได้";
-    startBtn.disabled = false;
+  // ฟังก์ชันตรวจสอบ input
+  function checkInputs() {
+    const nameVal = nameInput.value.trim();
+    const groupVal = groupSelect.value;
+    const nameValid = /^[A-Za-z\s]+$/.test(nameVal);
+    startBtn.disabled = !(nameValid && groupVal);
+    uploadBtn.disabled = true;
     stopBtn.disabled = true;
+    msg.textContent = "";
   }
-}
+  nameInput.addEventListener("input", checkInputs);
+  groupSelect.addEventListener("change", checkInputs);
 
-// หยุดอัดเสียงด้วยปุ่ม
-stopBtn.addEventListener("click", () => {
-  if (mediaRecorder && mediaRecorder.state === "recording") {
-    mediaRecorder.stop();
+  // เริ่มเล่นเสียงทักทายก่อนอัด
+  startBtn.addEventListener("click", () => {
+    startBtn.disabled = true;
+    msg.textContent = "กำลังเล่นเสียงทักทาย...";
+    greetingAudio.play();
+    greetingAudio.onended = () => {
+      startRecording();
+    };
+  });
+
+  // เริ่มอัดเสียง
+  async function startRecording() {
+    recordedChunks = [];
+    msg.textContent = "กำลังอัดเสียง... (สูงสุด 3 นาที)";
+    stopBtn.disabled = false;
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorder = new MediaRecorder(stream);
+
+      mediaRecorder.ondataavailable = e => {
+        if (e.data.size > 0) recordedChunks.push(e.data);
+      };
+
+      mediaRecorder.onstop = () => {
+        audioBlob = new Blob(recordedChunks, { type: "audio/webm" });
+        msg.textContent = "หยุดอัดแล้ว กดส่งเพื่ออัปโหลด";
+        uploadBtn.disabled = false;
+        stopBtn.disabled = true;
+      };
+
+      mediaRecorder.start();
+
+      setTimeout(() => {
+        if (mediaRecorder.state === "recording") mediaRecorder.stop();
+      }, MAX_RECORD_TIME_MS);
+    } catch (err) {
+      msg.textContent = "ไม่สามารถใช้งานไมโครโฟนได้";
+      startBtn.disabled = false;
+      stopBtn.disabled = true;
+    }
   }
-});
 
-// อัปโหลดไฟล์ไป Google Drive ผ่าน Google Apps Script
-uploadBtn.addEventListener("click", async () => {
-  if (!audioBlob) {
-    alert("ยังไม่มีไฟล์เสียงสำหรับอัปโหลด");
-    return;
-  }
-  const name = nameInput.value.trim().replace(/\s+/g, "_");
-  const group = groupSelect.value;
-  if (!name || !group) {
-    alert("กรุณากรอกชื่อและเลือกกลุ่มให้ครบ");
-    return;
-  }
+  stopBtn.addEventListener("click", () => {
+    if (mediaRecorder && mediaRecorder.state === "recording") {
+      mediaRecorder.stop();
+    }
+  });
 
-  progressContainer.style.display = "block";
-  progressBar.style.width = "0%";
-  msg.textContent = "กำลังอัปโหลด...";
+  // อัปโหลดไฟล์เสียงไป Google Drive ผ่าน Google Apps Script
+  uploadBtn.addEventListener("click", async () => {
+    if (!audioBlob) {
+      alert("ยังไม่มีไฟล์เสียงสำหรับอัปโหลด");
+      return;
+    }
 
-  // สร้าง FormData ส่งไฟล์และข้อมูล
-  const formData = new FormData();
-  formData.append("action", "check");
-  formData.append("name", `${group}_${name}.webm`);
+    const nameRaw = nameInput.value.trim();
+    const groupVal = groupSelect.value;
+    if (!nameRaw || !groupVal) {
+      alert("กรุณากรอกชื่อและเลือกกลุ่มให้ครบ");
+      return;
+    }
 
-  // เช็คชื่อไฟล์ซ้ำ
-  try {
-    let response = await fetch(UPLOAD_URL, {
-      method: "POST",
-      body: formData
-    });
-    let result = await response.json();
-    if (result.exists) {
-      if (!confirm("ชื่อไฟล์ซ้ำในระบบ ต้องการอัปโหลดซ้ำหรือไม่?")) {
-        msg.textContent = "ยกเลิกการอัปโหลด";
-        progressContainer.style.display = "none";
-        return;
+    // แปลงชื่อไฟล์ให้เป็นภาษาอังกฤษ ไม่เว้นวรรค ใช้ _ แทน
+    const safeName = nameRaw.replace(/\s+/g, "_");
+    const filename = `${groupVal}_${safeName}.webm`;
+
+    progressContainer.style.display = "block";
+    progressBar.style.width = "0%";
+    msg.textContent = "กำลังตรวจสอบชื่อไฟล์...";
+
+    // 1) ตรวจสอบชื่อไฟล์ซ้ำ
+    try {
+      let checkForm = new FormData();
+      checkForm.append("action", "check");
+      checkForm.append("name", filename);
+
+      let response = await fetch(UPLOAD_URL, {
+        method: "POST",
+        body: checkForm
+      });
+
+      let result = await response.json();
+
+      if (result.exists) {
+        if (!confirm("ชื่อไฟล์ซ้ำในระบบ ต้องการอัปโหลดซ้ำหรือไม่?")) {
+          msg.textContent = "ยกเลิกการอัปโหลด";
+          progressContainer.style.display = "none";
+          return;
+        }
       }
+    } catch (e) {
+      msg.textContent = "ไม่สามารถตรวจสอบชื่อไฟล์ได้";
+      progressContainer.style.display = "none";
+      return;
     }
-  } catch {
-    msg.textContent = "ไม่สามารถตรวจสอบชื่อไฟล์ได้";
-    progressContainer.style.display = "none";
-    return;
-  }
 
-  // อัปโหลดไฟล์จริง
-  const uploadData = new FormData();
-  uploadData.append("action", "upload");
-  uploadData.append("name", `${group}_${name}.webm`);
-  uploadData.append("file", audioBlob);
+    // 2) อัปโหลดไฟล์จริง
+    const uploadForm = new FormData();
+    uploadForm.append("action", "upload");
+    uploadForm.append("name", filename);
+    uploadForm.append("file", audioBlob);
 
-  const xhr = new XMLHttpRequest();
-  xhr.open("POST", UPLOAD_URL, true);
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", UPLOAD_URL, true);
 
-  xhr.upload.onprogress = e => {
-    if (e.lengthComputable) {
-      const percent = (e.loaded / e.total) * 100;
-      progressBar.style.width = percent + "%";
-    }
-  };
+    xhr.upload.onprogress = e => {
+      if (e.lengthComputable) {
+        let percent = (e.loaded / e.total) * 100;
+        progressBar.style.width = percent + "%";
+      }
+    };
 
-  xhr.onload = () => {
-    if (xhr.status === 200) {
-      msg.textContent = "อัปโหลดสำเร็จ ขอบคุณมากครับ/ค่ะ!";
-    } else {
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        msg.textContent = "อัปโหลดสำเร็จ ขอบคุณมากครับ/ค่ะ!";
+      } else {
+        msg.textContent = "เกิดข้อผิดพลาดในการอัปโหลด โปรดลองใหม่อีกครั้ง";
+      }
+      progressContainer.style.display = "none";
+      progressBar.style.width = "0%";
+      startBtn.disabled = false;
+      uploadBtn.disabled = true;
+    };
+
+    xhr.onerror = () => {
       msg.textContent = "เกิดข้อผิดพลาดในการอัปโหลด โปรดลองใหม่อีกครั้ง";
-    }
-    progressContainer.style.display = "none";
-    progressBar.style.width = "0%";
-    startBtn.disabled = false;
-    uploadBtn.disabled = true;
-  };
+      progressContainer.style.display = "none";
+      progressBar.style.width = "0%";
+      startBtn.disabled = false;
+      uploadBtn.disabled = true;
+    };
 
-  xhr.onerror = () => {
-    msg.textContent = "เกิดข้อผิดพลาดในการอัปโหลด โปรดลองใหม่อีกครั้ง";
-    progressContainer.style.display = "none";
-    progressBar.style.width = "0%";
-    startBtn.disabled = false;
-    uploadBtn.disabled = true;
-  };
-
-  xhr.send(uploadData);
-});
+    xhr.send(uploadForm);
+  });
 </script>
-
 </body>
 </html>
