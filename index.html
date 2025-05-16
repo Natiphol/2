@@ -3,217 +3,187 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>บันทึกเสียงแบบรองรับ iOS</title>
+<title>บันทึกเสียงพร้อมทักทาย</title>
 <style>
-  body { font-family: "Kanit", sans-serif, Arial; max-width: 480px; margin: 2rem auto; padding: 1rem; background: #f0f6ff; color: #0a224a; text-align: center;}
-  h1 { margin-bottom: 0.3rem;}
-  p#status { margin: 0.5rem 0 1.2rem; font-weight: 600; color: #1a73e8;}
-  select, input[type="text"] { font-size: 1rem; padding: 0.5rem 0.75rem; margin: 0.5rem 0; width: 100%; max-width: 300px; border-radius: 5px; border: 1.5px solid #aaa; outline-color: #1a73e8; box-sizing: border-box;}
-  button { background-color: #1a73e8; color: white; border: none; border-radius: 5px; padding: 0.75rem 1.5rem; font-size: 1.1rem; margin: 0.3rem 0.5rem; cursor: pointer; transition: background-color 0.25s ease;}
-  button:disabled { background-color: #a3c0f9; cursor: not-allowed;}
-  audio#audioPlayback { width: 100%; margin-top: 0.5rem; outline: none; }
+  body { font-family: sans-serif; max-width: 600px; margin: auto; padding: 1rem; text-align: center; }
+  button, select, input { font-size: 1rem; margin: 0.5rem; padding: 0.5rem; }
+  #visualizer { width: 100%; height: 100px; border: 1px solid #ccc; margin-top: 1rem; }
+  audio { width: 100%; margin-top: 1rem; display: none; }
 </style>
 </head>
 <body>
-  <h1>🎤 บันทึกเสียงแบบรองรับ iOS</h1>
-  <p id="status">กรุณากรอกชื่อ และเลือกกลุ่ม จากนั้นกด "เล่นเสียงทักทาย"</p>
 
-  <select id="group" aria-label="เลือกกลุ่ม">
-    <option value="">-- เลือกกลุ่ม --</option>
-    <option value="groom-family">ครอบครัวเจ้าบ่าว</option>
-    <option value="bride-family">ครอบครัวเจ้าสาว</option>
-    <option value="groom-friends">เพื่อนเจ้าบ่าว</option>
-    <option value="bride-friends">เพื่อนเจ้าสาว</option>
-  </select>
-  <input type="text" id="name" placeholder="ชื่อของคุณ" aria-label="กรอกชื่อของคุณ" />
+<h2>🎤 บันทึกเสียงพร้อมทักทาย</h2>
 
-  <div>
-    <button id="playGreeting">▶️ เล่นเสียงทักทาย</button>
-    <button id="startRecording" disabled>🎙 เริ่มอัดเสียง</button>
-    <button id="stopRecording" disabled>⏹ หยุดอัดเสียง</button>
-    <button id="playAudio" disabled>🔊 ฟังเสียงที่อัด</button>
-    <button id="retryRecording" disabled>🔁 อัดใหม่</button>
-    <button id="uploadAudio" disabled>📤 ส่งเสียง</button>
-  </div>
+<select id="group">
+  <option value="">-- เลือกกลุ่ม --</option>
+  <option value="groom_family">ครอบครัวฝ่ายเจ้าบ่าว</option>
+  <option value="bride_family">ครอบครัวฝ่ายเจ้าสาว</option>
+  <option value="groom_friends">เพื่อนเจ้าบ่าว</option>
+  <option value="bride_friends">เพื่อนเจ้าสาว</option>
+</select>
+<input id="name" type="text" placeholder="ชื่อของคุณ" />
 
-  <audio id="audioPlayback" controls style="display:none;"></audio>
-  <audio id="greetingAudio" src="https://cdn.jsdelivr.net/gh/user/repo/greeting.mp3"></audio>
+<br/>
 
-  <!-- โหลด Recorder.js จาก CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/recorder-js@1.0.4/dist/recorder.min.js"></script>
+<button id="playGreetingBtn">▶️ เล่นเสียงทักทายก่อน</button>
+<button id="startRecordBtn" disabled>🎙 เริ่มอัดเสียง</button>
+<button id="stopRecordBtn" disabled>⏹ หยุดอัด</button>
+<button id="playRecordBtn" disabled>🔊 ฟังเสียงที่อัด</button>
+<button id="resetBtn" disabled>🔁 อัดใหม่</button>
 
-  <script>
-    const status = document.getElementById("status");
-    const groupSelect = document.getElementById("group");
-    const nameInput = document.getElementById("name");
+<canvas id="visualizer" width="500" height="100"></canvas>
+<audio id="recordedAudio" controls></audio>
 
-    const playGreetingBtn = document.getElementById("playGreeting");
-    const startBtn = document.getElementById("startRecording");
-    const stopBtn = document.getElementById("stopRecording");
-    const playBtn = document.getElementById("playAudio");
-    const retryBtn = document.getElementById("retryRecording");
-    const uploadBtn = document.getElementById("uploadAudio");
+<audio id="greetingAudio" src="https://natiphol.github.io/33/Test.mp3"></audio>
 
-    const audioPlayback = document.getElementById("audioPlayback");
-    const greetingAudio = document.getElementById("greetingAudio");
+<script>
+  const groupSelect = document.getElementById('group');
+  const nameInput = document.getElementById('name');
+  const playGreetingBtn = document.getElementById('playGreetingBtn');
+  const startRecordBtn = document.getElementById('startRecordBtn');
+  const stopRecordBtn = document.getElementById('stopRecordBtn');
+  const playRecordBtn = document.getElementById('playRecordBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const recordedAudio = document.getElementById('recordedAudio');
+  const greetingAudio = document.getElementById('greetingAudio');
+  const canvas = document.getElementById('visualizer');
+  const ctx = canvas.getContext('2d');
 
-    let audioContext;
-    let recorder;
-    let audioBuffer;
-    let recordingTimeout;
-    const MAX_RECORDING_TIME = 180000; // 3 นาที
+  let mediaRecorder;
+  let audioChunks = [];
+  let audioContext, analyser, source;
+  let animationId;
 
-    // เช็ค iOS Safari ใช้ Recorder.js
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  function drawVisualizer() {
+    const bufferLength = analyser.fftSize;
+    const dataArray = new Uint8Array(bufferLength);
 
-    async function setupRecorder() {
-      if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    function draw() {
+      animationId = requestAnimationFrame(draw);
+      analyser.getByteTimeDomainData(dataArray);
+
+      ctx.fillStyle = 'white';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#1E90FF';
+      ctx.beginPath();
+
+      const sliceWidth = canvas.width / bufferLength;
+      let x = 0;
+
+      for(let i = 0; i < bufferLength; i++) {
+        const v = dataArray[i] / 128.0;
+        const y = v * canvas.height / 2;
+        if(i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+        x += sliceWidth;
+      }
+
+      ctx.lineTo(canvas.width, canvas.height/2);
+      ctx.stroke();
+    }
+
+    draw();
+  }
+
+  playGreetingBtn.onclick = () => {
+    if (!groupSelect.value) {
+      alert('กรุณาเลือกกลุ่มของคุณก่อน');
+      return;
+    }
+    if (!nameInput.value.trim()) {
+      alert('กรุณากรอกชื่อของคุณก่อน');
+      return;
+    }
+
+    playGreetingBtn.disabled = true;
+    greetingAudio.play().catch(err => {
+      alert('ไม่สามารถเล่นเสียงทักทายได้: ' + err.message);
+      playGreetingBtn.disabled = false;
+    });
+  };
+
+  greetingAudio.onended = () => {
+    startRecordBtn.disabled = false;
+    playGreetingBtn.textContent = '✅ เล่นเสียงทักทายแล้ว';
+  };
+
+  startRecordBtn.onclick = async () => {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      alert('เบราว์เซอร์นี้ไม่รองรับการบันทึกเสียง');
+      return;
+    }
+    startRecordBtn.disabled = true;
+    stopRecordBtn.disabled = false;
+    playRecordBtn.disabled = true;
+    resetBtn.disabled = true;
+    recordedAudio.style.display = 'none';
+    audioChunks = [];
+
+    try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      recorder = new Recorder(audioContext, { 
-        // recorder.js config
-        // เราจะบันทึกแบบ WAV เพื่อเล่นบน iOS ได้
-        // ปกติ Recorder.js ต้องใช้ MediaStreamSource
-        source: audioContext.createMediaStreamSource(stream)
-      });
-    }
+      mediaRecorder = new MediaRecorder(stream);
+      audioContext = new AudioContext();
+      source = audioContext.createMediaStreamSource(stream);
+      analyser = audioContext.createAnalyser();
+      analyser.fftSize = 2048;
+      source.connect(analyser);
+      drawVisualizer();
 
-    playGreetingBtn.onclick = () => {
-      if (!groupSelect.value) {
-        alert("กรุณาเลือกกลุ่มของคุณก่อน");
-        return;
-      }
-      if (!nameInput.value.trim()) {
-        alert("กรุณากรอกชื่อของคุณก่อน");
-        return;
-      }
-      playGreetingBtn.disabled = true;
-      status.textContent = "🔊 กำลังเล่นเสียงทักทาย...";
-      greetingAudio.play();
-    };
+      mediaRecorder.ondataavailable = e => {
+        if (e.data.size > 0) audioChunks.push(e.data);
+      };
 
-    greetingAudio.onended = () => {
-      status.textContent = "🎙 คุณพร้อมที่จะบันทึกเสียงแล้ว";
-      startBtn.disabled = false;
-      playGreetingBtn.disabled = false;
-    };
+      mediaRecorder.onstop = () => {
+        cancelAnimationFrame(animationId);
+        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+        recordedAudio.src = audioUrl;
+        recordedAudio.style.display = 'block';
+        playRecordBtn.disabled = false;
+        resetBtn.disabled = false;
+        stopRecordBtn.disabled = true;
+        startRecordBtn.disabled = false;
+      };
 
-    greetingAudio.onerror = () => {
-      alert("❌ ไม่สามารถโหลดเสียงทักทายได้");
-      playGreetingBtn.disabled = false;
-      status.textContent = "❌ โหลดเสียงทักทายไม่สำเร็จ";
-    };
+      mediaRecorder.start();
 
-    startBtn.onclick = async () => {
-      startBtn.disabled = true;
-      stopBtn.disabled = false;
-      retryBtn.disabled = true;
-      playBtn.disabled = true;
-      uploadBtn.disabled = true;
-      status.textContent = "🔴 กำลังบันทึกเสียง...";
-
-      try {
-        if (!recorder) await setupRecorder();
-        recorder.clear();
-        recorder.start();
-
-        // หยุดอัตโนมัติหลัง 3 นาที
-        recordingTimeout = setTimeout(() => {
-          if (stopBtn.disabled === false) stopRecording();
-        }, MAX_RECORDING_TIME);
-
-      } catch (e) {
-        alert("❌ ไม่สามารถอัดเสียงได้ กรุณาอนุญาตไมโครโฟน");
-        resetButtons();
-      }
-    };
-
-    function stopRecording() {
-      stopBtn.disabled = true;
-      recorder.stop().then(({blob, buffer}) => {
-        audioBuffer = buffer;
-        const url = URL.createObjectURL(blob);
-        audioPlayback.src = url;
-        audioPlayback.style.display = "block";
-        playBtn.disabled = false;
-        uploadBtn.disabled = false;
-        retryBtn.disabled = false;
-        status.textContent = "✅ บันทึกเสียงเสร็จสิ้น";
-        clearTimeout(recordingTimeout);
-      });
-    }
-
-    stopBtn.onclick = () => {
-      stopRecording();
-    };
-
-    playBtn.onclick = () => {
-      audioPlayback.play();
-    };
-
-    retryBtn.onclick = () => {
-      audioPlayback.src = "";
-      audioPlayback.style.display = "none";
-      playBtn.disabled = true;
-      retryBtn.disabled = true;
-      uploadBtn.disabled = true;
-      status.textContent = "🔄 พร้อมบันทึกเสียงใหม่ กรุณากดเล่นเสียงทักทายอีกครั้ง";
-      startBtn.disabled = true;
-      stopBtn.disabled = true;
-    };
-
-    uploadBtn.onclick = async () => {
-      if (!audioPlayback.src) {
-        alert("ยังไม่มีไฟล์เสียงที่จะส่ง");
-        return;
-      }
-      uploadBtn.disabled = true;
-      uploadBtn.textContent = "⏳ กำลังอัปโหลด...";
-
-      try {
-        // ดึง blob จาก URL
-        const response = await fetch(audioPlayback.src);
-        const blob = await response.blob();
-
-        const formData = new FormData();
-        // ตั้งชื่อไฟล์ให้เหมาะสม ภาษาอังกฤษ + กลุ่ม
-        const safeName = nameInput.value.trim().replace(/[^a-zA-Z0-9]/g, "_");
-        formData.append("audio", blob, `voice_${safeName}_${groupSelect.value}.wav`);
-        formData.append("name", nameInput.value.trim());
-        formData.append("group", groupSelect.value);
-
-        const res = await fetch("/upload", {
-          method: "POST",
-          body: formData,
-        });
-        const json = await res.json();
-        if (json.success) {
-          alert("✅ อัปโหลดเรียบร้อยแล้ว ขอบคุณครับ!");
-          status.textContent = "✅ ขอบคุณที่ส่งเสียง!";
-          uploadBtn.disabled = true;
-          uploadBtn.textContent = "📤 ส่งเสียง";
-          retryBtn.disabled = true;
-          playBtn.disabled = true;
-          startBtn.disabled = true;
-          stopBtn.disabled = true;
-        } else {
-          throw new Error(json.message || "เกิดข้อผิดพลาดในการอัปโหลด");
+      // บันทึกได้ไม่เกิน 3 นาที
+      setTimeout(() => {
+        if (mediaRecorder && mediaRecorder.state === 'recording') {
+          mediaRecorder.stop();
+          alert('หมดเวลาบันทึกเสียง 3 นาที');
         }
-      } catch (err) {
-        alert("❌ อัปโหลดล้มเหลว: " + err.message);
-      } finally {
-        uploadBtn.disabled = false;
-        uploadBtn.textContent = "📤 ส่งเสียง";
-      }
-    };
+      }, 3 * 60 * 1000);
 
-    function resetButtons() {
-      startBtn.disabled = false;
-      stopBtn.disabled = true;
-      retryBtn.disabled = true;
-      playBtn.disabled = true;
-      uploadBtn.disabled = true;
-      status.textContent = "พร้อมบันทึกเสียง";
+    } catch (err) {
+      alert('ไม่สามารถเข้าถึงไมโครโฟนได้: ' + err.message);
+      startRecordBtn.disabled = false;
+      stopRecordBtn.disabled = true;
     }
-  </script>
+  };
+
+  stopRecordBtn.onclick = () => {
+    if (mediaRecorder && mediaRecorder.state === 'recording') {
+      mediaRecorder.stop();
+    }
+  };
+
+  playRecordBtn.onclick = () => {
+    if (recordedAudio.src) {
+      recordedAudio.play();
+    }
+  };
+
+  resetBtn.onclick = () => {
+    recordedAudio.src = '';
+    recordedAudio.style.display = 'none';
+    playRecordBtn.disabled = true;
+    resetBtn.disabled = true;
+  };
+</script>
+
 </body>
 </html>
