@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ฝากเสียงอวยพรงานแต่ง (รองรับ iOS)</title>
+<title>ฝากเสียงอวยพรงานแต่ง (แก้เล่นเสียง)</title>
 <style>
   body {
     font-family: 'Kanit', sans-serif, sans-serif;
@@ -140,9 +140,10 @@
     }
 
     audioChunks = [];
-    mediaRecorder = new MediaRecorder(stream);
+    mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
     mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
     mediaRecorder.onstop = () => {
+      // สร้าง blob โดยกำหนด mime type เป็น audio/webm
       audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
       const audioUrl = URL.createObjectURL(audioBlob);
       audioPlayer.src = audioUrl;
