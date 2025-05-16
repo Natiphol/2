@@ -67,7 +67,7 @@
   <button id="stopBtn" disabled>⏹️ หยุดอัด</button>
   <button id="uploadBtn" disabled>📤 อัปโหลด</button>
 
-  <audio id="audioPlayer" controls></audio>
+  <audio id="audioPlayer" controls playsinline></audio>
 
   <div id="status"></div>
 
@@ -103,16 +103,15 @@
         stream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
         if (isIOS()) {
-          // ใช้ Recorder.js สำหรับ iOS (บันทึกเป็น WAV)
-          const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          const audioContext = new AudioContext();
           const source = audioContext.createMediaStreamSource(stream);
           recorder = new Recorder(source, { numChannels: 1 });
           recorder.record();
 
           statusDiv.textContent = "🎙️ กำลังอัดเสียง (iOS) ...";
         } else {
-          // ใช้ MediaRecorder ปกติบนเบราว์เซอร์อื่น
-          mediaRecorder = new MediaRecorder(stream);
+          mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
           audioChunks = [];
           mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
           mediaRecorder.start();
@@ -141,6 +140,9 @@
           const url = URL.createObjectURL(blob);
           audioPlayer.src = url;
           audioPlayer.load();
+          audioPlayer.play().catch(() => {
+            // autoplay blocked
+          });
           uploadBtn.disabled = false;
           statusDiv.textContent = "✅ หยุดอัดเสียงแล้ว พร้อมอัปโหลด (iOS WAV)";
         });
@@ -151,6 +153,9 @@
           const url = URL.createObjectURL(audioBlob);
           audioPlayer.src = url;
           audioPlayer.load();
+          audioPlayer.play().catch(() => {
+            // autoplay blocked
+          });
           uploadBtn.disabled = false;
           statusDiv.textContent = "✅ หยุดอัดเสียงแล้ว พร้อมอัปโหลด";
         };
