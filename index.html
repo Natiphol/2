@@ -47,6 +47,8 @@
       min-height: 2rem;
       font-weight: bold;
       color: #333;
+      white-space: pre-line;
+      text-align: left;
     }
   </style>
 </head>
@@ -67,7 +69,7 @@
   <button id="stopBtn" disabled>⏹️ หยุดอัด</button>
   <button id="uploadBtn" disabled>📤 อัปโหลด</button>
 
-  <audio id="audioPlayer" controls playsinline></audio>
+  <audio id="audioPlayer" controls></audio>
 
   <div id="status"></div>
 
@@ -93,30 +95,47 @@
       return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     }
 
+    async function checkMicPermission() {
+      if (!navigator.permissions) {
+        statusDiv.textContent = "⚠️ เบราว์เซอร์ไม่รองรับ Permissions API";
+        return;
+      }
+      try {
+        const status = await navigator.permissions.query({ name: 'microphone' });
+        statusDiv.textContent = `🎧 สถานะสิทธิ์ไมโครโฟน: ${status.state}`;
+        status.onchange = () => {
+          statusDiv.textContent = `🎧 สถานะสิทธิ์ไมโครโฟนเปลี่ยนเป็น: ${status.state}`;
+        };
+      } catch (e) {
+        statusDiv.textContent = `❌ ไม่สามารถตรวจสอบสิทธิ์ไมโครโฟน: ${e.message}`;
+      }
+    }
+
     startBtn.onclick = async () => {
       if (!nameInput.value.trim() || !groupSelect.value) {
         alert("กรุณากรอกชื่อและเลือกกลุ่มก่อนเริ่มอัดเสียง");
         return;
       }
 
+      statusDiv.textContent = "⏳ กำลังตรวจสอบสิทธิ์ไมโครโฟน...";
+      await checkMicPermission();
+
       try {
         stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        statusDiv.textContent += "\n✅ เข้าถึงไมโครโฟนสำเร็จ";
 
         if (isIOS()) {
-          const AudioContext = window.AudioContext || window.webkitAudioContext;
-          const audioContext = new AudioContext();
+          const audioContext = new (window.AudioContext || window.webkitAudioContext)();
           const source = audioContext.createMediaStreamSource(stream);
           recorder = new Recorder(source, { numChannels: 1 });
           recorder.record();
-
-          statusDiv.textContent = "🎙️ กำลังอัดเสียง (iOS) ...";
+          statusDiv.textContent += "\n🎙️ กำลังอัดเสียง (iOS) ...";
         } else {
-          mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+          mediaRecorder = new MediaRecorder(stream);
           audioChunks = [];
           mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
           mediaRecorder.start();
-
-          statusDiv.textContent = "🎙️ กำลังอัดเสียง ...";
+          statusDiv.textContent += "\n🎙️ กำลังอัดเสียง ...";
         }
 
         startBtn.disabled = true;
@@ -124,8 +143,9 @@
         uploadBtn.disabled = true;
         audioPlayer.src = "";
       } catch (err) {
-        alert("ไม่สามารถเข้าถึงไมโครโฟนได้");
-        console.error(err);
+        statusDiv.textContent += `\n❌ ไม่สามารถเข้าถึงไมโครโฟนได้: ${err.message}`;
+        console.error("getUserMedia error:", err);
+        alert("ไม่สามารถเข้าถึงไมโครโฟนได้ กรุณาตรวจสอบการอนุญาตในเบราว์เซอร์และตั้งค่า iOS");
       }
     };
 
@@ -140,11 +160,8 @@
           const url = URL.createObjectURL(blob);
           audioPlayer.src = url;
           audioPlayer.load();
-          audioPlayer.play().catch(() => {
-            // autoplay blocked
-          });
           uploadBtn.disabled = false;
-          statusDiv.textContent = "✅ หยุดอัดเสียงแล้ว พร้อมอัปโหลด (iOS WAV)";
+          statusDiv.textContent += "\n✅ หยุดอัดเสียงแล้ว พร้อมอัปโหลด (iOS WAV)";
         });
       } else {
         mediaRecorder.stop();
@@ -153,11 +170,8 @@
           const url = URL.createObjectURL(audioBlob);
           audioPlayer.src = url;
           audioPlayer.load();
-          audioPlayer.play().catch(() => {
-            // autoplay blocked
-          });
           uploadBtn.disabled = false;
-          statusDiv.textContent = "✅ หยุดอัดเสียงแล้ว พร้อมอัปโหลด";
+          statusDiv.textContent += "\n✅ หยุดอัดเสียงแล้ว พร้อมอัปโหลด";
         };
       }
     };
@@ -170,7 +184,7 @@
       const name = nameInput.value.trim();
       const group = groupSelect.value;
 
-      statusDiv.textContent = "⏳ กำลังอัปโหลด...";
+      statusDiv.textContent += "\n⏳ กำลังอัปโหลด...";
       uploadBtn.disabled = true;
 
       const reader = new FileReader();
@@ -191,7 +205,7 @@
           const result = await response.json();
 
           if (result.success) {
-            statusDiv.innerHTML = `✅ อัปโหลดสำเร็จ!<br><a href="${result.url}" target="_blank">เปิดไฟล์เสียง</a>`;
+            statusDiv.innerHTML += `<br>✅ อัปโหลดสำเร็จ!<br><a href="${result.url}" target="_blank">เปิดไฟล์เสียง</a>`;
             uploadBtn.disabled = true;
             startBtn.disabled = false;
           } else {
@@ -199,7 +213,7 @@
           }
         } catch (error) {
           console.error(error);
-          statusDiv.textContent = "❌ อัปโหลดไม่สำเร็จ: " + error.message;
+          statusDiv.textContent += "\n❌ อัปโหลดไม่สำเร็จ: " + error.message;
           uploadBtn.disabled = false;
         }
       };
