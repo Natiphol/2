@@ -167,7 +167,7 @@
         // Set canvas size dynamically
         canvas.width = canvas.clientWidth;
         canvas.height = 80;
-        
+
         return true;
       } catch (e) {
         alert("ไม่สามารถเข้าถึงไมโครโฟนได้ กรุณาอนุญาต");
@@ -279,8 +279,9 @@
         alert("ยังไม่มีไฟล์เสียง");
         return;
       }
+      const filename = `${nameInput.value.trim().replace(/\s+/g, '_')}_${groupSelect.value}.m4a`;
       const formData = new FormData();
-      formData.append("audio", audioBlob, `${nameInput.value.trim().replace(/\s+/g, '_')}_${groupSelect.value}.m4a`);
+      formData.append("audio", audioBlob, filename);
       formData.append("name", nameInput.value.trim());
       formData.append("group", groupSelect.value);
 
@@ -288,6 +289,7 @@
       uploadBtn.textContent = "⏳ กำลังอัปโหลด...";
 
       try {
+        // ตัวอย่าง URL ที่จะอัปโหลด ต้องเปลี่ยนตามเซิร์ฟเวอร์ของคุณ
         const response = await fetch("/upload", { method: "POST", body: formData });
         const result = await response.json();
         if (result.success) {
