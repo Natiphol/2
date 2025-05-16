@@ -154,25 +154,33 @@
       startBtn.disabled = false;
 
       if (isIOS()) {
-        recorder.stop();
-        recorder.exportWAV(blob => {
-          audioBlob = blob;
-          const url = URL.createObjectURL(blob);
-          audioPlayer.src = url;
-          audioPlayer.load();
-          uploadBtn.disabled = false;
-          statusDiv.textContent += "\n✅ หยุดอัดเสียงแล้ว พร้อมอัปโหลด (iOS WAV)";
-        });
+        if (recorder) {
+          recorder.stop();
+          recorder.exportWAV(blob => {
+            audioBlob = blob;
+            const url = URL.createObjectURL(blob);
+            audioPlayer.src = url;
+            audioPlayer.load();
+            uploadBtn.disabled = false;
+            statusDiv.textContent += "\n✅ หยุดอัดเสียงแล้ว พร้อมอัปโหลด (iOS WAV)";
+          });
+        } else {
+          statusDiv.textContent += "\n❌ ตัวแปร recorder ยังไม่ได้ถูกสร้าง";
+        }
       } else {
-        mediaRecorder.stop();
-        mediaRecorder.onstop = () => {
-          audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-          const url = URL.createObjectURL(audioBlob);
-          audioPlayer.src = url;
-          audioPlayer.load();
-          uploadBtn.disabled = false;
-          statusDiv.textContent += "\n✅ หยุดอัดเสียงแล้ว พร้อมอัปโหลด";
-        };
+        if (mediaRecorder) {
+          mediaRecorder.stop();
+          mediaRecorder.onstop = () => {
+            audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+            const url = URL.createObjectURL(audioBlob);
+            audioPlayer.src = url;
+            audioPlayer.load();
+            uploadBtn.disabled = false;
+            statusDiv.textContent += "\n✅ หยุดอัดเสียงแล้ว พร้อมอัปโหลด";
+          };
+        } else {
+          statusDiv.textContent += "\n❌ ตัวแปร mediaRecorder ยังไม่ได้ถูกสร้าง";
+        }
       }
     };
 
