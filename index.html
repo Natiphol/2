@@ -3,53 +3,117 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>บันทึกเสียงพร้อมเสียงทักทาย</title>
+  <title>ฝากเสียงอวยพรเจ้าบ่าวเจ้าสาว</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;700&display=swap');
+
     body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Kanit', sans-serif;
       max-width: 600px;
       margin: 2rem auto;
-      padding: 1rem;
+      padding: 2rem 1.5rem 3rem;
+      background: linear-gradient(135deg, #bbdefb 0%, #e3f2fd 100%);
+      color: #0a3d62;
       text-align: center;
-      background: #f0f8ff;
-      color: #333;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+      border-radius: 15px;
     }
-    button, select, input {
-      margin: 0.5rem 0.3rem;
-      padding: 0.8rem 1rem;
+
+    h1 {
+      font-weight: 700;
+      font-size: 2.4rem;
+      margin-bottom: 0.25rem;
+      color: #0984e3;
+    }
+
+    #logo {
+      width: 150px;
+      margin: 0 auto 1rem;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+      border-radius: 10px;
+    }
+
+    p.description {
       font-size: 1.1rem;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      outline: none;
+      margin-top: 0;
+      margin-bottom: 1.8rem;
+      color: #3742fa;
+      font-weight: 500;
+      user-select: none;
+    }
+
+    select, input[type="text"] {
+      width: 48%;
+      padding: 0.7rem 1rem;
+      font-size: 1.1rem;
+      border-radius: 10px;
+      border: 2px solid #74b9ff;
+      margin: 0.3rem 1% 1rem;
+      outline-offset: 2px;
+      transition: border-color 0.3s ease;
+    }
+    select:focus, input[type="text"]:focus {
+      border-color: #0984e3;
+      box-shadow: 0 0 8px #74b9ff80;
+    }
+
+    div.buttons {
+      margin: 1.5rem 0 0.5rem;
+    }
+
+    button {
+      background: #0984e3;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 0.85rem 1.8rem;
+      font-size: 1.1rem;
+      margin: 0 0.4rem 0.8rem;
       cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 5px 10px rgb(9 132 227 / 0.4);
+    }
+    button:hover:not(:disabled) {
+      background: #74b9ff;
+      box-shadow: 0 6px 15px rgb(116 185 255 / 0.7);
     }
     button:disabled {
-      background: #ccc;
+      background: #dfe6e9;
+      color: #7f8c8d;
       cursor: not-allowed;
+      box-shadow: none;
     }
+
     #visualizer {
       width: 100%;
       height: 80px;
-      border: 1px solid #0099ff;
-      border-radius: 6px;
-      margin: 1rem 0;
-      background: #e0f7ff;
+      border-radius: 10px;
+      margin: 1.5rem 0 1.8rem;
+      background: #dfe6e9;
+      box-shadow: inset 0 0 10px #b2bec3;
     }
+
     audio {
       width: 100%;
       margin-top: 1rem;
       outline: none;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgb(0 0 0 / 0.15);
     }
+
     #msg {
-      margin-top: 1rem;
+      margin-top: 1.2rem;
       font-weight: 600;
-      color: #007acc;
-      min-height: 1.2rem;
+      color: #0984e3;
+      min-height: 1.3rem;
+      user-select: none;
     }
   </style>
 </head>
 <body>
-  <h1>🎤 บันทึกเสียง พร้อมเสียงทักทาย</h1>
+  <img id="logo" src="https://i.imgur.com/n0DtfkQ.jpg" alt="งานแต่งงาน โลโก้" />
+  <h1>ฝากเสียงอวยพรเจ้าบ่าวเจ้าสาว</h1>
+  <p class="description">จะฮา จะซึ้ง จะร้องเพลงก็ได้ ขอแค่พูดถึงเจ้าบ่าวเจ้าสาวบ้างก็พอ 😄❤️</p>
 
   <select id="group">
     <option value="">-- เลือกกลุ่ม --</option>
@@ -60,7 +124,7 @@
   </select>
   <input type="text" id="name" placeholder="ชื่อของคุณ" />
 
-  <div>
+  <div class="buttons">
     <button id="start" disabled>▶️ เริ่มอัด (ฟังเสียงทักทายก่อน)</button>
     <button id="stop" disabled>⏹ หยุด</button>
     <button id="play" disabled>🔊 ฟัง</button>
@@ -100,8 +164,8 @@
     let recordTimeout;
 
     function resetUI() {
-      stopBtn.disabled = true;
       startBtn.disabled = !(nameInput.value.trim() && groupSelect.value);
+      stopBtn.disabled = true;
       playBtn.disabled = !audioBlob;
       retryBtn.disabled = !audioBlob;
       uploadBtn.disabled = !audioBlob;
@@ -114,7 +178,7 @@
 
     function clearCanvas() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "#e0f7ff";
+      ctx.fillStyle = "#dfe6e9";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
 
@@ -127,11 +191,11 @@
         animationId = requestAnimationFrame(draw);
         analyser.getByteTimeDomainData(dataArray);
 
-        ctx.fillStyle = "#e0f7ff";
+        ctx.fillStyle = "#dfe6e9";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         ctx.lineWidth = 2;
-        ctx.strokeStyle = "#007acc";
+        ctx.strokeStyle = "#0984e3";
 
         ctx.beginPath();
 
@@ -215,21 +279,10 @@
         const url = URL.createObjectURL(audioBlob);
         audioPlayback.src = url;
         audioPlayback.style.display = "block";
-
-        playBtn.disabled = false;
-        retryBtn.disabled = false;
-        uploadBtn.disabled = false;
-
-        stopBtn.disabled = true;
-        startBtn.disabled = false;
-
-        msg.textContent = "🛑 หยุดบันทึกเสียง";
-        clearTimeout(recordTimeout);
-        cancelAnimationFrame(animationId);
-        clearCanvas();
+        resetUI();
       };
 
-      // เล่นเสียงทักทายก่อนบันทึก
+      // Play greeting first
       msg.textContent = "กำลังเล่นเสียงทักทาย...";
       await new Promise((res) => {
         greetingAudio.play();
@@ -246,7 +299,6 @@
       retryBtn.disabled = true;
       uploadBtn.disabled = true;
 
-      // ตั้งเวลาหยุดบันทึกอัตโนมัติ 3 นาที
       recordTimeout = setTimeout(() => {
         stopRecording();
         msg.textContent = "⏰ หมดเวลา 3 นาที";
@@ -260,7 +312,7 @@
         mediaRecorder.stop();
       }
       stopBtn.disabled = true;
-      startBtn.disabled = false;
+      startBtn.disabled = !(nameInput.value.trim() && groupSelect.value);
       clearTimeout(recordTimeout);
       cancelAnimationFrame(animationId);
       msg.textContent = "🛑 หยุดบันทึกเสียง";
@@ -273,12 +325,11 @@
     playBtn.onclick = () => {
       if (audioPlayback.src) {
         audioPlayback.play();
-      } else {
-        alert("ยังไม่มีไฟล์เสียงให้ฟัง");
       }
     };
 
     retryBtn.onclick = () => {
+      // ตามข้อ 5 ไม่เล่นเสียงทักทายใหม่ตอนอัดใหม่
       audioBlob = null;
       audioPlayback.src = "";
       audioPlayback.style.display = "none";
@@ -301,7 +352,7 @@
       uploadBtn.textContent = "⏳ กำลังอัปโหลด...";
 
       try {
-        // เปลี่ยน URL ให้ตรงกับเซิร์ฟเวอร์ของคุณ
+        // ตัวอย่าง URL ที่จะอัปโหลด ต้องเปลี่ยนตามเซิร์ฟเวอร์ของคุณ
         const response = await fetch("/upload", { method: "POST", body: formData });
         const result = await response.json();
         if (result.success) {
