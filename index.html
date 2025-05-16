@@ -56,6 +56,9 @@
   #buttonsContainer button {
     flex: 1;
   }
+  #uploadContainer {
+    margin-top: 1rem;
+  }
   #timer {
     font-weight: bold;
     margin-top: 0.3rem;
@@ -81,6 +84,11 @@
     0% { transform: rotate(0deg);}
     100% { transform: rotate(360deg);}
   }
+  #noteText {
+    margin-top: 0.2rem;
+    font-size: 0.9rem;
+    color: #555;
+  }
 </style>
 </head>
 <body>
@@ -98,13 +106,18 @@
   <option value="bride_friends">เพื่อนเจ้าสาว</option>
 </select>
 
+<div id="noteText">จะฮา จะซึ้ง จะร้องเพลงก็ได้ ขอแค่พูดถึงเจ้าบ่าวเจ้าสาวบ้างก็พอ 😄❤️</div>
+
 <button id="playGreetingBtn">▶️ ฟังเสียงทักทาย</button>
 
 <div id="buttonsContainer">
   <button id="startBtn" disabled>🎤 เริ่มอัดเสียง</button>
   <button id="stopBtn" disabled>⏹️ หยุดอัดเสียง</button>
-  <button id="uploadBtn" disabled>📤 อัปโหลด</button>
   <button id="resetBtn" disabled>🔁 อัดใหม่</button>
+</div>
+
+<div id="uploadContainer">
+  <button id="uploadBtn" disabled>📤 อัปโหลด</button>
 </div>
 
 <div id="timer"></div>
@@ -138,14 +151,13 @@
   const maxRecordingTime = 180; // 3 นาที
   let timeElapsed = 0;
 
-  // Visualizer setup
   let audioContext;
   let analyser;
   let sourceNode;
   let dataArray;
   let animationId;
 
-  // ปรับขนาด canvas
+  // ฟังก์ชัน resize canvas
   function resizeCanvas() {
     canvas.width = canvas.clientWidth;
     canvas.height = canvas.clientHeight;
@@ -153,7 +165,6 @@
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
 
-  // Clear visualizer
   function clearVisualizer() {
     if (animationId) {
       cancelAnimationFrame(animationId);
@@ -161,7 +172,6 @@
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
 
-  // ฟังก์ชัน visualizer สวยๆ
   function drawVisualizer() {
     if (!analyser) return;
     analyser.getByteTimeDomainData(dataArray);
@@ -170,7 +180,7 @@
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     ctx.lineWidth = 3;
-    ctx.strokeStyle = '#d24a4a'; // เส้นสีแดงเข้ม
+    ctx.strokeStyle = '#d24a4a';
 
     ctx.beginPath();
     let sliceWidth = canvas.width / dataArray.length;
@@ -206,7 +216,6 @@
     drawVisualizer();
   }
 
-  // Timer update
   function updateTimer() {
     timeElapsed++;
     let m = Math.floor(timeElapsed / 60).toString().padStart(2, '0');
@@ -218,7 +227,6 @@
     }
   }
 
-  // เริ่มอัดเสียง
   async function startRecording() {
     if (!nameInput.value.trim()) {
       alert('กรุณากรอกชื่อของคุณ');
@@ -226,6 +234,10 @@
     }
     if (!groupSelect.value) {
       alert('กรุณาเลือกกลุ่มของคุณ');
+      return;
+    }
+    if (playGreetingBtn.disabled === false) {
+      alert('กรุณาฟังเสียงทักทายก่อนเริ่มอัดเสียง');
       return;
     }
     try {
@@ -284,7 +296,7 @@
     stopBtn.disabled = false;
     uploadBtn.disabled = true;
     resetBtn.disabled = true;
-    playGreetingBtn.disabled = true; // ปิดปุ่มฟังทักทายตอนอัด
+    playGreetingBtn.disabled = true;
 
     timeElapsed = 0;
     timerDiv.textContent = '⏱️ เวลาอัดเสียง: 00:00';
@@ -294,7 +306,6 @@
     startVisualizer();
   }
 
-  // หยุดอัดเสียง
   function stopRecording() {
     if(mediaRecorder && mediaRecorder.state !== 'inactive') {
       mediaRecorder.stop();
@@ -302,7 +313,6 @@
     stopBtn.disabled = true;
   }
 
-  // กดอัดใหม่
   function resetRecording() {
     if(!confirm('🔁 คุณต้องการอัดใหม่หรือไม่? ข้อมูลเสียงที่อัดไว้จะถูกลบ')) return;
 
@@ -320,39 +330,56 @@
       audioContext = null;
     }
 
-    // ปลดล็อคให้เริ่มอัดเสียงได้ทันที ไม่ต้องฟังทักทาย
-    startBtn.disabled = false;
+    // หลังกดอัดใหม่ ให้ฟังทักทายอีกครั้งก่อนเริ่มอัดได้
+    playGreetingBtn.disabled = false;
+    startBtn.disabled = true;
     stopBtn.disabled = true;
     uploadBtn.disabled = true;
     resetBtn.disabled = true;
-
-    // ปิดปุ่มฟังทักทายเลย (ตามข้อ 3)
-    playGreetingBtn.disabled = true;
   }
 
-  // กดฟังเสียงทักทาย
   function playGreeting() {
     playGreetingBtn.disabled = true;
     statusDiv.textContent = '▶️ กำลังเล่นเสียงทักทาย...';
 
     audioPlayer.src = 'https://natiphol.github.io/33/Test.mp3';
-    audioPlayer.load();
     audioPlayer.play();
 
     audioPlayer.onended = () => {
-      statusDiv.textContent = '✅ ฟังเสียงทักทายจบแล้ว คุณสามารถเริ่มอัดเสียงได้';
-      startBtn.disabled = false; // ปลดล็อคให้เริ่มอัด
+      statusDiv.textContent = '✅ ฟังเสียงทักทายเสร็จแล้ว สามารถเริ่มอัดเสียงได้';
+      startBtn.disabled = false;
+      // ปุ่มฟังทักทายฟังได้แค่รอบเดียว
+      playGreetingBtn.disabled = true;
+    };
+
+    audioPlayer.onerror = () => {
+      alert('เกิดข้อผิดพลาดในการเล่นเสียงทักทาย กรุณาลองใหม่');
+      playGreetingBtn.disabled = false;
+      statusDiv.textContent = '';
     }
   }
 
-  // บังคับชื่อภาษาอังกฤษเท่านั้น (a-z, A-Z, 0-9, space)
-  nameInput.addEventListener('input', () => {
-    let val = nameInput.value;
-    // ลบทุกอย่างที่ไม่ใช่ a-z, A-Z, 0-9 หรือ space
-    val = val.replace(/[^a-zA-Z0-9 ]/g, '');
-    if(val !== nameInput.value) {
-      nameInput.value = val;
+  // จำกัดให้กรอกแต่ภาษาอังกฤษเท่านั้น
+  nameInput.addEventListener('input', e => {
+    e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+  });
+
+  // อัปโหลดปลอม แสดงหลอดกุหลาบหมุน
+  uploadBtn.addEventListener('click', () => {
+    if (!audioBlob) {
+      alert('ยังไม่มีเสียงที่อัดไว้');
+      return;
     }
+    uploadBtn.disabled = true;
+    statusDiv.textContent = '⏳ กำลังอัปโหลด... กรุณารอสักครู่';
+    progressRose.style.display = 'block';
+
+    // จำลองการอัปโหลด 3 วินาที
+    setTimeout(() => {
+      progressRose.style.display = 'none';
+      statusDiv.textContent = '✅ อัปโหลดสำเร็จ ขอบคุณมากๆ ครับ/ค่ะ!';
+      uploadBtn.disabled = false;
+    }, 3000);
   });
 
   playGreetingBtn.addEventListener('click', playGreeting);
@@ -360,39 +387,6 @@
   stopBtn.addEventListener('click', stopRecording);
   resetBtn.addEventListener('click', resetRecording);
 
-  // อัปโหลด (ยังไม่ได้เชื่อมจริง)
-  uploadBtn.addEventListener('click', () => {
-    if(!audioBlob) {
-      alert('ไม่มีไฟล์เสียงให้ส่ง');
-      return;
-    }
-    if(!nameInput.value.trim()) {
-      alert('กรุณากรอกชื่อของคุณ');
-      return;
-    }
-    if(!groupSelect.value) {
-      alert('กรุณาเลือกกลุ่มของคุณ');
-      return;
-    }
-    // ตัวอย่างการแสดงสถานะอัปโหลด
-    progressRose.style.display = 'block';
-    statusDiv.textContent = '📤 กำลังอัปโหลด...';
-
-    setTimeout(() => {
-      progressRose.style.display = 'none';
-      statusDiv.textContent = '✅ อัปโหลดเสร็จเรียบร้อย ขอบคุณมากครับ!';
-      uploadBtn.disabled = true;
-      resetBtn.disabled = false;
-      startBtn.disabled = true;
-    }, 3000);
-  });
-
-  // เริ่มต้น UI
-  function init() {
-    resetRecording();
-    playGreetingBtn.disabled = false;
-  }
-  init();
 </script>
 
 </body>
