@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="th">
 <head>
   <meta charset="UTF-8">
@@ -130,6 +129,7 @@
     to { opacity: 1; }
   }
 
+  /* Lightbox Styles */
   #lightbox {
     position: fixed;
     z-index: 9999;
@@ -138,35 +138,53 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-
-  #lightbox-img {
-    max-width: 90%;
-    max-height: 80%;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(255,255,255,0.3);
+    user-select: none;
+    touch-action: none;
   }
 
   #lightbox .close {
     position: absolute;
-    top: 30px;
-    right: 30px;
-    font-size: 2rem;
+    top: 20px;
+    right: 25px;
+    font-size: 3rem;
     color: white;
     cursor: pointer;
+    font-weight: 700;
+    z-index: 10001;
+    transition: color 0.3s ease;
   }
-</style>
+  #lightbox .close:hover,
+  #lightbox .close:focus {
+    color: #f0c040;
+    outline: none;
+  }
 
+  .lightbox-zoom-wrapper {
+    max-width: 90%;
+    max-height: 80%;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+    touch-action: none;
+    position: relative;
+  }
 
+  #lightbox-img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+    will-change: transform;
+    user-select: none;
+    pointer-events: none;
+  }
+  </style>
 </head>
 <body>
-  <!-- ส่วน Header รูปภาพหลัก -->
-  <!-- ใส่ลิงก์ Google Fonts ที่ <head> -->
-<header>
-  <img src="https://i.postimg.cc/6QGx2SKg/DSC087422-1.jpg" alt="ภาพปกงานแต่ง" style="width: 100%; height: auto; display: block;">
-</header>
-
-  <!-- ส่วนเพลงแนะนำพร้อม autoplay ด้วย interaction -->
+  <header>
+    <img src="https://i.postimg.cc/6QGx2SKg/DSC087422-1.jpg" alt="ภาพปกงานแต่ง">
+  </header>
 
   <section class="audio-section center">
     <audio id="bgm" controls playsinline>
@@ -177,37 +195,28 @@
   </section>
 
   <script>
-    // พยายามเล่นเพลงเมื่อมี interaction ครั้งแรก
     const bgm = document.getElementById('bgm');
     let hasInteracted = false;
-
     function tryPlay() {
       if (!hasInteracted) {
         bgm.play().catch(() => {});
         hasInteracted = true;
       }
     }
-
     window.addEventListener('click', tryPlay);
     window.addEventListener('touchstart', tryPlay);
     window.addEventListener('scroll', tryPlay);
   </script>
-
-  <!-- Countdown ถึงวันแต่งงาน -->
 
   <section class="center">
     <h2>นับถอยหลังสู่งานมงคล</h2>
     <div class="countdown" id="countdown"></div>
   </section>
 
-  <!-- ข้อความความรู้สึกจากบ่าวสาว -->
-
   <section class="message">
     <p class="center">ในวันที่พิเศษของเรา ตั๊กและตาลอยากแบ่งปันความสุขนี้กับทุกคนที่เรารัก</p>
     <p class="center">ขอบคุณที่เป็นส่วนหนึ่งของความทรงจำที่มีความหมาย</p>
   </section>
-
-  <!-- แกลเลอรี่ภาพแนวนอน -->
 
   <section class="gallery">
     <img src="https://i.postimg.cc/SsTCWWJw/DSC-7529-19944.jpg" alt="ภาพ1">
@@ -218,98 +227,156 @@
     <span class="dot"></span><span class="dot"></span><span class="dot"></span>
   </div>
 
-  <!-- Lightbox สำหรับดูภาพเต็ม -->
-
+  <!-- Lightbox -->
   <div id="lightbox" style="display: none;">
-    <span class="close">&times;</span>
-    <img class="lightbox-content" id="lightbox-img">
+    <span class="close" aria-label="ปิด lightbox" role="button" tabindex="0">&times;</span>
+    <div class="lightbox-zoom-wrapper">
+      <img class="lightbox-content" id="lightbox-img" alt="">
+    </div>
   </div>
 
   <script>
-  // เตรียมอ้างอิง DOM
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightbox-img');
   const closeBtn = document.querySelector('#lightbox .close');
   const images = Array.from(document.querySelectorAll('.gallery img, .gallery-bw img'));
-
   let currentIndex = 0;
 
-  // ฟังก์ชันเปิดภาพที่ index ที่กำหนด
+  let scale = 1;
+  let startX = 0, startY = 0;
+  let originX = 0, originY = 0;
+  let lastTouchDistance = 0;
+  let isPanning = false;
+  let panX = 0, panY = 0;
+
+  function resetTransform() {
+    scale = 1;
+    panX = 0;
+    panY = 0;
+    updateTransform();
+  }
+
+  function updateTransform() {
+    lightboxImg.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+  }
+
+  function getDistance(touches) {
+    const dx = touches[0].clientX - touches[1].clientX;
+    const dy = touches[0].clientY - touches[1].clientY;
+    return Math.hypot(dx, dy);
+  }
+
   function showImage(index) {
     if (index >= 0 && index < images.length) {
       currentIndex = index;
       lightboxImg.src = images[currentIndex].src;
-      lightboxImg.alt = images[currentIndex].alt;
+      lightboxImg.alt = images[currentIndex].alt || '';
+      resetTransform();
     }
   }
 
-  // คลิกเปิด lightbox
   images.forEach((img, index) => {
+    img.style.cursor = 'zoom-in';
     img.addEventListener('click', () => {
       lightbox.style.display = 'flex';
       showImage(index);
+      document.body.style.overflow = 'hidden';
     });
   });
 
-  // ปิด lightbox
-  closeBtn.addEventListener('click', () => {
+  function closeLightbox() {
     lightbox.style.display = 'none';
     lightboxImg.src = '';
+    document.body.style.overflow = '';
+  }
+
+  closeBtn.addEventListener('click', closeLightbox);
+  closeBtn.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); closeLightbox(); }
   });
 
-  // คลิกพื้นหลังเพื่อปิด
   lightbox.addEventListener('click', e => {
-    if (e.target === lightbox) {
-      lightbox.style.display = 'none';
-      lightboxImg.src = '';
-    }
+    if (e.target === lightbox) closeLightbox();
   });
 
-  // กดปุ่มซ้าย/ขวาเพื่อเลื่อนภาพ
   document.addEventListener('keydown', e => {
     if (lightbox.style.display === 'flex') {
-      if (e.key === 'ArrowRight') {
-        showImage((currentIndex + 1) % images.length);
-      } else if (e.key === 'ArrowLeft') {
-        showImage((currentIndex - 1 + images.length) % images.length);
-      } else if (e.key === 'Escape') {
-        lightbox.style.display = 'none';
-        lightboxImg.src = '';
-      }
+      if (e.key === 'ArrowRight') showImage((currentIndex + 1) % images.length);
+      else if (e.key === 'ArrowLeft') showImage((currentIndex - 1 + images.length) % images.length);
+      else if (e.key === 'Escape') closeLightbox();
     }
   });
 
-  // เพิ่ม gesture สำหรับมือถือ (ปัดซ้าย/ขวา)
-  let touchStartX = 0;
+  let touchStartX = 0, touchStartY = 0;
+  let pinchZooming = false;
 
   lightboxImg.addEventListener('touchstart', e => {
-    touchStartX = e.touches[0].clientX;
-  });
+    if (e.touches.length === 1) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      isPanning = scale > 1;
+      startX = panX;
+      startY = panY;
+    } else if (e.touches.length === 2) {
+      pinchZooming = true;
+      lastTouchDistance = getDistance(e.touches);
+      const rect = lightboxImg.getBoundingClientRect();
+      originX = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
+      originY = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
+      lightboxImg.style.transformOrigin = `${originX}px ${originY}px`;
+    }
+  }, { passive: false });
+
+  lightboxImg.addEventListener('touchmove', e => {
+    e.preventDefault();
+    if (e.touches.length === 1 && isPanning) {
+      const dx = e.touches[0].clientX - touchStartX;
+      const dy = e.touches[0].clientY - touchStartY;
+      panX = startX + dx;
+      panY = startY + dy;
+      updateTransform();
+    } else if (e.touches.length === 2 && pinchZooming) {
+      const currentDistance = getDistance(e.touches);
+      let newScale = scale * (currentDistance / lastTouchDistance);
+      newScale = Math.min(Math.max(newScale, 1), 4);
+      scale = newScale;
+      updateTransform();
+      lastTouchDistance = currentDistance;
+    }
+  }, { passive: false });
 
   lightboxImg.addEventListener('touchend', e => {
-    let touchEndX = e.changedTouches[0].clientX;
-    if (touchEndX - touchStartX > 50) {
-      showImage((currentIndex - 1 + images.length) % images.length);
-    } else if (touchStartX - touchEndX > 50) {
-      showImage((currentIndex + 1) % images.length);
+    if (e.touches.length < 2) {
+      pinchZooming = false;
+      isPanning = false;
+      if (scale < 1) { scale = 1; panX = 0; panY = 0; updateTransform(); }
     }
   });
-</script>
 
-  <!-- ข้อมูลครอบครัวผู้จัดงาน -->
+  let swipeStartX = 0, swipeEndX = 0;
+  lightboxImg.addEventListener('touchstart', e => {
+    if (e.touches.length === 1 && scale === 1) swipeStartX = e.touches[0].clientX;
+  });
+  lightboxImg.addEventListener('touchend', e => {
+    if (e.changedTouches.length === 1 && scale === 1) {
+      swipeEndX = e.changedTouches[0].clientX;
+      const diffX = swipeEndX - swipeStartX;
+      if (diffX > 50) showImage((currentIndex - 1 + images.length) % images.length);
+      else if (diffX < -50) showImage((currentIndex + 1) % images.length);
+    }
+  });
+  </script>
 
   <section class="family">
     <h2>เรียนเชิญร่วมเป็นเกียรติในพิธีมงคลสมรส</h2>
     <p>นายสีศักดิ์ ศรีโกศล (พ่อ) และ นางสาวหนูพิน เจนวิถี (แม่)</p>
     <p>นายวรพันธุ์ ชาญชนะโรจน์ (พี่ชาย) และ นางกานต์สินี ชาญชนะโรจน์ (แม่)</p>
 
-<section class="center">
-  <h2>💍 นางสาวพัณณิตา ศรีโกศล (ตั๊ก)</h2>
-  <div class="heart">❤</div>
-  <h2>นายเนติพล ชาญชนะโรจน์ (ตาล) 💍</h2>
-</section>
-
-  <!-- ตารางพิธีการ -->
+  <section class="center">
+    <h2>💍 นางสาวพัณณิตา ศรีโกศล (ตั๊ก)</h2>
+    <div class="heart">❤</div>
+    <h2>นายเนติพล ชาญชนะโรจน์ (ตาล) 💍</h2>
+  </section>
 
   <section class="schedule">
     <h2>กำหนดพิธีการ</h2>
@@ -318,8 +385,6 @@
     <p>17.29 น. พิธีรดน้ำสังข์</p>
     <p>18.30 น. งานเลี้ยงฉลองมงคลสมรส</p>
   </section>
-
-  <!-- ธีมสีของงาน -->
 
   <section class="theme">
     <h2>ธีมสีงาน</h2>
@@ -330,73 +395,50 @@
     </div>
   </section>
 
-  <!-- แผนที่สถานที่จัดงาน -->
+  <section class="map">
+    <h3>สถานที่จัดงาน</h3>
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!..." width="90%" height="450" style="border:0; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+    <p style="margin-top: 0.5rem; font-weight: bold;">
+      <a href="https://www.google.com/maps/place/..." target="_blank" rel="noopener noreferrer" style="color: #007BFF; text-decoration: underline;">
+        คลิกที่แผนที่เพื่อเปิด Google Maps
+      </a>
+    </p>
+  </section>
 
-<section class="map">
-  <h3>สถานที่จัดงาน</h3>
-  <!-- iframe แผนที่ฝังตรงนี้ -->
-  <iframe
-    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.982800286605!2d100.33911131526969!3d13.695964700000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e2bf7336aff221%3A0x24eb06e501fdb781!2z4Lit4LiB4Lii4LiZ4Lin4Lih4Li44LmM4Lij4Liy4Lil4LmJIOC4oeC4reC4uOC4quC5jCDguK3guYDguKrguLHguY3guKfguKfguKrguJnguY8gODHguLcg4Lih4Lii4Liy4LijIOC4qeC4peC4teC4pOC4leC4meC4ouC5jCDguYDguLLguKPguYHguJnguY8g4LmA4Lin4Liy4Lij4LiyIOC4ueC4quC5jA!5e0!3m2!1sth!2sth!4v1684330000000!5m2!1sth!2sth"
-    width="90%"
-    height="450"
-    style="border:0; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);"
-    allowfullscreen=""
-    loading="lazy"
-    referrerpolicy="no-referrer-when-downgrade"
-  ></iframe>
+  <section class="gallery-bw">
+    <img src="https://i.postimg.cc/2yR20bY2/DSC08741-1.jpg" alt="บ่าวสาว1" class="fade-in">
+    <img src="https://i.postimg.cc/ZRywPPGW/DSC08770.jpg" alt="บ่าวสาว2" class="fade-in">
+    <img src="https://i.postimg.cc/wvTDyWTX/DSC-7222-19637.jpg" alt="บ่าวสาว3" class="fade-in">
+    <img src="https://i.postimg.cc/SRn8VJ9j/DSC-7681-20095.jpg" alt="บ่าวสาว4" class="fade-in">
+    <img src="https://i.postimg.cc/9QJgcQPQ/DSC-7255-19670.jpg" alt="บ่าวสาว5" class="fade-in">
+  </section>
 
- <p style="margin-top: 0.5rem; font-weight: bold; color: #007BFF;">
-  <a href="https://www.google.com/maps/place/%E0%B9%80%E0%B8%A5%E0%B8%B4%E0%B8%9F%E0%B8%AA%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B8%B5%E0%B9%88+(%E0%B9%80%E0%B8%9E%E0%B8%8A%E0%B8%A3%E0%B9%80%E0%B8%81%E0%B8%A9%E0%B8%A1+81)+%E0%B8%AA%E0%B8%96%E0%B8%B2%E0%B8%99%E0%B8%97%E0%B8%B5%E0%B9%88%E2%80%8B%E0%B8%88%E0%B8%B1%E0%B8%94%E0%B8%87%E0%B8%B2%E0%B8%99%E0%B9%81%E0%B8%95%E0%B9%88%E0%B8%87%E0%B8%87%E0%B8%B2%E0%B8%99/@13.6959647,100.3413,17z/data=!3m1!4b1!4m6!3m5!1s0x30e2bf7336aff221:0x24eb06e501fdb781!8m2!3d13.6959647!4d100.3413!16s%2Fg%2F11js9xb64b?entry=ttu&g_ep=EgoyMDI1MDUxMy4xIKXMDSoASAFQAw%3D%3D" 
-     target="_blank" 
-     rel="noopener noreferrer" 
-     style="color: #007BFF; text-decoration: underline;">
-    คลิกที่แผนที่เพื่อเปิด Google Maps 
-  </a>
-</p>
-</section>
-
-  <!-- แกลเลอรี่ภาพบ่าวสาว ขาวดำ -->
-
-<section class="gallery-bw">
-  <img src="https://i.postimg.cc/2yR20bY2/DSC08741-1.jpg" alt="บ่าวสาว1" class="fade-in">
-  <img src="https://i.postimg.cc/ZRywPPGW/DSC08770.jpg" alt="บ่าวสาว2" class="fade-in">
-  <img src="https://i.postimg.cc/wvTDyWTX/DSC-7222-19637.jpg" alt="บ่าวสาว3" class="fade-in">
-  <img src="https://i.postimg.cc/SRn8VJ9j/DSC-7681-20095.jpg" alt="บ่าวสาว4" class="fade-in">
-  <img src="https://i.postimg.cc/9QJgcQPQ/DSC-7255-19670.jpg" alt="บ่าวสาว5" class="fade-in">
-</section>
-
-<script>
-  const countdownEl = document.getElementById('countdown');
-  // ตั้งวันที่งานแต่ง (ปี, เดือน-1, วัน, ชม, นาที, วินาที)
-  const weddingDate = new Date(2025, 5, 8, 16, 0, 0); // 8 มิถุนายน 2025 16:00
-
-  function updateCountdown() {
-    const now = new Date();
-    const diff = weddingDate - now;
-
-    if (diff <= 0) {
-      countdownEl.innerHTML = '<div>งานเริ่มแล้ว 🎉</div>';
-      clearInterval(interval);
-      return;
+  <script>
+    const countdownEl = document.getElementById('countdown');
+    const weddingDate = new Date(2025, 5, 8, 16, 0, 0);
+    function updateCountdown() {
+      const now = new Date();
+      const diff = weddingDate - now;
+      if (diff <= 0) {
+        countdownEl.innerHTML = '<div>งานเริ่มแล้ว 🎉</div>';
+        clearInterval(interval);
+        return;
+      }
+      const days = Math.floor(diff / (1000*60*60*24));
+      const hours = Math.floor((diff/(1000*60*60)) % 24);
+      const minutes = Math.floor((diff/(1000*60)) % 60);
+      const seconds = Math.floor((diff/1000) % 60);
+      countdownEl.innerHTML = `
+        <div><strong>${days}</strong><br>วัน</div>
+        <div><strong>${hours.toString().padStart(2,'0')}</strong><br>ชม.</div>
+        <div><strong>${minutes.toString().padStart(2,'0')}</strong><br>นาที</div>
+        <div><strong>${seconds.toString().padStart(2,'0')}</strong><br>วิ</div>
+      `;
     }
-
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((diff / (1000 * 60)) % 60);
-    const seconds = Math.floor((diff / 1000) % 60);
-
-    countdownEl.innerHTML = `
-      <div><strong>${days}</strong><br>วัน</div>
-      <div><strong>${hours.toString().padStart(2,'0')}</strong><br>ชม.</div>
-      <div><strong>${minutes.toString().padStart(2,'0')}</strong><br>นาที</div>
-      <div><strong>${seconds.toString().padStart(2,'0')}</strong><br>วิ</div>
-    `;
-  }
-
-  updateCountdown();
-  const interval = setInterval(updateCountdown, 1000);
-</script>
-
-
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+  </script>
 </body>
-</html> 
+</html>
