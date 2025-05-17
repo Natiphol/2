@@ -268,27 +268,27 @@
   </section>
 
   <script>
-    // Countdown script
-    const countdownEl = document.getElementById("countdown");
-    const targetDate = new Date("June 8, 2025 00:00:00").getTime();
+  // Countdown script
+  const countdownEl = document.getElementById("countdown");
+  const targetDate = new Date("June 8, 2025 00:00:00").getTime();
 
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const diff = targetDate - now;
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const secs = Math.floor((diff % (1000 * 60)) / 1000);
-      countdownEl.innerHTML = `
-        <div>${days}<br>วัน</div>
-        <div>${hours}<br>ชม.</div>
-        <div>${mins}<br>นาที</div>
-        <div>${secs}<br>วินาที</div>
-      `;
-    }
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const diff = targetDate - now;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const secs = Math.floor((diff % (1000 * 60)) / 1000);
+    countdownEl.innerHTML = `
+      <div>${days}<br>วัน</div>
+      <div>${hours}<br>ชม.</div>
+      <div>${mins}<br>นาที</div>
+      <div>${secs}<br>วินาที</div>
+    `;
+  }
 
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-  </script>
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+</script>
 </body>
 </html>
