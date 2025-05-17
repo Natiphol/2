@@ -128,59 +128,10 @@
 <body>
   <!-- ส่วน Header รูปภาพหลัก -->
   <!-- ใส่ลิงก์ Google Fonts ที่ <head> -->
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
-
-<header style="position: relative; text-align: center; color: white;">
+<header>
   <img src="https://i.postimg.cc/zXSjn3gJ/DSC08741.jpg" alt="ภาพปกงานแต่ง" style="width: 100%; height: auto; display: block;">
-  <h1 class="fancy-text">งานแต่งงานของเรา</h1>
 </header>
 
-<style>
-  .fancy-text {
-    position: absolute;
-    bottom: 30px; /* อยู่ช่วงล่างรูป */
-    left: 50%;
-    transform: translateX(-50%);
-    font-family: 'Great Vibes', cursive;
-    font-size: 4rem;
-    font-weight: 400;
-    background: linear-gradient(45deg, #f9d423, #ff4e50);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow:
-      0 0 5px rgba(255, 255, 255, 0.7),
-      0 0 10px rgba(255, 255, 255, 0.5),
-      0 0 15px rgba(255, 255, 255, 0.3);
-    opacity: 0;
-    animation: fadeUp 2s ease forwards, sparkle 3s infinite ease-in-out;
-  }
-
-  @keyframes fadeUp {
-    0% {
-      opacity: 0;
-      transform: translateX(-50%) translateY(30px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-  }
-
-  @keyframes sparkle {
-    0%, 100% {
-      text-shadow:
-        0 0 5px rgba(255, 255, 255, 0.7),
-        0 0 10px rgba(255, 255, 255, 0.5),
-        0 0 15px rgba(255, 255, 255, 0.3);
-    }
-    50% {
-      text-shadow:
-        0 0 10px rgba(255, 255, 255, 1),
-        0 0 20px rgba(255, 255, 255, 0.8),
-        0 0 30px rgba(255, 255, 255, 0.6);
-    }
-  }
-</style>
   <!-- ส่วนเพลงแนะนำพร้อม autoplay ด้วย interaction -->
   <section class="audio-section center">
     <audio id="bgm" controls playsinline>
