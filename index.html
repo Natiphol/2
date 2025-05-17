@@ -127,23 +127,25 @@
 </head>
 <body>
   <!-- ส่วน Header รูปภาพหลัก -->
-  <header style="position: relative; text-align: center; color: white;">
-  <img src="https://i.postimg.cc/zXSjn3gJ/DSC08741.jpg" alt="ภาพปกงานแต่ง" style="width: 100%; height: auto;">
+  <!-- ใส่ลิงก์ Google Fonts ที่ <head> -->
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@700&display=swap" rel="stylesheet">
+
+<header style="position: relative; text-align: center; color: white;">
+  <img src="https://i.postimg.cc/zXSjn3gJ/DSC08741.jpg" alt="ภาพปกงานแต่ง" style="width: 100%; height: auto; display: block;">
   <h1 class="animated-text">งานแต่งงานของเรา</h1>
 </header>
 
 <style>
-  header {
-    position: relative;
-  }
   .animated-text {
     position: absolute;
-    top: 50%;
+    bottom: 20px; /* อยู่ช่วงล่างรูป */
     left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 3rem;
-    font-weight: bold;
+    transform: translateX(-50%);
+    font-size: 2.5rem;
+    font-weight: 700;
+    font-family: 'Sarabun', sans-serif;
     color: white;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.7); /* เงาให้ข้อความอ่านง่ายขึ้น */
     opacity: 0;
     animation: fadeUp 2s ease forwards;
   }
@@ -151,11 +153,11 @@
   @keyframes fadeUp {
     0% {
       opacity: 0;
-      transform: translate(-50%, -30%);
+      transform: translateX(-50%) translateY(20px);
     }
     100% {
       opacity: 1;
-      transform: translate(-50%, -50%);
+      transform: translateX(-50%) translateY(0);
     }
   }
 </style>
