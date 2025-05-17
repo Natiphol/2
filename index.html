@@ -10,7 +10,8 @@
   body {
     margin: 0;
     font-family: 'Kanit', sans-serif;
-    background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
+    /* พื้นหลังภาพจากลิงก์ Google Drive (ใช้ลิงก์ตรงดาวน์โหลด) */
+    background: url('https://drive.google.com/uc?export=download&id=1TQsT_SsnluurOPstICuacdbIO-mgI8sT') no-repeat center center fixed;
     background-size: cover;
     color: #3a4661;
     display: flex;
@@ -41,31 +42,12 @@
     position: relative;
   }
 
-  /* โลโก้แบบโปร่งแสงกลืนพื้น */
+  /* โลโก้แทนชื่อคู่รัก */
   .logo {
-    width: 120px;
-    opacity: 0.25;
-    position: absolute;
-    top: -60px;
-    left: 50%;
-    transform: translateX(-50%);
-    pointer-events: none;
-    user-select: none;
-  }
-
-  h1 {
-    font-family: 'Sriracha', cursive;
-    font-weight: 400;
-    font-size: 3rem;
-    margin-bottom: 0;
-    letter-spacing: 0.08em;
-  }
-
-  .parents {
-    margin-top: 12px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    line-height: 1.4;
+    width: 140px;
+    opacity: 0.9;
+    margin: 0 auto 16px auto;
+    display: block;
   }
 
   .invitation-text {
@@ -74,6 +56,7 @@
     font-size: 1rem;
     letter-spacing: 0.05em;
     white-space: nowrap;
+    color: #3a4661dd;
   }
 
   .couple {
@@ -86,6 +69,7 @@
     font-size: 1.3rem;
     box-shadow: 0 4px 10px rgba(58,70,97,0.15);
     margin-bottom: 25px;
+    color: #354a92;
   }
 
   .couple > span {
@@ -247,12 +231,8 @@
 
 <div class="overlay">
   <header>
+    <!-- โลโก้แทน T & T -->
     <img src="https://i.imgur.com/n0DtfkQ.jpg" alt="โลโก้งานแต่ง" class="logo" />
-    <h1>T & T</h1>
-    <div class="parents">
-      นายสีศักดิ์ ศรีโกศล (พ่อ) และ นายวรพันธุ์ ชาญชนะโรจน์ (พี่ชาย)<br />
-      นางสาวหนูพิน เจนวิถี (แม่) และ นางกานต์สินี ชาญชนะโรจน์ (แม่)
-    </div>
     <div class="invitation-text">ขอเรียนเชิญร่วมเป็นเกียรติในพิธีมงคลสมรส</div>
   </header>
 
