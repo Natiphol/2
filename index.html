@@ -2,109 +2,226 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>การ์ดงานแต่ง ตั๊ก & ตาล</title>
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;500;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>งานแต่ง ตั๊ก ❤ ตาล</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;600&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Sarabun', sans-serif;
-      background: #f9f9f6;
-      color: #2b3a42;
       margin: 0;
-      padding: 0;
+      background: #fefefe;
+      color: #333;
     }
-    .container {
-      max-width: 480px;
-      margin: auto;
-      padding: 20px;
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    header img {
+      width: 100%;
+      display: block;
     }
-    h1, h2, h3 {
-      text-align: center;
-      color: #2a5d9f;
-    }
-    .heart {
-      font-size: 24px;
-      color: #e67e22;
-      text-align: center;
-      margin: 10px 0;
-    }
-    .section {
-      margin-top: 20px;
+    .center {
       text-align: center;
     }
-    .date-box {
-      background: #2a5d9f;
-      color: white;
-      padding: 12px;
-      border-radius: 12px;
-      font-size: 20px;
-      margin: 10px auto;
-      width: fit-content;
+    .audio-section {
+      padding: 2rem;
     }
-    .qrcode {
+    .countdown {
       display: flex;
-      justify-content: space-around;
-      margin-top: 20px;
+      justify-content: center;
+      gap: 1rem;
+      font-size: 1.5rem;
+      padding: 1rem 0;
     }
-    .qrcode img {
-      width: 120px;
-      border-radius: 8px;
+    .countdown div {
+      background: #e0f7fa;
+      border-radius: 10px;
+      padding: 1rem;
+      min-width: 60px;
     }
-    footer {
+    .message {
+      padding: 2rem;
+      background: #f3faff;
+      font-size: 1.2rem;
+    }
+    .map {
       text-align: center;
-      font-size: 12px;
-      margin-top: 30px;
-      color: #666;
+      padding: 1rem;
+    }
+    .gallery, .gallery-bw {
+      display: flex;
+      overflow-x: scroll;
+      gap: 1rem;
+      padding: 1rem;
+      scroll-snap-type: x mandatory;
+    }
+    .gallery img, .gallery-bw img {
+      height: 300px;
+      border-radius: 10px;
+      scroll-snap-align: center;
+    }
+    .dots {
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+    .dot {
+      height: 10px;
+      width: 10px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      margin: 0 2px;
+    }
+    .family, .schedule, .theme {
+      padding: 2rem;
+    }
+    .family h2, .schedule h2, .theme h2 {
+      text-align: center;
+      font-weight: 600;
+    }
+    .family p, .schedule p {
+      text-align: center;
+      margin: 0.5rem 0;
+    }
+    .theme .colors {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .theme .colors div {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+    }
+    .blue { background-color: #6ca0dc; }
+    .cream { background-color: #f7e9d7; }
+    .green { background-color: #a5d8d2; }
+    .fade-in {
+      animation: fadeIn 1s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>💍 ตั๊ก & ตาล</h1>
-    <p style="text-align: center;">
-      มีความยินดีขอเรียนเชิญท่าน<br>
-      เพื่อเป็นเกียรติในพิธีมงคลสมรสระหว่าง
-    </p>
+  <!-- 1. รูปภาพหลัก -->
+  <header>
+    <img src="https://i.postimg.cc/zXSjn3gJ/DSC08741.jpg" alt="ภาพปกงานแต่ง">
+  </header>
 
-    <h2>นางสาวพัณณิตา ศรีโกศล (ตั๊ก)</h2>
-    <div class="heart">♥</div>
-    <h2>นายเนติพล ชาญชนะโรจน์ (ตาล)</h2>
+  <!-- 2. เพลง และข้อความแนะนำ -->
+  <section class="audio-section" style="text-align: center; padding: 2rem;">
+    <audio id="bgm" controls playsinline>
+      <source src="https://media1.vocaroo.com/mp3/1n3otBXCi0M4" type="audio/mp3">
+      เบราว์เซอร์ของคุณไม่รองรับเสียง
+    </audio>
+    <p style="margin-top: 1rem;">🎶 กดเล่นเพลง แล้วเลื่อนชมรายละเอียดงานด้านล่างได้เลยค่ะ 🎶</p>
+  </section>
 
-    <div class="section">
-      <h3>ณ เลิฟสตอรี่ เพชรเกษม 81</h3>
-      <p>163/2 ถนนมาเจริญ แขวงหนองค้างพลู<br>เขตหนองแขม กรุงเทพฯ 10160</p>
-    </div>
+  <script>
+    const bgm = document.getElementById('bgm');
+    let hasInteracted = false;
 
-    <div class="section">
-      <div class="date-box">
-        วันอาทิตย์ที่ 8 มิถุนายน 2568
-      </div>
-      <p>
-        🥁 พิธีแห่ขันหมาก: 15.30 น.<br>
-        💍 พิธีหมั้น: 16.09 น.<br>
-        💦 พิธีรดน้ำสังข์: 17.29 น.<br>
-        🍽 งานเลี้ยงฉลอง: 18.30 น.
-      </p>
-    </div>
+    function tryPlay() {
+      if (!hasInteracted) {
+        bgm.play().catch(() => {});
+        hasInteracted = true;
+      }
+    }
 
-    <div class="section qrcode">
-      <div>
-        <p style="font-size: 14px;">📍 สถานที่จัดงาน</p>
-        <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://maps.app.goo.gl/abc123&size=120x120" alt="QR สถานที่">
-      </div>
-      <div>
-        <p style="font-size: 14px;">💬 แสดงความยินดี</p>
-        <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://line.me/ti/p/abc123&size=120x120" alt="QR อวยพร">
-      </div>
-    </div>
+    window.addEventListener('click', tryPlay);
+    window.addEventListener('touchstart', tryPlay);
+    window.addEventListener('scroll', tryPlay);
+  </script>
 
-    <footer>
-      Theme: Blue • Cream • Green<br>
-      (ขออภัยหากมิได้เรียนเชิญด้วยตนเอง)
-    </footer>
+  <!-- 3. Countdown -->
+  <section class="center">
+    <h2>นับถอยหลังสู่งานมงคล</h2>
+    <div class="countdown" id="countdown"></div>
+  </section>
+
+  <!-- 4. ความรู้สึกจากบ่าวสาว -->
+  <section class="message">
+    <p class="center">ในวันที่พิเศษของเรา ตั๊กและตาลอยากแบ่งปันความสุขนี้กับทุกคนที่เรารัก</p>
+    <p class="center">ขอบคุณที่เป็นส่วนหนึ่งของความทรงจำที่มีความหมาย</p>
+  </section>
+
+  <!-- 5. ลิงก์แผนที่ -->
+  <section class="map">
+    <h3>สถานที่จัดงาน</h3>
+    <iframe src="https://maps.google.com/maps?q=https://maps.app.goo.gl/CaaGCvt2BpcpdcYR6&amp;output=embed" width="90%" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
+  </section>
+
+  <!-- 6. แกลลอรี่ภาพเลื่อนด้านข้าง -->
+  <section class="gallery">
+    <img src="g1.jpg" alt="ภาพ1">
+    <img src="g2.jpg" alt="ภาพ2">
+    <img src="g3.jpg" alt="ภาพ3">
+    <!-- เพิ่มรูปตามต้องการ -->
+  </section>
+  <div class="dots center">
+    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
   </div>
+
+  <!-- 7. รายละเอียดครอบครัว -->
+  <section class="family">
+    <h2>เรียนเชิญร่วมเป็นเกียรติในพิธีมงคลสมรส</h2>
+    <p>นายสีศักดิ์ ศรีโกศล (พ่อ) และ นางสาวหนูพิน เจนวิถี (แม่)</p>
+    <p>นายวรพันธุ์ ชาญชนะโรจน์ (พี่ชาย) และ นางกานต์สินี ชาญชนะโรจน์ (แม่)</p>
+  </section>
+
+  <!-- 8. ชื่อบ่าวสาว -->
+  <section class="center">
+    <h2>💍 นางสาวพัณณิตา ศรีโกศล (ตั๊ก) ❤ นายเนติพล ชาญชนะโรจน์ (ตาล) 💍</h2>
+  </section>
+
+  <!-- 9. กำหนดพิธีการ -->
+  <section class="schedule">
+    <h2>กำหนดพิธีการ</h2>
+    <p>15.30 น. พิธีแห่ขันหมาก</p>
+    <p>16.09 น. พิธีหมั้น</p>
+    <p>17.29 น. พิธีรดน้ำสังข์</p>
+    <p>18.30 น. งานเลี้ยงฉลองมงคลสมรส</p>
+  </section>
+
+  <!-- 10. ธีมสี -->
+  <section class="theme">
+    <h2>ธีมสีงาน</h2>
+    <div class="colors">
+      <div class="blue" title="Blue"></div>
+      <div class="cream" title="Cream"></div>
+      <div class="green" title="Green (ออกฟ้า)"></div>
+    </div>
+  </section>
+
+  <!-- 11. แกลลอรี่บ่าวสาว -->
+  <section class="gallery-bw">
+    <img src="bw1.jpg" alt="บ่าวสาว1" class="fade-in">
+    <img src="bw2.jpg" alt="บ่าวสาว2" class="fade-in">
+    <!-- เพิ่มอีกได้ตามต้องการ -->
+  </section>
+
+  <script>
+    // Countdown script
+    const countdownEl = document.getElementById("countdown");
+    const targetDate = new Date("June 8, 2025 00:00:00").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const diff = targetDate - now;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const secs = Math.floor((diff % (1000 * 60)) / 1000);
+      countdownEl.innerHTML = `
+        <div>${days}<br>วัน</div>
+        <div>${hours}<br>ชม.</div>
+        <div>${mins}<br>นาที</div>
+        <div>${secs}<br>วินาที</div>
+      `;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
 </body>
 </html>
