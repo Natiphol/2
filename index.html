@@ -265,10 +265,55 @@
     <p>นายวรพันธุ์ ชาญชนะโรจน์ (พี่ชาย) และ นางกานต์สินี ชาญชนะโรจน์ (แม่)</p>
   </section>
 
-  <!-- ชื่อบ่าวสาว -->
-  <section class="center">
-    <h2>💍 นางสาวพัณณิตา ศรีโกศล (ตั๊ก) ❤ นายเนติพล ชาญชนะโรจน์ (ตาล) 💍</h2>
-  </section>
+  <style>
+  /* จัดกึ่งกลาง และใช้ฟอนต์สวยๆ จาก Google Fonts */
+  @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Kanit&display=swap');
+
+  .center {
+    text-align: center;
+    margin: 2rem 1rem;
+  }
+
+  .center h2 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.5rem;
+    color: #b97a56; /* สีน้ำตาลทอง ดูอบอุ่นและหรูหรา */
+    opacity: 0;
+    transform: scale(0.8);
+    animation: fadeScaleUp 1.5s forwards ease-in-out;
+    animation-delay: 0.3s;
+    line-height: 1.4;
+  }
+
+  @keyframes fadeScaleUp {
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* เพิ่มไอคอนหัวใจให้มีสีแดงสดและขยับเบาๆ */
+  .center h2 span.heart {
+    color: #e74c3c;
+    animation: heartbeat 1.5s infinite;
+    display: inline-block;
+    margin: 0 0.3rem;
+  }
+
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+  }
+</style>
+
+<section class="center">
+  <h2>
+    💍 นางสาวพัณณิตา ศรีโกศล (ตั๊ก) 
+    <span class="heart">❤</span> 
+    นายเนติพล ชาญชนะโรจน์ (ตาล) 
+    💍
+  </h2>
+</section>
 
   <!-- ตารางพิธีการ -->
   <section class="schedule">
