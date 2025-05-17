@@ -1,110 +1,191 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>การ์ดงานแต่ง ตั๊ก & ตาล</title>
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;500;700&display=swap" rel="stylesheet" />
   <style>
     body {
       font-family: 'Sarabun', sans-serif;
-      background: #f9f9f6;
-      color: #2b3a42;
-      margin: 0;
-      padding: 0;
+      background: url('https://www.transparenttextures.com/patterns/watercolor-paper.png') repeat;
+      background-color: #f8f6f1;
+      margin: 0; padding: 0;
+      color: #4a4a4a;
     }
-    .container {
+    .card {
       max-width: 480px;
-      margin: auto;
-      padding: 20px;
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      margin: 32px auto;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 32px 24px;
+      border-radius: 24px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+      border: 1px solid #ddd;
+      position: relative;
     }
-    h1, h2, h3 {
+    .header {
       text-align: center;
-      color: #2a5d9f;
+      color: #305177;
+      margin-bottom: 16px;
+    }
+    .header img {
+      width: 120px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .header p {
+      font-size: 16px;
+      color: #888;
+      margin: 0;
+      font-weight: 500;
+    }
+    .divider {
+      width: 60px;
+      height: 3px;
+      background: #bda27c;
+      margin: 20px auto;
+      border-radius: 2px;
+    }
+    .names {
+      text-align: center;
+      margin-top: 20px;
+      font-weight: 600;
+      color: #305177;
+    }
+    .names h2 {
+      font-size: 22px;
+      margin: 6px 0;
     }
     .heart {
-      font-size: 24px;
-      color: #e67e22;
-      text-align: center;
-      margin: 10px 0;
+      font-size: 28px;
+      color: #c38e70;
+      margin: 14px 0;
     }
     .section {
-      margin-top: 20px;
       text-align: center;
+      margin-top: 28px;
+      line-height: 1.7;
+      font-size: 16px;
+    }
+    .venue {
+      font-size: 18px;
+      font-weight: 600;
+      color: #2d3e50;
     }
     .date-box {
-      background: #2a5d9f;
+      background: #305177;
       color: white;
-      padding: 12px;
-      border-radius: 12px;
-      font-size: 20px;
-      margin: 10px auto;
+      padding: 18px;
+      border-radius: 16px;
+      font-size: 18px;
+      margin: 24px auto;
       width: fit-content;
+      letter-spacing: 1.2px;
+      box-shadow: 0 6px 12px rgba(48,81,119,0.4);
+    }
+    .schedule {
+      background: #f0ede6;
+      border-radius: 16px;
+      padding: 16px;
+      margin: 20px 0;
+      box-shadow: inset 0 1px 4px rgba(0,0,0,0.05);
+      color: #444;
+    }
+    .schedule p {
+      margin: 8px 0;
+      font-size: 16px;
+      font-weight: 500;
     }
     .qrcode {
       display: flex;
       justify-content: space-around;
-      margin-top: 20px;
+      margin-top: 28px;
+    }
+    .qrcode div {
+      text-align: center;
     }
     .qrcode img {
-      width: 120px;
-      border-radius: 8px;
+      width: 100px;
+      height: 100px;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
-    footer {
+    .footer {
       text-align: center;
-      font-size: 12px;
-      margin-top: 30px;
+      font-size: 13px;
       color: #666;
+      margin-top: 36px;
+      font-style: italic;
     }
+    .theme-bar {
+      margin-top: 10px;
+    }
+    .theme-circle {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      margin: 0 4px;
+    }
+    .blue { background: #305177; }
+    .cream { background: #e6dac5; }
+    .green { background: #8baaa8; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>💍 ตั๊ก & ตาล</h1>
-    <p style="text-align: center;">
-      มีความยินดีขอเรียนเชิญท่าน<br>
-      เพื่อเป็นเกียรติในพิธีมงคลสมรสระหว่าง
-    </p>
+  <audio autoplay loop muted>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/17/audio_b14e71b46d.mp3?filename=wedding-dream-21691.mp3" type="audio/mpeg" />
+  </audio>
+  <div class="card">
+    <div class="header">
+      <img src="https://i.imgur.com/n0DtfkQ.jpg" alt="โลโก้ ตั๊กตาล" />
+      <p>ขอเรียนเชิญร่วมเป็นเกียรติ<br>ในพิธีมงคลสมรส</p>
+    </div>
+    <div class="divider"></div>
 
-    <h2>นางสาวพัณณิตา ศรีโกศล (ตั๊ก)</h2>
-    <div class="heart">♥</div>
-    <h2>นายเนติพล ชาญชนะโรจน์ (ตาล)</h2>
+    <div class="names">
+      <h2>นางสาวพัณณิตา ศรีโกศล (ตั๊ก)</h2>
+      <div class="heart">❤</div>
+      <h2>นายเนติพล ชาญชนะโรจน์ (ตาล)</h2>
+    </div>
 
     <div class="section">
-      <h3>ณ เลิฟสตอรี่ เพชรเกษม 81</h3>
+      <p class="venue">ณ เลิฟสตอรี่ เพชรเกษม 81</p>
       <p>163/2 ถนนมาเจริญ แขวงหนองค้างพลู<br>เขตหนองแขม กรุงเทพฯ 10160</p>
     </div>
 
     <div class="section">
-      <div class="date-box">
-        วันอาทิตย์ที่ 8 มิถุนายน 2568
-      </div>
-      <p>
-        🥁 พิธีแห่ขันหมาก: 15.30 น.<br>
-        💍 พิธีหมั้น: 16.09 น.<br>
-        💦 พิธีรดน้ำสังข์: 17.29 น.<br>
-        🍽 งานเลี้ยงฉลอง: 18.30 น.
-      </p>
-    </div>
-
-    <div class="section qrcode">
-      <div>
-        <p style="font-size: 14px;">📍 สถานที่จัดงาน</p>
-        <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://maps.app.goo.gl/abc123&size=120x120" alt="QR สถานที่">
-      </div>
-      <div>
-        <p style="font-size: 14px;">💬 แสดงความยินดี</p>
-        <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://line.me/ti/p/abc123&size=120x120" alt="QR อวยพร">
+      <div class="date-box">วันอาทิตย์ที่ 8 มิถุนายน 2568</div>
+      <div class="schedule">
+        <p>พิธีแห่ขันหมาก : 15.30 น.</p>
+        <p>พิธีหมั้น : 16.09 น.</p>
+        <p>พิธีรดน้ำสังข์ : 17.29 น.</p>
+        <p>งานเลี้ยงฉลองมงคลสมรส : 18.30 น.</p>
       </div>
     </div>
 
-    <footer>
-      Theme: Blue • Cream • Green<br>
+    <div class="qrcode">
+      <div>
+        <p style="font-size: 13px;">📍 สถานที่จัดงาน</p>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://maps.app.goo.gl/abc123&size=100x100" alt="QR สถานที่" />
+      </div>
+      <div>
+        <p style="font-size: 13px;">💬 ส่งคำอวยพร</p>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://line.me/ti/p/abc123&size=100x100" alt="QR อวยพร" />
+      </div>
+    </div>
+
+    <div class="footer">
+      Theme Color:
+      <span class="theme-bar">
+        <span class="theme-circle blue"></span>
+        <span class="theme-circle cream"></span>
+        <span class="theme-circle green"></span>
+      </span><br />
       (ขออภัยหากมิได้เรียนเชิญด้วยตนเอง)
-    </footer>
+    </div>
   </div>
 </body>
 </html>
