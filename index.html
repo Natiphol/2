@@ -1,314 +1,134 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>การ์ดงานแต่งงาน พัณณิตา & เนติพล</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wedding Invitation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/a2e0e6ad98.js" crossorigin="anonymous"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Sriracha&family=Kanit:wght@300;600&display=swap');
-
     body {
       margin: 0;
       font-family: 'Kanit', sans-serif;
-      background: linear-gradient(to bottom right, #e8f0ff, #fdfcff);
-      background-attachment: fixed;
-      color: #3a4661;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
-    .overlay {
-      background: rgba(255, 255, 255, 0.85);
-      flex-grow: 1;
-      margin: 20px;
-      border-radius: 18px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      max-width: 480px;
-      width: 95%;
-      padding: 30px 40px 80px;
-      box-sizing: border-box;
-      margin-left: auto;
-      margin-right: auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      background: linear-gradient(to bottom, #fdfcfb, #f7f5f3);
+      color: #2c2c2c;
     }
 
     header {
       text-align: center;
-      margin-bottom: 25px;
-      position: relative;
+      padding: 2rem 1rem 1rem;
     }
 
-    .logo {
-      width: 120px;
-      opacity: 0.25;
-      position: absolute;
-      top: -60px;
-      left: 50%;
-      transform: translateX(-50%);
-      pointer-events: none;
-      user-select: none;
+    header img {
+      width: 140px;
+      height: auto;
+      filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.15));
     }
 
-    h1 {
-      font-family: 'Sriracha', cursive;
-      font-weight: 400;
-      font-size: 3rem;
-      margin-bottom: 0;
-      letter-spacing: 0.08em;
+    section {
+      padding: 2rem 1.5rem;
+      max-width: 900px;
+      margin: auto;
     }
 
-    .parents {
-      margin-top: 12px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      line-height: 1.4;
-    }
-
-    .invitation-text {
-      margin: 20px 0 25px;
-      font-weight: 400;
-      font-size: 1rem;
-      letter-spacing: 0.05em;
-      white-space: nowrap;
-    }
-
-    .couple {
-      background: #d9e7f9;
-      border-radius: 12px;
-      padding: 18px 20px;
-      width: 100%;
+    .date-section {
+      background: linear-gradient(145deg, #fffdf7, #fefaf0);
+      border: 2px solid #e4d5bd;
+      padding: 2.5rem;
+      border-radius: 2rem;
       text-align: center;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+      margin-bottom: 2.5rem;
+    }
+
+    .date-section h2 {
+      font-size: 2.2rem;
+      color: #7a5c3d;
+      margin-bottom: 1rem;
       font-weight: 600;
+    }
+
+    .date-section p {
       font-size: 1.3rem;
-      box-shadow: 0 4px 10px rgba(58,70,97,0.15);
-      margin-bottom: 25px;
+      color: #5e4a36;
     }
 
-    .couple > span {
+    .map-link {
       display: inline-block;
-      margin: 0 12px;
-      font-size: 1.4rem;
-      color: #5485d6;
-      vertical-align: middle;
+      background: #b3905b;
+      color: white;
+      padding: 0.8rem 1.8rem;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 1rem;
+      margin-top: 1.5rem;
+      transition: background 0.3s ease;
     }
 
-    .address {
-      font-size: 0.8rem;
-      color: #666d87;
-      margin-bottom: 30px;
-      line-height: 1.4;
+    .map-link:hover {
+      background: #987640;
     }
 
-    .calendar {
-      background: #3a4661;
-      border-radius: 10px;
-      width: 120px;
+    footer {
+      padding: 2rem 1rem 4rem;
       text-align: center;
-      color: #d9e7f9;
-      font-weight: 700;
-      margin-bottom: 20px;
-      user-select: none;
+      background: #1e2a38;
+      color: white;
+      font-size: 1rem;
     }
 
-    .calendar .day {
-      background: #5472d6;
-      padding: 8px 0;
-      font-size: 1.2rem;
-      border-radius: 10px 10px 0 0;
-    }
-
-    .calendar .date {
-      font-size: 2.4rem;
-      padding: 10px 0 16px;
-      letter-spacing: 0.1em;
-    }
-
-    .content-row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 25px;
-      margin-bottom: 30px;
-      width: 100%;
-    }
-
-    .content-left, .content-right {
-      background: #d9e7f9;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 14px rgba(58,70,97,0.12);
-      flex: 1 1 210px;
-      max-width: 280px;
-    }
-
-    .qr-label {
-      font-size: 0.8rem;
-      color: #3a4661cc;
-      text-align: center;
-      margin-top: 8px;
-    }
-
-    .content-right p {
-      margin: 14px 0;
-      font-size: 0.9rem;
-      color: #3a4661;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .content-right svg {
-      width: 22px;
-      height: 22px;
-      stroke: #3a4661;
-      stroke-width: 1.5;
-      fill: none;
-      flex-shrink: 0;
-    }
-
-    .qr-container {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: nowrap;
-    }
-
-    .qr-container a img {
-      width: 80px;
-      height: 80px;
-      border-radius: 10px;
-      border: 2px solid #3a4661aa;
-    }
-
-    nav.bottom-nav {
+    nav {
       position: fixed;
       bottom: 0;
+      left: 0;
       width: 100%;
-      max-width: 480px;
-      background: #3a4661ee;
+      background: white;
+      border-top: 1px solid #ccc;
       display: flex;
       justify-content: space-around;
-      box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.15);
-      font-weight: 600;
-      font-size: 0.88rem;
-      z-index: 1000;
-      border-radius: 15px 15px 0 0;
-      left: 50%;
-      transform: translateX(-50%);
+      padding: 0.5rem 0;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
     }
 
-    nav.bottom-nav a {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: #d9e7f9;
-      padding: 10px 8px 6px;
+    nav a {
       text-decoration: none;
-      user-select: none;
-      transition: color 0.25s ease;
+      color: #333;
+      font-size: 0.85rem;
+      text-align: center;
     }
 
-    nav.bottom-nav a:hover {
-      color: #fff;
-    }
-
-    nav.bottom-nav svg {
-      width: 24px;
-      height: 24px;
-      stroke: currentColor;
-      stroke-width: 2;
-      fill: none;
-      margin-bottom: 4px;
-    }
-
-    audio {
-      display: none;
-    }
-
-    @media (max-width: 480px) {
-      .overlay {
-        padding: 25px 25px 90px;
-        margin: 15px 10px 70px;
-      }
+    nav i {
+      display: block;
+      font-size: 1.2rem;
+      margin-bottom: 0.2rem;
     }
   </style>
 </head>
+
 <body>
+  <header>
+    <img src="logo.png" alt="Wedding Logo" />
+  </header>
 
-  <div class="overlay">
-    <header>
-      <img src="https://i.imgur.com/n0DtfkQ.jpg" alt="โลโก้งานแต่ง" class="logo" />
-      <h1>T & T</h1>
-      <div class="parents">
-        นายสีศักดิ์ ศรีโกศล (พ่อ) และ นายวรพันธุ์ ชาญชนะโรจน์ (พี่ชาย)<br />
-        นางสาวหนูพิน เจนวิถี (แม่) และ นางกานต์สินี ชาญชนะโรจน์ (แม่)
-      </div>
-      <div class="invitation-text">ขอเรียนเชิญร่วมเป็นเกียรติในพิธีมงคลสมรส</div>
-    </header>
-
-    <section class="couple">
-      นางสาวพัณณิตา ศรีโกศล (ตั๊ก) <span>❤</span> นายเนติพล ชาญชนะโรจน์ (ตาล)
-    </section>
-
-    <div class="address">
-      ณ เลิฟสตอรี่ เพชรเกษม 81<br />
-      163/2 ถนนมาเจริญ แขวงหนองค้างพลู เขตหนองแขม กรุงเทพฯ 10160
-    </div>
-
-    <div class="content-row">
-      <div class="calendar">
-        <div class="day">วันอาทิตย์</div>
-        <div class="date">8 มิ.ย. 68</div>
-      </div>
-
-      <div class="content-left">
-        <div class="qr-container">
-          <a href="https://goo.gl/maps/LZmF7UjoFbqF2sUx6" target="_blank">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://goo.gl/maps/LZmF7UjoFbqF2sUx6&size=80x80" alt="QR สถานที่จัดงาน" />
-          </a>
-          <a href="https://natiphol.github.io/AudioGuestbook/" target="_blank">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://natiphol.github.io/AudioGuestbook/&size=80x80" alt="QR อวยพรเสียง" />
-          </a>
-        </div>
-        <div class="qr-label">สถานที่จัดงาน</div>
-        <div class="qr-label">ส่งเสียงอวยพร</div>
-      </div>
-
-      <div class="content-right">
-        <p><svg viewBox="0 0 24 24"><path d="M3 10v4h4l5 5V5L7 10H3z"/></svg> เวลา 15.30 น. พิธีแห่ขันหมาก</p>
-        <p><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg> เวลา 16.09 น. พิธีหมั้น</p>
-        <p><svg viewBox="0 0 24 24"><path d="M12 2L2 7v13h20V7L12 2zM12 4.44l7 3.11v10.45H5V7.56l7-3.12z"/></svg> เวลา 17.29 น. พิธีรดน้ำสังข์</p>
-        <p><svg viewBox="0 0 24 24"><path d="M3 17v4h4l11-11-4-4L3 17z"/></svg> เวลา 18.30 น. งานเลี้ยงฉลองมงคลสมรส</p>
-      </div>
-    </div>
-  </div>
-
-  <nav class="bottom-nav">
-    <a href="https://natiphol.github.io/2/" title="การ์ดแต่งงาน" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24"><path d="M12 2L2 7v13h20V7L12 2z"/></svg>
-      การ์ดแต่งงาน
+  <section class="date-section">
+    <h2>วันอาทิตย์ที่ 8 มิถุนายน 2568</h2>
+    <p>ณ ห้องแกรนด์บอลรูม โรงแรมหรูใจกลางกรุงเทพฯ</p>
+    <a class="map-link" href="https://maps.app.goo.gl/CaaGCvt2BpcpdcYR6" target="_blank">
+      ดูแผนที่ใน Google Maps
     </a>
-    <a href="#" title="รูปพรีเวดดิ้ง">
-      <svg viewBox="0 0 24 24"><path d="M4 5h16v14H4zM8 10l3 4 4-6 4 5v3H4v-3z"/></svg>
-      รูปพรีเวดดิ้ง
-    </a>
-    <a href="https://natiphol.github.io/AudioGuestbook/" title="ส่งเสียงอวยพร" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24"><path d="M3 10v4h4l5 5V5L7 10H3z"/></svg>
-      ส่งเสียงอวยพร
-    </a>
-    <a href="#" title="อวยพรด้วยข้อความ">
-      <svg viewBox="0 0 24 24"><path d="M3 17v4h4l11-11-4-4L3 17z"/></svg>
-      อวยพรด้วยข้อความ
-    </a>
+  </section>
+
+  <footer>
+    ขอขอบคุณที่มาร่วมเป็นส่วนหนึ่งในวันสำคัญของเรา
+  </footer>
+
+  <nav>
+    <a href="#home"><i class="fas fa-home"></i>หน้าหลัก</a>
+    <a href="#photos"><i class="fas fa-camera"></i>ภาพถ่าย</a>
+    <a href="#voice"><i class="fas fa-microphone"></i>ฝากเสียง</a>
+    <a href="#wishes"><i class="fas fa-heart"></i>อวยพร</a>
   </nav>
-
-  <audio autoplay loop>
-    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_8e78953510.mp3?filename=romantic-piano-14291.mp3" type="audio/mpeg" />
-    Your browser does not support the audio element.
-  </audio>
-
 </body>
+
 </html>
