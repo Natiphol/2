@@ -1,315 +1,110 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ฝากเสียงอวยพรงานแต่ง</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>การ์ดงานแต่ง ตั๊ก & ตาล</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;500;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-    }
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to bottom, #fdfcfb, #e2e1e0);
+      font-family: 'Sarabun', sans-serif;
+      background: #f9f9f6;
+      color: #2b3a42;
       margin: 0;
-      padding: 2rem 1rem;
+      padding: 0;
+    }
+    .container {
       max-width: 480px;
-      margin-left: auto;
-      margin-right: auto;
+      margin: auto;
+      padding: 20px;
+      background: white;
       border-radius: 16px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-      color: #1a1a1a;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
     }
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      color: #002244;
-      margin-top: 0.5rem;
-      margin-bottom: 0.5rem;
-    }
-    .subtitle {
-      font-size: 0.95rem;
-      color: #555;
-      margin-bottom: 1.5rem;
-    }
-    img.logo {
-      width: 100px;
-      display: block;
-      margin: 0 auto 0.5rem;
-      border-radius: 12px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.2);
-    }
-    input, select, button {
-      font-size: 1rem;
-      padding: 0.75rem;
-      width: 100%;
-      border-radius: 8px;
-      border: 1px solid #d1d1d1;
-      margin: 0.5rem 0;
-    }
-    input::placeholder {
-      color: #aaa;
-    }
-    select {
-      background-color: #fff;
-    }
-    button {
-      background: linear-gradient(to right, #ffd700, #f6c400);
-      color: #002244;
-      font-weight: bold;
-      border: none;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    button:hover {
-      background: linear-gradient(to right, #f6c400, #ffd700);
-      transform: translateY(-1px);
-    }
-    button:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-    }
-    #buttonsContainer {
-      display: flex;
-      gap: 10px;
-      margin-top: 0.5rem;
-    }
-    #buttonsContainer button {
-      flex: 1;
-    }
-    #uploadBtn {
-      margin-top: 10px;
-    }
-    #timer {
-      font-weight: bold;
-      color: #b30000;
-      margin-top: 0.5rem;
-    }
-    #visualizer {
-      width: 100%;
-      height: 70px;
-      background: #fffaf0;
-      border-radius: 10px;
-      margin-top: 1rem;
-    }
-    #status {
-      margin-top: 1rem;
-      min-height: 2rem;
-      font-weight: bold;
+    h1, h2, h3 {
       text-align: center;
-      color: #002244;
+      color: #2a5d9f;
     }
-    #progressRose {
-      margin: 1rem auto 0;
-      width: 50px;
-      height: 50px;
-      background-image: url('https://i.imgur.com/n0DtfkQ.jpg');
-      background-size: cover;
-      animation: spin 1.2s linear infinite;
-      display: none;
+    .heart {
+      font-size: 24px;
+      color: #e67e22;
+      text-align: center;
+      margin: 10px 0;
     }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    .section {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .date-box {
+      background: #2a5d9f;
+      color: white;
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 20px;
+      margin: 10px auto;
+      width: fit-content;
+    }
+    .qrcode {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+    .qrcode img {
+      width: 120px;
+      border-radius: 8px;
+    }
+    footer {
+      text-align: center;
+      font-size: 12px;
+      margin-top: 30px;
+      color: #666;
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <h1>💍 ตั๊ก & ตาล</h1>
+    <p style="text-align: center;">
+      มีความยินดีขอเรียนเชิญท่าน<br>
+      เพื่อเป็นเกียรติในพิธีมงคลสมรสระหว่าง
+    </p>
 
-  <img src="https://i.imgur.com/n0DtfkQ.jpg" alt="โลโก้งานแต่ง" class="logo" />
-  <h1>ฝากเสียงอวยพรงานแต่ง</h1>
-  <div class="subtitle">จะฮา จะซึ้ง จะร้องเพลงก็ได้ ขอแค่พูดถึงเจ้าบ่าวเจ้าสาวบ้างก็พอ 😄❤️</div>
+    <h2>นางสาวพัณณิตา ศรีโกศล (ตั๊ก)</h2>
+    <div class="heart">♥</div>
+    <h2>นายเนติพล ชาญชนะโรจน์ (ตาล)</h2>
 
-  <input type="text" id="name" placeholder="Your name (English only)" />
-  <select id="group">
-    <option value="">-- เลือกกลุ่ม --</option>
-    <option value="groom_family">ครอบครัวเจ้าบ่าว</option>
-    <option value="bride_family">ครอบครัวเจ้าสาว</option>
-    <option value="groom_friends">เพื่อนเจ้าบ่าว</option>
-    <option value="bride_friends">เพื่อนเจ้าสาว</option>
-  </select>
+    <div class="section">
+      <h3>ณ เลิฟสตอรี่ เพชรเกษม 81</h3>
+      <p>163/2 ถนนมาเจริญ แขวงหนองค้างพลู<br>เขตหนองแขม กรุงเทพฯ 10160</p>
+    </div>
 
-  <button id="playGreetingBtn">▶️ ฟังเสียงทักทาย</button>
+    <div class="section">
+      <div class="date-box">
+        วันอาทิตย์ที่ 8 มิถุนายน 2568
+      </div>
+      <p>
+        🥁 พิธีแห่ขันหมาก: 15.30 น.<br>
+        💍 พิธีหมั้น: 16.09 น.<br>
+        💦 พิธีรดน้ำสังข์: 17.29 น.<br>
+        🍽 งานเลี้ยงฉลอง: 18.30 น.
+      </p>
+    </div>
 
-  <div id="buttonsContainer">
-    <button id="startBtn" disabled>🎤 เริ่มอัด</button>
-    <button id="stopBtn" disabled>⏹️ หยุด</button>
-    <button id="resetBtn" disabled>🔁 อัดใหม่</button>
+    <div class="section qrcode">
+      <div>
+        <p style="font-size: 14px;">📍 สถานที่จัดงาน</p>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://maps.app.goo.gl/abc123&size=120x120" alt="QR สถานที่">
+      </div>
+      <div>
+        <p style="font-size: 14px;">💬 แสดงความยินดี</p>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://line.me/ti/p/abc123&size=120x120" alt="QR อวยพร">
+      </div>
+    </div>
+
+    <footer>
+      Theme: Blue • Cream • Green<br>
+      (ขออภัยหากมิได้เรียนเชิญด้วยตนเอง)
+    </footer>
   </div>
-  <button id="uploadBtn" disabled>📤 อัปโหลด</button>
-
-  <div id="timer"></div>
-  <canvas id="visualizer"></canvas>
-  <audio id="audioPlayer" controls></audio>
-  <div id="status"></div>
-  <div id="progressRose"></div>
-
-  <script>
-    const nameInput = document.getElementById('name');
-    nameInput.addEventListener('input', () => {
-      nameInput.value = nameInput.value.replace(/[^a-zA-Z\s]/g, '');
-    });
-
-    const greetingURL = 'https://natiphol.github.io/33/Test.mp3';
-    const playGreetingBtn = document.getElementById('playGreetingBtn');
-    const startBtn = document.getElementById('startBtn');
-    const stopBtn = document.getElementById('stopBtn');
-    const resetBtn = document.getElementById('resetBtn');
-    const uploadBtn = document.getElementById('uploadBtn');
-    const audioPlayer = document.getElementById('audioPlayer');
-    const timerDiv = document.getElementById('timer');
-    const canvas = document.getElementById('visualizer');
-    const ctx = canvas.getContext('2d');
-    const statusDiv = document.getElementById('status');
-    const progressRose = document.getElementById('progressRose');
-    const groupSelect = document.getElementById('group');
-
-    let audioChunks = [], mediaRecorder, stream, audioBlob, timeElapsed = 0, recordingTimer, greetingPlayed = false, animationId;
-
-    canvas.width = canvas.clientWidth;
-    canvas.height = 70;
-
-    playGreetingBtn.addEventListener('click', () => {
-      if (greetingPlayed) return;
-      const audio = new Audio(greetingURL);
-      audio.play();
-      playGreetingBtn.disabled = true;
-      audio.onended = () => {
-        greetingPlayed = true;
-        startBtn.disabled = false;
-        statusDiv.textContent = "🎧 เสียงทักทายเสร็จแล้ว เริ่มอัดได้เลย!";
-      }
-    });
-
-    startBtn.addEventListener('click', async () => {
-      if (!nameInput.value.trim() || !groupSelect.value) {
-        alert("กรุณากรอกชื่อและเลือกกลุ่ม");
-        return;
-      }
-
-      try {
-        stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      } catch {
-        alert("⚠️ ไม่สามารถเข้าถึงไมโครโฟนได้");
-        return;
-      }
-
-      audioChunks = [];
-      mediaRecorder = new MediaRecorder(stream);
-      mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
-      mediaRecorder.onstop = () => {
-        audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-        audioPlayer.src = URL.createObjectURL(audioBlob);
-        stopBtn.disabled = true;
-        resetBtn.disabled = false;
-        uploadBtn.disabled = false;
-        stream.getTracks().forEach(t => t.stop());
-        clearInterval(recordingTimer);
-        clearVisualizer();
-      };
-
-      mediaRecorder.start();
-      startBtn.disabled = true;
-      stopBtn.disabled = false;
-      resetBtn.disabled = true;
-      uploadBtn.disabled = true;
-      timeElapsed = 0;
-      recordingTimer = setInterval(() => {
-        timeElapsed++;
-        const m = String(Math.floor(timeElapsed / 60)).padStart(2, '0');
-        const s = String(timeElapsed % 60).padStart(2, '0');
-        timerDiv.textContent = `⏱️ ${m}:${s}`;
-        if (timeElapsed >= 180) stopBtn.click();
-      }, 1000);
-      startVisualizer();
-    });
-
-    stopBtn.addEventListener('click', () => {
-      if (mediaRecorder?.state === 'recording') mediaRecorder.stop();
-    });
-
-    resetBtn.addEventListener('click', () => {
-      if (confirm("อัดใหม่แน่นะ?")) {
-        audioBlob = null;
-        audioPlayer.src = "";
-        startBtn.disabled = false;
-        resetBtn.disabled = true;
-        uploadBtn.disabled = true;
-        timerDiv.textContent = "";
-        clearVisualizer();
-      }
-    });
-
-    uploadBtn.addEventListener('click', () => {
-      if (!audioBlob) return alert("ยังไม่มีเสียงที่อัดไว้");
-
-      const reader = new FileReader();
-      reader.onloadend = async () => {
-        const base64Audio = reader.result.split(',')[1];
-        const name = nameInput.value.trim();
-        const group = groupSelect.value;
-
-        statusDiv.textContent = "⏳ กำลังอัปโหลด...";
-        progressRose.style.display = "block";
-
-        try {
-          const res = await fetch("https://script.google.com/macros/s/AKfycbxE_TYcDqqheROL652jb8wHmg3K9IHujV6nwrXADVlYqX-RSJNfp1TfdyZdL4Zm7oODMw/exec", {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: new URLSearchParams({ name, group, audio: base64Audio })
-          });
-          const json = await res.json();
-          if (json.success) {
-            statusDiv.innerHTML = `✅ อัปโหลดสำเร็จ!<br><a href="${json.url}" target="_blank">เปิดไฟล์</a>`;
-          } else {
-            throw new Error(json.message);
-          }
-        } catch (err) {
-          statusDiv.textContent = "❌ ล้มเหลว: " + err.message;
-        } finally {
-          progressRose.style.display = "none";
-        }
-      };
-      reader.readAsDataURL(audioBlob);
-    });
-
-    function startVisualizer() {
-      const audioCtx = new AudioContext();
-      const analyser = audioCtx.createAnalyser();
-      const source = audioCtx.createMediaStreamSource(stream);
-      source.connect(analyser);
-      analyser.fftSize = 2048;
-      const dataArray = new Uint8Array(analyser.fftSize);
-
-      function draw() {
-        animationId = requestAnimationFrame(draw);
-        analyser.getByteTimeDomainData(dataArray);
-        ctx.fillStyle = '#fffaf0';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = '#ffcc00';
-        ctx.beginPath();
-        const sliceWidth = canvas.width / dataArray.length;
-        let x = 0;
-        for (let i = 0; i < dataArray.length; i++) {
-          const v = dataArray[i] / 128.0;
-          const y = v * canvas.height / 2;
-          if (i === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-          x += sliceWidth;
-        }
-        ctx.lineTo(canvas.width, canvas.height / 2);
-        ctx.stroke();
-      }
-      draw();
-    }
-
-    function clearVisualizer() {
-      cancelAnimationFrame(animationId);
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
-  </script>
-
 </body>
 </html>
