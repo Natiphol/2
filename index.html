@@ -370,29 +370,31 @@ transform: scale(1.03);
 </section>
 
   <script>
-    // Countdown script พร้อมคำอธิบาย
-    const countdownEl = document.getElementById("countdown");
-    const targetDate = new Date("June 8, 2025 00:00:00").getTime();
+   const countdownEl = document.getElementById("countdown");
+const targetDate = new Date("June 8, 2025 00:00:00").getTime();
 
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const diff = targetDate - now;
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const secs = Math.floor((diff % (1000 * 60)) / 1000);
+function updateCountdown() {
+  const now = new Date().getTime(); // เวลาปัจจุบันเป็น milliseconds
+  const diff = targetDate - now; // คำนวณเวลาที่เหลือ
+  
+  // แปลง milliseconds เป็น วัน ชั่วโมง นาที วินาที
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const secs = Math.floor((diff % (1000 * 60)) / 1000);
 
-      // แสดงผลตัวเลขถอยหลัง
-      countdownEl.innerHTML = 
-        <div>${days}<br>วัน</div>
-        <div>${hours}<br>ชม.</div>
-        <div>${mins}<br>นาที</div>
-        <div>${secs}<br>วินาที</div>
-      ;
-    }
+  // แสดงผลตัวเลขถอยหลังด้วย Template literals
+  countdownEl.innerHTML = `
+    <div>${days}<br>วัน</div>
+    <div>${hours}<br>ชม.</div>
+    <div>${mins}<br>นาที</div>
+    <div>${secs}<br>วินาที</div>
+  `;
+}
 
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
+// เรียกครั้งแรกแล้วตั้ง interval ให้ update ทุกวินาที
+updateCountdown();
+setInterval(updateCountdown, 1000);
   </script>
 
 </body>
