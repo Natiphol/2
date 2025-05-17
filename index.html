@@ -117,21 +117,21 @@
   <p style="margin-top: 1rem;">🎶 กดเล่นเพลง แล้วเลื่อนชมรายละเอียดงานด้านล่างได้เลยค่ะ 🎶</p>
 </section>
 
-  <script>
-    const bgm = document.getElementById('bgm');
-    let hasInteracted = false;
+<script>
+  const bgm = document.getElementById('bgm');
+  let hasInteracted = false;
 
-    function tryPlay() {
-      if (!hasInteracted) {
-        bgm.play().catch(() => {});
-        hasInteracted = true;
-      }
+  function tryPlay() {
+    if (!hasInteracted) {
+      bgm.play().catch(() => {});
+      hasInteracted = true;
     }
+  }
 
-    window.addEventListener('click', tryPlay);
-    window.addEventListener('touchstart', tryPlay);
-    window.addEventListener('scroll', tryPlay);
-  </script>
+  window.addEventListener('click', tryPlay);
+  window.addEventListener('touchstart', tryPlay);
+  window.addEventListener('scroll', tryPlay);
+</script>
 
   <!-- 3. Countdown -->
   <section class="center">
