@@ -124,6 +124,43 @@
       cursor: pointer;
     }
   </style>
+  <style>
+  #lightbox {
+    position: fixed;
+    z-index: 999;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .lightbox-content {
+    max-width: 90%;
+    max-height: 80%;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  }
+
+  .close {
+    position: absolute;
+    top: 30px;
+    right: 50px;
+    font-size: 2.5rem;
+    color: white;
+    cursor: pointer;
+  }
+
+  .gallery-bw img {
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+
+  .gallery-bw img:hover {
+    transform: scale(1.03);
+  }
+</style>
 </head>
 <body>
   <!-- ส่วน Header รูปภาพหลัก -->
