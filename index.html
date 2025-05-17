@@ -100,6 +100,31 @@
       from { opacity: 0; }
       to { opacity: 1; }
     }
+    #lightbox {
+  position: fixed;
+  z-index: 9999;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0,0,0,0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#lightbox-img {
+  max-width: 90%;
+  max-height: 80%;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255,255,255,0.3);
+}
+
+#lightbox .close {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+}
   </style>
 </head>
 <body>
@@ -159,15 +184,48 @@
 </section>
 
   <!-- 6. แกลลอรี่ภาพเลื่อนด้านข้าง -->
-  <section class="gallery">
-    <img src="https://i.postimg.cc/wvTDyWTX/DSC-7222-19637.jpg" alt="ภาพ1">
-    <img src="https://i.postimg.cc/SsTCWWJw/DSC-7529-19944.jpg" alt="ภาพ2">
-    <img src="https://i.postimg.cc/SRn8VJ9j/DSC-7681-20095.jpg" alt="ภาพ3">
-    <!-- เพิ่มรูปตามต้องการ -->
-  </section>
-  <div class="dots center">
-    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-  </div>
+ <section class="gallery">
+  <img src="https://i.postimg.cc/wvTDyWTX/DSC-7222-19637.jpg" alt="ภาพ1">
+  <img src="https://i.postimg.cc/SsTCWWJw/DSC-7529-19944.jpg" alt="ภาพ2">
+  <img src="https://i.postimg.cc/SRn8VJ9j/DSC-7681-20095.jpg" alt="ภาพ3">
+  <!-- เพิ่มรูปตามต้องการ -->
+</section>
+<div class="dots center">
+  <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+</div>
+
+<!-- Lightbox Overlay -->
+<div id="lightbox" style="display: none;">
+  <span class="close">&times;</span>
+  <img class="lightbox-content" id="lightbox-img">
+</div>
+
+<script>
+  // ฟีเจอร์ Lightbox ดูรูปขยาย
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const closeBtn = document.querySelector('#lightbox .close');
+
+  document.querySelectorAll('.gallery img, .gallery-bw img').forEach(img => {
+    img.addEventListener('click', () => {
+      lightbox.style.display = 'flex';
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+    });
+  });
+
+  closeBtn.addEventListener('click', () => {
+    lightbox.style.display = 'none';
+    lightboxImg.src = '';
+  });
+
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) {
+      lightbox.style.display = 'none';
+      lightboxImg.src = '';
+    }
+  });
+</script>
 
   <!-- 7. รายละเอียดครอบครัว -->
   <section class="family">
