@@ -172,12 +172,9 @@
 
   <!-- แกลเลอรี่ภาพแนวนอน -->
   <section class="gallery">
-    <img src="https://i.postimg.cc/wvTDyWTX/DSC-7222-19637.jpg" alt="ภาพ1">
-    <img src="https://i.postimg.cc/SsTCWWJw/DSC-7529-19944.jpg" alt="ภาพ2">
-    <img src="https://i.postimg.cc/SRn8VJ9j/DSC-7681-20095.jpg" alt="ภาพ3">
-    <img src="https://i.postimg.cc/02vVmwcN/DSC-0160.jpg" alt="ภาพ4">
-    <img src="https://i.postimg.cc/9QJgcQPQ/DSC-7255-19670.jpg" alt="ภาพ5">
-    <img src="https://i.postimg.cc/cCRT2x4Z/DSC-7266-19681.jpg" alt="ภาพ6">
+    <img src="https://i.postimg.cc/SsTCWWJw/DSC-7529-19944.jpg" alt="ภาพ1">
+    <img src="https://i.postimg.cc/02vVmwcN/DSC-0160.jpg" alt="ภาพ2">
+    <img src="https://i.postimg.cc/cCRT2x4Z/DSC-7266-19681.jpg" alt="ภาพ3">
   </section>
   <div class="dots center">
     <span class="dot"></span><span class="dot"></span><span class="dot"></span>
@@ -318,14 +315,46 @@
 
 
   <!-- แกลเลอรี่ภาพบ่าวสาว ขาวดำ -->
-  <section class="gallery-bw">
-    <img src="https://i.postimg.cc/2yR20bY2/DSC08741-1.jpg" alt="บ่าวสาว1" class="fade-in">
-    <img src="https://i.postimg.cc/ZRywPPGW/DSC08770.jpg" alt="บ่าวสาว2" class="fade-in">
-    <img src="https://i.postimg.cc/wvTDyWTX/DSC-7222-19637.jpg" alt="บ่าวสาว3" class="fade-in">
-    <img src="https://i.postimg.cc/SRn8VJ9j/DSC-7681-20095.jpg" alt="บ่าวสาว4" class="fade-in">
-     <img src="https://i.postimg.cc/9QJgcQPQ/DSC-7255-19670.jpg" alt="บ่าวสาว5" class="fade-in">
-  </section>
+<section class="gallery-bw">
+  <img src="https://i.postimg.cc/2yR20bY2/DSC08741-1.jpg" alt="บ่าวสาว1" class="fade-in">
+  <img src="https://i.postimg.cc/ZRywPPGW/DSC08770.jpg" alt="บ่าวสาว2" class="fade-in">
+  <img src="https://i.postimg.cc/wvTDyWTX/DSC-7222-19637.jpg" alt="บ่าวสาว3" class="fade-in">
+  <img src="https://i.postimg.cc/SRn8VJ9j/DSC-7681-20095.jpg" alt="บ่าวสาว4" class="fade-in">
+  <img src="https://i.postimg.cc/9QJgcQPQ/DSC-7255-19670.jpg" alt="บ่าวสาว5" class="fade-in">
+</section>
 
+<!-- Lightbox -->
+<div id="lightbox" style="display: none;">
+  <span class="close">&times;</span>
+  <img class="lightbox-content" id="lightbox-img">
+</div>
+    <script>
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const closeBtn = document.querySelector('#lightbox .close');
+
+  document.querySelectorAll('.gallery-bw img').forEach(img => {
+    img.addEventListener('click', () => {
+      lightbox.style.display = 'flex';
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+    });
+  });
+
+  closeBtn.addEventListener('click', () => {
+    lightbox.style.display = 'none';
+    lightboxImg.src = '';
+  });
+
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) {
+      lightbox.style.display = 'none';
+      lightboxImg.src = '';
+    }
+  });
+</script>
+
+    
   <script>
     // Countdown script พร้อมคำอธิบาย
     const countdownEl = document.getElementById("countdown");
