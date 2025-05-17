@@ -370,33 +370,37 @@ transform: scale(1.03);
 </section>
 
 <script>
-function updateCountdown() {
-  const weddingDate = new Date("2025-06-08T15:30:00"); // แก้ไขเป็นวันเวลาจริงของงาน
-  const now = new Date();
-  const diff = weddingDate - now;
+  const countdownEl = document.getElementById('countdown');
+  // ตั้งวันที่งานแต่ง (ปี, เดือน-1, วัน, ชม, นาที, วินาที)
+  const weddingDate = new Date(2025, 5, 8, 16, 0, 0); // 8 มิถุนายน 2025 16:00
 
-  if (diff <= 0) {
-    document.getElementById("countdown").innerHTML = "<div>🎉 ถึงวันแต่งงานแล้ว! 🎉</div>";
-    return;
+  function updateCountdown() {
+    const now = new Date();
+    const diff = weddingDate - now;
+
+    if (diff <= 0) {
+      countdownEl.innerHTML = '<div>งานเริ่มแล้ว 🎉</div>';
+      clearInterval(interval);
+      return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    countdownEl.innerHTML = `
+      <div><strong>${days}</strong><br>วัน</div>
+      <div><strong>${hours.toString().padStart(2,'0')}</strong><br>ชม.</div>
+      <div><strong>${minutes.toString().padStart(2,'0')}</strong><br>นาที</div>
+      <div><strong>${seconds.toString().padStart(2,'0')}</strong><br>วิ</div>
+    `;
   }
 
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-  const minutes = Math.floor((diff / (1000 * 60)) % 60);
-  const seconds = Math.floor((diff / 1000) % 60);
-
-  document.getElementById("countdown").innerHTML = `
-    <div><strong>${days}</strong><br>วัน</div>
-    <div><strong>${hours}</strong><br>ชั่วโมง</div>
-    <div><strong>${minutes}</strong><br>นาที</div>
-    <div><strong>${seconds}</strong><br>วินาที</div>
-  `;
-}
-
-// อัปเดตทุกวินาที
-setInterval(updateCountdown, 1000);
-updateCountdown();
+  updateCountdown();
+  const interval = setInterval(updateCountdown, 1000);
 </script>
+
 
 </body>
 </html> 
