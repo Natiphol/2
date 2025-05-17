@@ -127,9 +127,38 @@
 </head>
 <body>
   <!-- ส่วน Header รูปภาพหลัก -->
-  <header>
-    <img src="https://i.postimg.cc/zXSjn3gJ/DSC08741.jpg" alt="ภาพปกงานแต่ง">
-  </header>
+  <header style="position: relative; text-align: center; color: white;">
+  <img src="https://i.postimg.cc/zXSjn3gJ/DSC08741.jpg" alt="ภาพปกงานแต่ง" style="width: 100%; height: auto;">
+  <h1 class="animated-text">งานแต่งงานของเรา</h1>
+</header>
+
+<style>
+  header {
+    position: relative;
+  }
+  .animated-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    font-weight: bold;
+    color: white;
+    opacity: 0;
+    animation: fadeUp 2s ease forwards;
+  }
+
+  @keyframes fadeUp {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -30%);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
+  }
+</style>
 
   <!-- ส่วนเพลงแนะนำพร้อม autoplay ด้วย interaction -->
   <section class="audio-section center">
