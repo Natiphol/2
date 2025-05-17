@@ -1,237 +1,168 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>การ์ดงานแต่งงาน พัณณิตา & เนติพล</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Sriracha&family=Kanit:wght@300;600&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>การ์ดงานแต่งงาน พัณณิตา & เนติพล</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Sriracha&family=Kanit:wght@300;600&display=swap');
 
-  body {
-    margin: 0;
-    font-family: 'Kanit', sans-serif;
-    /* พื้นหลังภาพจากลิงก์ Google Drive (ใช้ลิงก์ตรงดาวน์โหลด) */
-    background: url('https://drive.google.com/uc?export=download&id=1TQsT_SsnluurOPstICuacdbIO-mgI8sT') no-repeat center center fixed;
-    background-size: cover;
-    color: #3a4661;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
+    body {
+      margin: 0;
+      font-family: 'Kanit', sans-serif;
+      background: url('https://i.imgur.com/3rZvqVa.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #3a4661;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
 
-  .overlay {
-    background: rgba(255 255 255 / 0.85);
-    flex-grow: 1;
-    margin: 20px;
-    border-radius: 18px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    max-width: 480px;
-    width: 95%;
-    padding: 30px 40px;
-    box-sizing: border-box;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  header {
-    text-align: center;
-    margin-bottom: 25px;
-    position: relative;
-  }
-
-  /* โลโก้แทนชื่อคู่รัก */
-  .logo {
-    width: 140px;
-    opacity: 0.9;
-    margin: 0 auto 16px auto;
-    display: block;
-  }
-
-  .invitation-text {
-    margin: 20px 0 25px;
-    font-weight: 400;
-    font-size: 1rem;
-    letter-spacing: 0.05em;
-    white-space: nowrap;
-    color: #3a4661dd;
-  }
-
-  .couple {
-    background: #d9e7f9;
-    border-radius: 12px;
-    padding: 18px 20px;
-    width: 100%;
-    text-align: center;
-    font-weight: 600;
-    font-size: 1.3rem;
-    box-shadow: 0 4px 10px rgba(58,70,97,0.15);
-    margin-bottom: 25px;
-    color: #354a92;
-  }
-
-  .couple > span {
-    display: inline-block;
-    margin: 0 12px;
-    font-size: 1.4rem;
-    color: #5485d6;
-    vertical-align: middle;
-  }
-
-  .address {
-    font-size: 0.8rem;
-    color: #666d87;
-    margin-bottom: 30px;
-    line-height: 1.4;
-  }
-
-  .calendar {
-    background: #3a4661;
-    border-radius: 10px;
-    width: 120px;
-    text-align: center;
-    color: #d9e7f9;
-    font-weight: 700;
-    margin-bottom: 20px;
-    user-select: none;
-  }
-
-  .calendar .day {
-    background: #5472d6;
-    padding: 8px 0;
-    font-size: 1.2rem;
-    border-radius: 10px 10px 0 0;
-  }
-
-  .calendar .date {
-    font-size: 2.4rem;
-    padding: 10px 0 16px;
-    letter-spacing: 0.1em;
-  }
-
-  .content-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 25px;
-    margin-bottom: 30px;
-    width: 100%;
-  }
-
-  .content-left, .content-right {
-    background: #d9e7f9;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 4px 14px rgba(58,70,97,0.12);
-    flex: 1 1 210px;
-    max-width: 280px;
-  }
-
-  .qr-label {
-    font-size: 0.8rem;
-    color: #3a4661cc;
-    text-align: center;
-    margin-top: 8px;
-  }
-
-  .content-right p {
-    margin: 14px 0;
-    font-size: 0.9rem;
-    color: #3a4661;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .content-right svg {
-    width: 22px;
-    height: 22px;
-    stroke: #3a4661;
-    stroke-width: 1.5;
-    fill: none;
-    flex-shrink: 0;
-  }
-
-  .qr-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: nowrap;
-  }
-
-  .qr-container img {
-    width: 80px;
-    height: 80px;
-    border-radius: 10px;
-    border: 2px solid #3a4661aa;
-  }
-
-  /* แทบเมนูล่าง */
-  nav.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    max-width: 480px;
-    background: #3a4661dd;
-    display: flex;
-    justify-content: space-around;
-    box-shadow: 0 -4px 10px rgb(0 0 0 / 0.15);
-    font-weight: 600;
-    font-size: 0.88rem;
-    z-index: 10;
-    border-radius: 15px 15px 0 0;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  nav.bottom-nav a {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: #d9e7f9;
-    padding: 10px 8px 6px;
-    text-decoration: none;
-    user-select: none;
-    transition: color 0.25s ease;
-  }
-
-  nav.bottom-nav a:hover,
-  nav.bottom-nav a:focus {
-    color: #fff;
-  }
-
-  nav.bottom-nav svg {
-    width: 24px;
-    height: 24px;
-    stroke: currentColor;
-    stroke-width: 2;
-    fill: none;
-    margin-bottom: 4px;
-  }
-
-  /* เพลงบรรเลงซ่อน */
-  audio {
-    display: none;
-  }
-
-  @media (max-width: 480px) {
     .overlay {
-      padding: 25px 25px 60px;
-      margin: 15px 10px 70px;
+      background: rgba(255, 255, 255, 0.85);
+      flex-grow: 1;
+      margin: 20px auto;
+      border-radius: 18px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      max-width: 480px;
+      width: 95%;
+      padding: 30px 40px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
+
+    header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .logo {
+      width: 140px;
+      opacity: 0.9;
+      margin-bottom: 16px;
+    }
+
+    .invitation-text {
+      font-weight: 400;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+      color: #3a4661dd;
+    }
+
+    .couple {
+      background: #d9e7f9;
+      border-radius: 12px;
+      padding: 18px 20px;
+      width: 100%;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.3rem;
+      margin: 20px 0;
+      box-shadow: 0 4px 10px rgba(58, 70, 97, 0.15);
+      color: #354a92;
+    }
+
+    .couple span {
+      margin: 0 12px;
+      font-size: 1.4rem;
+      color: #5485d6;
+    }
+
+    .address {
+      font-size: 0.85rem;
+      color: #444a5d;
+      margin-bottom: 20px;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .map-link {
+      display: inline-block;
+      background: #354a92;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-bottom: 25px;
+      transition: background 0.3s ease;
+    }
+
+    .map-link:hover {
+      background: #274087;
+    }
+
     .calendar {
-      width: 100px;
+      background: #3a4661;
+      border-radius: 10px;
+      width: 140px;
+      text-align: center;
+      color: #fff;
+      font-weight: 700;
+      margin-bottom: 20px;
     }
-  }
-</style>
+
+    .calendar .day {
+      background: #5472d6;
+      padding: 8px 0;
+      font-size: 1.2rem;
+      border-radius: 10px 10px 0 0;
+    }
+
+    .calendar .date {
+      font-size: 2.4rem;
+      padding: 10px 0 16px;
+      letter-spacing: 0.1em;
+    }
+
+    .content-right {
+      background: #d9e7f9;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 14px rgba(58,70,97,0.12);
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .content-right p {
+      margin: 14px 0;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .content-right svg {
+      width: 22px;
+      height: 22px;
+      stroke: #3a4661;
+      stroke-width: 1.5;
+      fill: none;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 480px) {
+      .overlay {
+        padding: 25px 20px;
+        margin: 15px 10px;
+      }
+
+      .calendar {
+        width: 100px;
+      }
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
 </head>
 <body>
 
 <div class="overlay">
   <header>
-    <!-- โลโก้แทน T & T -->
     <img src="https://i.imgur.com/n0DtfkQ.jpg" alt="โลโก้งานแต่ง" class="logo" />
     <div class="invitation-text">ขอเรียนเชิญร่วมเป็นเกียรติในพิธีมงคลสมรส</div>
   </header>
@@ -241,56 +172,29 @@
   </section>
 
   <div class="address">
-    ณ เลิฟสตอรี่ เพชรเกษม 81<br />
+    ณ เลิฟสตอรี่ เพชรเกษม 81<br/>
     163/2 ถนนมาเจริญ แขวงหนองค้างพลู เขตหนองแขม กรุงเทพฯ 10160
   </div>
 
-  <div class="content-row">
-    <div class="calendar">
-      <div class="day">วันอาทิตย์</div>
-      <div class="date">8 มิ.ย. 68</div>
-    </div>
+  <a href="https://maps.app.goo.gl/1YGUcFxjvJeWgZPB6" class="map-link" target="_blank" rel="noopener">
+    ดูแผนที่ใน Google Maps
+  </a>
 
-    <div class="content-left">
-      <div class="qr-container">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?data=สถานที่จัดงาน&size=80x80" alt="QR สถานที่จัดงาน" />
-        <img src="https://api.qrserver.com/v1/create-qr-code/?data=ร่วมแสดงความยินดี&size=80x80" alt="QR ร่วมแสดงความยินดี" />
-      </div>
-      <div class="qr-label">สถานที่จัดงาน</div>
-      <div class="qr-label">ร่วมแสดงความยินดี</div>
-    </div>
+  <div class="calendar">
+    <div class="day">วันอาทิตย์</div>
+    <div class="date">8 มิ.ย. 68</div>
+  </div>
 
-    <div class="content-right">
-      <p><svg viewBox="0 0 24 24"><path d="M3 10v4h4l5 5V5L7 10H3z"/></svg> เวลา 15.30 น. พิธีแห่ขันหมาก</p>
-      <p><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#3a4661" stroke-width="1.5" fill="none"/><path d="M12 8v8M8 12h8"/></svg> เวลา 16.09 น. พิธีหมั้น</p>
-      <p><svg viewBox="0 0 24 24"><path d="M12 2L2 7v13h20V7L12 2zM12 4.44l7 3.11v10.45H5V7.56l7-3.12z"/></svg> เวลา 17.29 น. พิธีรดน้ำสังข์</p>
-      <p><svg viewBox="0 0 24 24"><path d="M3 17v4h4l11-11-4-4L3 17z"/></svg> เวลา 18.30 น. งานเลี้ยงฉลองมงคลสมรส</p>
-    </div>
+  <div class="content-right">
+    <p><svg viewBox="0 0 24 24"><path d="M3 10v4h4l5 5V5L7 10H3z"/></svg> เวลา 15.30 น. พิธีแห่ขันหมาก</p>
+    <p><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg> เวลา 16.09 น. พิธีหมั้น</p>
+    <p><svg viewBox="0 0 24 24"><path d="M12 2L2 7v13h20V7L12 2zM12 4.44l7 3.11v10.45H5V7.56l7-3.12z"/></svg> เวลา 17.29 น. พิธีรดน้ำสังข์</p>
+    <p><svg viewBox="0 0 24 24"><path d="M3 17v4h4l11-11-4-4L3 17z"/></svg> เวลา 18.30 น. งานเลี้ยงฉลองมงคลสมรส</p>
   </div>
 </div>
 
-<nav class="bottom-nav">
-  <a href="https://natiphol.github.io/2/" title="การ์ดงานแต่ง" target="_blank" rel="noopener">
-    <svg viewBox="0 0 24 24"><path d="M12 2L2 7v13h20V7L12 2zM12 4.44l7 3.11v10.45H5V7.56l7-3.12zM11 11h2v5h-2v-5z"/></svg>
-    การ์ดงานแต่ง
-  </a>
-  <a href="#" title="รูปพรีเวดดิ้ง">
-    <svg viewBox="0 0 24 24"><path d="M4 5h16v14H4zM8 10l3 4 4-6 4 5v3H4v-3z"/></svg>
-    รูปพรีเวดดิ้ง
-  </a>
-  <a href="https://natiphol.github.io/AudioGuestbook/" title="ส่งเสียงอวยพร" target="_blank" rel="noopener">
-    <svg viewBox="0 0 24 24"><path d="M3 10v4h4l5 5V5L7 10H3z"/></svg>
-    ส่งเสียงอวยพร
-  </a>
-  <a href="#" title="เขียนคำอวยพร">
-    <svg viewBox="0 0 24 24"><path d="M3 17v4h4l11-11-4-4L3 17z"/></svg>
-    เขียนคำอวยพร
-  </a>
-</nav>
-
 <audio autoplay loop>
   <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_8e78953510.mp3?filename=romantic-piano-14291.mp3" type="audio/mpeg" />
-  Your browser does not support the audio element.
 </audio>
 
 </body>
