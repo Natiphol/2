@@ -7,160 +7,156 @@
   <title>งานแต่ง ตั๊ก ❤ ตาล</title>
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;600&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Sarabun', sans-serif;
-      margin: 0;
-      background: #fefefe;
-      color: #333;
-    }
-    header img {
-      width: 100%;
-      display: block;
-    }
-    .center {
-      text-align: center;
-    }
-    .audio-section {
-      padding: 2rem;
-    }
-    .countdown {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      font-size: 1.5rem;
-      padding: 1rem 0;
-    }
-    .countdown div {
-      background: #e0f7fa;
-      border-radius: 10px;
-      padding: 1rem;
-      min-width: 60px;
-    }
-    .message {
-      padding: 2rem;
-      background: #f3faff;
-      font-size: 1.2rem;
-    }
-    .map {
-      text-align: center;
-      padding: 1rem;
-    }
-    .gallery, .gallery-bw {
-      display: flex;
-      overflow-x: scroll;
-      gap: 1rem;
-      padding: 1rem;
-      scroll-snap-type: x mandatory;
-    }
-    .gallery img, .gallery-bw img {
-      height: 300px;
-      border-radius: 10px;
-      scroll-snap-align: center;
-    }
-    .dots {
-      text-align: center;
-      margin-top: 0.5rem;
-    }
-    .dot {
-      height: 10px;
-      width: 10px;
-      background-color: #bbb;
-      border-radius: 50%;
-      display: inline-block;
-      margin: 0 2px;
-    }
-    .family, .schedule, .theme {
-      padding: 2rem;
-    }
-    .family h2, .schedule h2, .theme h2 {
-      text-align: center;
-      font-weight: 600;
-    }
-    .family p, .schedule p {
-      text-align: center;
-      margin: 0.5rem 0;
-    }
-    .theme .colors {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-    .theme .colors div {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-    }
-    .blue { background-color: #6ca0dc; }
-    .cream { background-color: #f7e9d7; }
-    .green { background-color: #a5d8d2; }
-    .fade-in {
-      animation: fadeIn 1s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    #lightbox {
-      position: fixed;
-      z-index: 9999;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: rgba(0,0,0,0.9);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    #lightbox-img {
-      max-width: 90%;
-      max-height: 80%;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(255,255,255,0.3);
-    }
-    #lightbox .close {
-      position: absolute;
-      top: 30px;
-      right: 30px;
-      font-size: 2rem;
-      color: white;
-      cursor: pointer;
-    }
-  </style>
-  <style>
+  body {
+    font-family: 'Sarabun', sans-serif;
+    margin: 0;
+    background: #fefefe;
+    color: #333;
+  }
+
+  header img {
+    width: 100%;
+    display: block;
+  }
+
+  .center {
+    text-align: center;
+  }
+
+  .audio-section {
+    padding: 2rem;
+  }
+
+  .countdown {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    font-size: 1.5rem;
+    padding: 1rem 0;
+  }
+
+  .countdown div {
+    background: #e0f7fa;
+    border-radius: 10px;
+    padding: 1rem;
+    min-width: 60px;
+  }
+
+  .message {
+    padding: 2rem;
+    background: #f3faff;
+    font-size: 1.2rem;
+  }
+
+  .map {
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .gallery, .gallery-bw {
+    display: flex;
+    overflow-x: scroll;
+    gap: 1rem;
+    padding: 1rem;
+    scroll-snap-type: x mandatory;
+  }
+
+  .gallery img, .gallery-bw img {
+    height: 300px;
+    border-radius: 10px;
+    scroll-snap-align: center;
+  }
+
+  .gallery-bw img {
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+
+  .gallery-bw img:hover {
+    transform: scale(1.03);
+  }
+
+  .dots {
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+
+  .dot {
+    height: 10px;
+    width: 10px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 2px;
+  }
+
+  .family, .schedule, .theme {
+    padding: 2rem;
+  }
+
+  .family h2, .schedule h2, .theme h2 {
+    text-align: center;
+    font-weight: 600;
+  }
+
+  .family p, .schedule p {
+    text-align: center;
+    margin: 0.5rem 0;
+  }
+
+  .theme .colors {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .theme .colors div {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+  }
+
+  .blue { background-color: #6ca0dc; }
+  .cream { background-color: #f7e9d7; }
+  .green { background-color: #a5d8d2; }
+
+  .fade-in {
+    animation: fadeIn 1s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
   #lightbox {
     position: fixed;
-    z-index: 999;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.85);
+    z-index: 9999;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0,0,0,0.9);
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-.lightbox-content {
-max-width: 90%;
-max-height: 80%;
-border-radius: 10px;
-box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-}
+  #lightbox-img {
+    max-width: 90%;
+    max-height: 80%;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(255,255,255,0.3);
+  }
 
-.close {
-position: absolute;
-top: 30px;
-right: 50px;
-font-size: 2.5rem;
-color: white;
-cursor: pointer;
-}
+  #lightbox .close {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    font-size: 2rem;
+    color: white;
+    cursor: pointer;
+  }
+</style>
 
-.gallery-bw img {
-cursor: pointer;
-transition: transform 0.3s;
-}
-
-.gallery-bw img\:hover {
-transform: scale(1.03);
-} </style>
 
 </head>
 <body>
