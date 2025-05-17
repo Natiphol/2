@@ -101,134 +101,130 @@
       to { opacity: 1; }
     }
     #lightbox {
-  position: fixed;
-  z-index: 9999;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(0,0,0,0.9);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#lightbox-img {
-  max-width: 90%;
-  max-height: 80%;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(255,255,255,0.3);
-}
-
-#lightbox .close {
-  position: absolute;
-  top: 30px;
-  right: 30px;
-  font-size: 2rem;
-  color: white;
-  cursor: pointer;
-}
+      position: fixed;
+      z-index: 9999;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0,0,0,0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #lightbox-img {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+    }
+    #lightbox .close {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
-  <!-- 1. รูปภาพหลัก -->
+  <!-- ส่วน Header รูปภาพหลัก -->
   <header>
     <img src="https://i.postimg.cc/zXSjn3gJ/DSC08741.jpg" alt="ภาพปกงานแต่ง">
   </header>
 
-<!-- 2. เพลง และข้อความแนะนำ -->
-<section class="audio-section" style="text-align: center; padding: 2rem;">
-  <audio id="bgm" controls playsinline>
-    <source src="https://natiphol.github.io/mp3/No.mp3" type="audio/mp3">
-    เบราว์เซอร์ของคุณไม่รองรับเสียง
-  </audio>
-  <p style="margin-top: 1rem;">🎶 กดเล่นเพลง แล้วเลื่อนชมรายละเอียดงานด้านล่างได้เลยค่ะ 🎶</p>
-</section>
+  <!-- ส่วนเพลงแนะนำพร้อม autoplay ด้วย interaction -->
+  <section class="audio-section center">
+    <audio id="bgm" controls playsinline>
+      <source src="https://natiphol.github.io/mp3/No.mp3" type="audio/mp3">
+      เบราว์เซอร์ของคุณไม่รองรับเสียง
+    </audio>
+    <p style="margin-top: 1rem;">🎶 กดเล่นเพลง แล้วเลื่อนชมรายละเอียดงานด้านล่างได้เลยค่ะ 🎶</p>
+  </section>
 
-<script>
-  const bgm = document.getElementById('bgm');
-  let hasInteracted = false;
+  <script>
+    // พยายามเล่นเพลงเมื่อมี interaction ครั้งแรก
+    const bgm = document.getElementById('bgm');
+    let hasInteracted = false;
 
-  function tryPlay() {
-    if (!hasInteracted) {
-      bgm.play().catch(() => {});
-      hasInteracted = true;
+    function tryPlay() {
+      if (!hasInteracted) {
+        bgm.play().catch(() => {});
+        hasInteracted = true;
+      }
     }
-  }
 
-  window.addEventListener('click', tryPlay);
-  window.addEventListener('touchstart', tryPlay);
-  window.addEventListener('scroll', tryPlay);
-</script>
+    window.addEventListener('click', tryPlay);
+    window.addEventListener('touchstart', tryPlay);
+    window.addEventListener('scroll', tryPlay);
+  </script>
 
-  <!-- 3. Countdown -->
+  <!-- Countdown ถึงวันแต่งงาน -->
   <section class="center">
     <h2>นับถอยหลังสู่งานมงคล</h2>
     <div class="countdown" id="countdown"></div>
   </section>
 
-  <!-- 4. ความรู้สึกจากบ่าวสาว -->
+  <!-- ข้อความความรู้สึกจากบ่าวสาว -->
   <section class="message">
     <p class="center">ในวันที่พิเศษของเรา ตั๊กและตาลอยากแบ่งปันความสุขนี้กับทุกคนที่เรารัก</p>
     <p class="center">ขอบคุณที่เป็นส่วนหนึ่งของความทรงจำที่มีความหมาย</p>
   </section>
 
+  <!-- แกลเลอรี่ภาพแนวนอน -->
+  <section class="gallery">
+    <img src="https://i.postimg.cc/wvTDyWTX/DSC-7222-19637.jpg" alt="ภาพ1">
+    <img src="https://i.postimg.cc/SsTCWWJw/DSC-7529-19944.jpg" alt="ภาพ2">
+    <img src="https://i.postimg.cc/SRn8VJ9j/DSC-7681-20095.jpg" alt="ภาพ3">
+  </section>
+  <div class="dots center">
+    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+  </div>
 
+  <!-- Lightbox สำหรับดูภาพเต็ม -->
+  <div id="lightbox" style="display: none;">
+    <span class="close">&times;</span>
+    <img class="lightbox-content" id="lightbox-img">
+  </div>
 
-  <!-- 6. แกลลอรี่ภาพเลื่อนด้านข้าง -->
- <section class="gallery">
-  <img src="https://i.postimg.cc/wvTDyWTX/DSC-7222-19637.jpg" alt="ภาพ1">
-  <img src="https://i.postimg.cc/SsTCWWJw/DSC-7529-19944.jpg" alt="ภาพ2">
-  <img src="https://i.postimg.cc/SRn8VJ9j/DSC-7681-20095.jpg" alt="ภาพ3">
-  <!-- เพิ่มรูปตามต้องการ -->
-</section>
-<div class="dots center">
-  <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-</div>
+  <script>
+    // ฟังก์ชันเปิด Lightbox เมื่อคลิกภาพ
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const closeBtn = document.querySelector('#lightbox .close');
 
-<!-- Lightbox Overlay -->
-<div id="lightbox" style="display: none;">
-  <span class="close">&times;</span>
-  <img class="lightbox-content" id="lightbox-img">
-</div>
-
-<script>
-  // ฟีเจอร์ Lightbox ดูรูปขยาย
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImg = document.getElementById('lightbox-img');
-  const closeBtn = document.querySelector('#lightbox .close');
-
-  document.querySelectorAll('.gallery img, .gallery-bw img').forEach(img => {
-    img.addEventListener('click', () => {
-      lightbox.style.display = 'flex';
-      lightboxImg.src = img.src;
-      lightboxImg.alt = img.alt;
+    document.querySelectorAll('.gallery img, .gallery-bw img').forEach(img => {
+      img.addEventListener('click', () => {
+        lightbox.style.display = 'flex';
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+      });
     });
-  });
 
-  closeBtn.addEventListener('click', () => {
-    lightbox.style.display = 'none';
-    lightboxImg.src = '';
-  });
-
-  lightbox.addEventListener('click', e => {
-    if (e.target === lightbox) {
+    closeBtn.addEventListener('click', () => {
       lightbox.style.display = 'none';
       lightboxImg.src = '';
-    }
-  });
-</script>
+    });
 
-  <!-- 7. รายละเอียดครอบครัว -->
+    lightbox.addEventListener('click', e => {
+      if (e.target === lightbox) {
+        lightbox.style.display = 'none';
+        lightboxImg.src = '';
+      }
+    });
+  </script>
+
+  <!-- ข้อมูลครอบครัวผู้จัดงาน -->
   <section class="family">
     <h2>เรียนเชิญร่วมเป็นเกียรติในพิธีมงคลสมรส</h2>
     <p>นายสีศักดิ์ ศรีโกศล (พ่อ) และ นางสาวหนูพิน เจนวิถี (แม่)</p>
     <p>นายวรพันธุ์ ชาญชนะโรจน์ (พี่ชาย) และ นางกานต์สินี ชาญชนะโรจน์ (แม่)</p>
   </section>
 
-  <!-- 8. ชื่อบ่าวสาว -->
+  <!-- ชื่อบ่าวสาว -->
   <section class="center">
     <h2>💍 นางสาวพัณณิตา ศรีโกศล (ตั๊ก) ❤ นายเนติพล ชาญชนะโรจน์ (ตาล) 💍</h2>
   </section>
 
-  <!-- 9. กำหนดพิธีการ -->
+  <!-- ตารางพิธีการ -->
   <section class="schedule">
     <h2>กำหนดพิธีการ</h2>
     <p>15.30 น. พิธีแห่ขันหมาก</p>
@@ -237,7 +233,7 @@
     <p>18.30 น. งานเลี้ยงฉลองมงคลสมรส</p>
   </section>
 
-  <!-- 10. ธีมสี -->
+  <!-- ธีมสีของงาน -->
   <section class="theme">
     <h2>ธีมสีงาน</h2>
     <div class="colors">
@@ -246,49 +242,51 @@
       <div class="green" title="Green (ออกฟ้า)"></div>
     </div>
   </section>
-  
- <!-- 5. ลิงก์แผนที่ -->
-<section class="map">
-  <h3>สถานที่จัดงาน</h3>
-  <iframe 
-    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3876.024823361872!2d100.52788731534905!3d13.719424790372071!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29eb19a7a433f%3A0xa5a5b9c504cc7f53!2z4LmI4Lij4LmA4Li14Liq4Lit4LiZ4LmI4LiB4Lii4Lin4LiX4Li04Lil4Lij4Lih4Liy4LiE4LmJ4LiV4Lii4LmE4Lio4Liy4Lih!5e0!3m2!1sth!2sth!4v1684353290456!5m2!1sth!2sth" 
-    width="90%" 
-    height="300" 
-    frameborder="0"
-    style="border:0;" 
-    allowfullscreen="true" 
-    loading="lazy"></iframe>
-</section>
 
-  <!-- 11. แกลลอรี่บ่าวสาว -->
+  <!-- แผนที่สถานที่จัดงาน -->
+  <section class="map">
+    <h3>สถานที่จัดงาน</h3>
+    <iframe 
+      src="https://www.google.com/maps/embed?..." 
+      width="90%" 
+      height="300" 
+      frameborder="0"
+      style="border:0;" 
+      allowfullscreen="true" 
+      loading="lazy">
+    </iframe>
+  </section>
+
+  <!-- แกลเลอรี่ภาพบ่าวสาว ขาวดำ -->
   <section class="gallery-bw">
     <img src="bw1.jpg" alt="บ่าวสาว1" class="fade-in">
     <img src="bw2.jpg" alt="บ่าวสาว2" class="fade-in">
-    <!-- เพิ่มอีกได้ตามต้องการ -->
   </section>
 
   <script>
-  // Countdown script
-  const countdownEl = document.getElementById("countdown");
-  const targetDate = new Date("June 8, 2025 00:00:00").getTime();
+    // Countdown script พร้อมคำอธิบาย
+    const countdownEl = document.getElementById("countdown");
+    const targetDate = new Date("June 8, 2025 00:00:00").getTime();
 
-  function updateCountdown() {
-    const now = new Date().getTime();
-    const diff = targetDate - now;
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const secs = Math.floor((diff % (1000 * 60)) / 1000);
-    countdownEl.innerHTML = `
-      <div>${days}<br>วัน</div>
-      <div>${hours}<br>ชม.</div>
-      <div>${mins}<br>นาที</div>
-      <div>${secs}<br>วินาที</div>
-    `;
-  }
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const diff = targetDate - now;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const secs = Math.floor((diff % (1000 * 60)) / 1000);
 
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
-</script>
+      // แสดงผลตัวเลขถอยหลัง
+      countdownEl.innerHTML = `
+        <div>${days}<br>วัน</div>
+        <div>${hours}<br>ชม.</div>
+        <div>${mins}<br>นาที</div>
+        <div>${secs}<br>วินาที</div>
+      `;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
 </body>
 </html>
