@@ -108,32 +108,30 @@
     <img src="https://i.postimg.cc/zXSjn3gJ/DSC08741.jpg" alt="ภาพปกงานแต่ง">
   </header>
 
-<!-- 2. เพลง และข้อความแนะนำ -->
-<section class="audio-section" style="text-align: center; padding: 2rem;">
-  <audio id="bgm" controls playsinline>
-    <source src="https://docs.google.com/uc?export=open&id=11t-v6qV-psAh4WwjyR1RU9o90yVHVIp8" type="audio/mp3">
-    เบราว์เซอร์ของคุณไม่รองรับเสียง
-  </audio>
-  <p style="margin-top: 1rem;">🎶 กดเล่นเพลง แล้วเลื่อนชมรายละเอียดงานด้านล่างได้เลยค่ะ 🎶</p>
-</section>
+  <!-- 2. เพลง และข้อความแนะนำ -->
+  <section class="audio-section" style="text-align: center; padding: 2rem;">
+    <audio id="bgm" controls playsinline>
+      <source src="https://media1.vocaroo.com/mp3/1n3otBXCi0M4" type="audio/mp3">
+      เบราว์เซอร์ของคุณไม่รองรับเสียง
+    </audio>
+    <p style="margin-top: 1rem;">🎶 กดเล่นเพลง แล้วเลื่อนชมรายละเอียดงานด้านล่างได้เลยค่ะ 🎶</p>
+  </section>
 
-<script>
-  // Safari / iOS จะไม่ยอมให้ autoplay ถ้าไม่มี interaction
-  const bgm = document.getElementById('bgm');
-  let hasInteracted = false;
+  <script>
+    const bgm = document.getElementById('bgm');
+    let hasInteracted = false;
 
-  const tryPlay = () => {
-    if (!hasInteracted) {
-      bgm.play().catch(() => {}); // ถ้าไม่ได้ก็ปล่อยเฉยๆ
-      hasInteracted = true;
+    function tryPlay() {
+      if (!hasInteracted) {
+        bgm.play().catch(() => {});
+        hasInteracted = true;
+      }
     }
-  };
 
-  // ฟัง scroll หรือแตะ เพื่อ trigger interaction
-  window.addEventListener('touchstart', tryPlay);
-  window.addEventListener('scroll', tryPlay);
-</script>
-
+    window.addEventListener('click', tryPlay);
+    window.addEventListener('touchstart', tryPlay);
+    window.addEventListener('scroll', tryPlay);
+  </script>
 
   <!-- 3. Countdown -->
   <section class="center">
@@ -227,4 +225,3 @@
   </script>
 </body>
 </html>
-
