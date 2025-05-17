@@ -264,45 +264,52 @@
     <p>นายสีศักดิ์ ศรีโกศล (พ่อ) และ นางสาวหนูพิน เจนวิถี (แม่)</p>
     <p>นายวรพันธุ์ ชาญชนะโรจน์ (พี่ชาย) และ นางกานต์สินี ชาญชนะโรจน์ (แม่)</p>
   </section>
-
-  <style>
-  /* จัดกึ่งกลาง และใช้ฟอนต์สวยๆ จาก Google Fonts */
-  @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Kanit&display=swap');
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Great+Vibes&display=swap');
 
   .center {
     text-align: center;
-    margin: 2rem 1rem;
+    margin: 3rem 1rem;
   }
 
   .center h2 {
-    font-family: 'Great Vibes', cursive;
-    font-size: 2.5rem;
-    color: #b97a56; /* สีน้ำตาลทอง ดูอบอุ่นและหรูหรา */
-    opacity: 0;
-    transform: scale(0.8);
-    animation: fadeScaleUp 1.5s forwards ease-in-out;
-    animation-delay: 0.3s;
-    line-height: 1.4;
+    font-family: 'Playfair Display', serif;
+    font-size: 3.2rem;
+    color: #b89156; /* สีทองอบอุ่น */
+    position: relative;
+    display: inline-block;
+    background: linear-gradient(90deg, #d4af37, #fff8dc, #d4af37);
+    background-size: 200% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: shine 3s linear infinite;
+    text-shadow:
+      1px 1px 2px rgba(0,0,0,0.3),
+      0 0 5px rgba(255, 215, 0, 0.7);
   }
 
-  @keyframes fadeScaleUp {
-    to {
-      opacity: 1;
-      transform: scale(1);
+  @keyframes shine {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
     }
   }
 
-  /* เพิ่มไอคอนหัวใจให้มีสีแดงสดและขยับเบาๆ */
-  .center h2 span.heart {
+  .center h2 .heart {
     color: #e74c3c;
+    font-size: 3.5rem;
     animation: heartbeat 1.5s infinite;
+    margin: 0 0.5rem;
     display: inline-block;
-    margin: 0 0.3rem;
+    vertical-align: middle;
   }
 
   @keyframes heartbeat {
     0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.2); }
+    50% { transform: scale(1.3); }
   }
 </style>
 
