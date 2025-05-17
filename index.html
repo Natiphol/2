@@ -4,9 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>การ์ดงานแต่งงาน พัณณิตา & เนติพล</title>
+  <meta name="description" content="การ์ดเชิญงานแต่งงาน พัณณิตา & เนติพล วันที่ 8 มิถุนายน 2568 ณ เลิฟสตอรี่ เพชรเกษม 81" />
+  <meta property="og:title" content="การ์ดงานแต่งงาน พัณณิตา & เนติพล" />
+  <meta property="og:description" content="ขอเรียนเชิญร่วมเป็นเกียรติในพิธีมงคลสมรส วันที่ 8 มิถุนายน 2568" />
+  <meta property="og:image" content="https://i.imgur.com/n0DtfkQ.jpg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="YOUR_PAGE_URL_HERE" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Sriracha&family=Kanit:wght@300;600&display=swap');
-
+    @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;600&display=swap');
+    * {
+      box-sizing: border-box;
+    }
     body {
       margin: 0;
       font-family: 'Kanit', sans-serif;
@@ -16,41 +24,37 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
-
     .overlay {
-      background: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.9);
       flex-grow: 1;
       margin: 20px auto;
       border-radius: 18px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
       max-width: 480px;
       width: 95%;
       padding: 30px 40px;
-      box-sizing: border-box;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
-
     header {
       text-align: center;
       margin-bottom: 25px;
     }
-
     .logo {
       width: 140px;
       opacity: 0.9;
       margin-bottom: 16px;
     }
-
     .invitation-text {
       font-weight: 400;
       font-size: 1rem;
       letter-spacing: 0.05em;
       color: #3a4661dd;
     }
-
     .couple {
       background: #d9e7f9;
       border-radius: 12px;
@@ -63,13 +67,11 @@
       box-shadow: 0 4px 10px rgba(58, 70, 97, 0.15);
       color: #354a92;
     }
-
     .couple span {
       margin: 0 12px;
       font-size: 1.4rem;
       color: #5485d6;
     }
-
     .address {
       font-size: 0.85rem;
       color: #444a5d;
@@ -77,7 +79,6 @@
       line-height: 1.5;
       text-align: center;
     }
-
     .map-link {
       display: inline-block;
       background: #354a92;
@@ -89,11 +90,9 @@
       margin-bottom: 25px;
       transition: background 0.3s ease;
     }
-
     .map-link:hover {
       background: #274087;
     }
-
     .calendar {
       background: #3a4661;
       border-radius: 10px;
@@ -102,21 +101,19 @@
       color: #fff;
       font-weight: 700;
       margin-bottom: 20px;
+      user-select: none;
     }
-
     .calendar .day {
       background: #5472d6;
       padding: 8px 0;
       font-size: 1.2rem;
       border-radius: 10px 10px 0 0;
     }
-
     .calendar .date {
       font-size: 2.4rem;
       padding: 10px 0 16px;
       letter-spacing: 0.1em;
     }
-
     .content-right {
       background: #d9e7f9;
       border-radius: 12px;
@@ -125,15 +122,14 @@
       width: 100%;
       margin-top: 20px;
     }
-
     .content-right p {
       margin: 14px 0;
       font-size: 0.95rem;
       display: flex;
       align-items: center;
       gap: 10px;
+      line-height: 1.4;
     }
-
     .content-right svg {
       width: 22px;
       height: 22px;
@@ -142,60 +138,180 @@
       fill: none;
       flex-shrink: 0;
     }
-
+    .audio-controls {
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+    .btn-audio {
+      background: #354a92;
+      border: none;
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 10px 18px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      user-select: none;
+    }
+    .btn-audio:hover {
+      background: #274087;
+    }
+    .social-share {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      width: 100%;
+    }
+    .social-btn {
+      flex: 1;
+      background: #3a4661;
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 12px 0;
+      border-radius: 12px;
+      text-align: center;
+      text-decoration: none;
+      user-select: none;
+      transition: background 0.3s ease;
+    }
+    .social-btn.line {
+      background: #00c300;
+    }
+    .social-btn.facebook {
+      background: #1877f2;
+    }
+    .social-btn:hover {
+      filter: brightness(0.9);
+    }
+    .page-links {
+      margin-top: 28px;
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .page-link-btn {
+      flex: 1 1 45%;
+      background: #5472d6;
+      color: white;
+      font-weight: 600;
+      padding: 10px 0;
+      border-radius: 12px;
+      text-align: center;
+      text-decoration: none;
+      user-select: none;
+      transition: background 0.3s ease;
+      font-size: 0.95rem;
+      min-width: 140px;
+    }
+    .page-link-btn:hover {
+      background: #405bb5;
+    }
     @media (max-width: 480px) {
       .overlay {
         padding: 25px 20px;
         margin: 15px 10px;
       }
-
       .calendar {
         width: 100px;
       }
-    }
-
-    audio {
-      display: none;
+      .content-right p {
+        font-size: 0.9rem;
+      }
+      .social-share {
+        flex-direction: column;
+        gap: 15px;
+      }
+      .page-links {
+        flex-direction: column;
+      }
+      .page-link-btn {
+        flex: none;
+        width: 100%;
+        min-width: unset;
+      }
     }
   </style>
 </head>
 <body>
 
-<div class="overlay">
-  <header>
-    <img src="https://i.imgur.com/n0DtfkQ.jpg" alt="โลโก้งานแต่ง" class="logo" />
-    <div class="invitation-text">ขอเรียนเชิญร่วมเป็นเกียรติในพิธีมงคลสมรส</div>
-  </header>
+  <div class="overlay">
+    <header>
+      <img src="https://i.imgur.com/n0DtfkQ.jpg" alt="โลโก้งานแต่งงาน พัณณิตาและเนติพล" class="logo" />
+      <div class="invitation-text">ขอเรียนเชิญร่วมเป็นเกียรติในพิธีมงคลสมรส</div>
+    </header>
 
-  <section class="couple">
-    นางสาวพัณณิตา ศรีโกศล (ตั๊ก) <span>❤</span> นายเนติพล ชาญชนะโรจน์ (ตาล)
-  </section>
+    <section class="couple" aria-label="ชื่อคู่บ่าวสาว">
+      นางสาวพัณณิตา ศรีโกศล (ตั๊ก) <span aria-hidden="true">❤</span> นายเนติพล ชาญชนะโรจน์ (ตาล)
+    </section>
 
-  <div class="address">
-    ณ เลิฟสตอรี่ เพชรเกษม 81<br/>
-    163/2 ถนนมาเจริญ แขวงหนองค้างพลู เขตหนองแขม กรุงเทพฯ 10160
-  </div>
+    <div class="address" aria-label="สถานที่จัดงานแต่งงาน">
+      ณ เลิฟสตอรี่ เพชรเกษม 81<br/>
+      163/2 ถนนมาเจริญ แขวงหนองค้างพลู เขตหนองแขม กรุงเทพฯ 10160
+    </div>
 
-  <a href="https://maps.app.goo.gl/1YGUcFxjvJeWgZPB6" class="map-link" target="_blank" rel="noopener">
-    ดูแผนที่ใน Google Maps
-  </a>
+    <a href="https://maps.app.goo.gl/1YGUcFxjvJeWgZPB6" class="map-link" target="_blank" rel="noopener" aria-label="ลิงก์ดูแผนที่ใน Google Maps">
+      ดูแผนที่ใน Google Maps
+    </a>
 
-  <div class="calendar">
-    <div class="day">วันอาทิตย์</div>
-    <div class="date">8 มิ.ย. 68</div>
-  </div>
+    <div class="calendar" aria-label="วันที่จัดงานแต่งงาน">
+      <div class="day">วันอาทิตย์</div>
+      <div class="date">8 มิ.ย. 68</div>
+    </div>
 
-  <div class="content-right">
-    <p><svg viewBox="0 0 24 24"><path d="M3 10v4h4l5 5V5L7 10H3z"/></svg> เวลา 15.30 น. พิธีแห่ขันหมาก</p>
-    <p><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg> เวลา 16.09 น. พิธีหมั้น</p>
-    <p><svg viewBox="0 0 24 24"><path d="M12 2L2 7v13h20V7L12 2zM12 4.44l7 3.11v10.45H5V7.56l7-3.12z"/></svg> เวลา 17.29 น. พิธีรดน้ำสังข์</p>
-    <p><svg viewBox="0 0 24 24"><path d="M3 17v4h4l11-11-4-4L3 17z"/></svg> เวลา 18.30 น. งานเลี้ยงฉลองมงคลสมรส</p>
-  </div>
-</div>
+    <div class="content-right" aria-label="รายละเอียดพิธีงานแต่งงาน">
+      <p><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 10v4h4l5 5V5L7 10H3z"/></svg> เวลา 15.30 น. พิธีแห่ขันหมาก</p>
+      <p><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg> เวลา 16.09 น. พิธีหมั้น</p>
+      <p><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2L2 7v13h20V7L12 2zM12 4.44l7 3.11v10.45H5V7.56l7-3.12z"/></svg> เวลา 17.29 น. พิธีรดน้ำสังข์</p>
+      <p><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 17v4h4l11-11-4-4L3 17z"/></svg> เวลา 18.30 น. งานเลี้ยงฉลองมงคลสมรส</p>
+    </div>
 
-<audio autoplay loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_8e78953510.mp3?filename=romantic-piano-14291.mp3" type="audio/mpeg" />
-</audio>
+    <div class="audio-controls" aria-label="ควบคุมเพลงพื้นหลัง">
+      <button id="btnPlayPause" class="btn-audio" aria-pressed="false" aria-label="เล่นเพลงพื้นหลัง">▶️ เล่นเพลง</button>
+      <audio id="bgAudio" src="https://cdn.pixabay.com/download/audio/2022/03/05/audio_5b73934322.mp3?filename=relaxing-music-ambient-7947.mp3" loop></audio>
+    </div>
 
+    <div class="social-share" role="region" aria-label="ปุ่มแชร์งานแต่งงาน">
+      <a href="https://line.me/R/msg/text/?ขอเชิญร่วมงานแต่งงาน%20พัณณิตา%20และ%20เนติพล%20วันที่%208%20มิถุนายน%2068%20สถานที่%20เลิฟสตอรี่%20เพชรเกษม%2081" class="social-btn line" target="_blank" rel="noopener noreferrer" aria-label="แชร์ผ่าน Line">LINE</a>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=YOUR_PAGE_URL_HERE" class="social-btn facebook" target="_blank" rel="noopener noreferrer" aria-label="แชร์ผ่าน Facebook">Facebook</a>
+    </div>
+
+<nav class="page-links" aria-label="ลิงก์ไปยังเพจต่างๆ">
+  <a href="index.html" class="page-link-btn" aria-current="page">หน้าหลัก</a>
+  <a href="ceremony.html" class="page-link-btn">พิธีการ</a>
+  <a href="audio-wishes.html" class="page-link-btn">อวยพรเสียง</a>
+  <a href="text-wishes.html" class="page-link-btn">อวยพรข้อความ</a>
+  <!-- เพิ่มลิงก์ตามที่ขอ -->
+  <a href="https://natiphol.github.io/AudioGuestbook/" target="_blank" rel="noopener" class="page-link-btn">ส่งเสียงอวยพร</a>
+  <a href="https://natiphol.github.io/2/" target="_blank" rel="noopener" class="page-link-btn">การ์ดงานแต่ง</a>
+</nav>
+
+  <script>
+    const btnPlayPause = document.getElementById('btnPlayPause');
+    const bgAudio = document.getElementById('bgAudio');
+
+    btnPlayPause.addEventListener('click', () => {
+      if(bgAudio.paused) {
+        bgAudio.play();
+        btnPlayPause.textContent = '⏸️ หยุดเพลง';
+        btnPlayPause.setAttribute('aria-pressed', 'true');
+      } else {
+        bgAudio.pause();
+        btnPlayPause.textContent = '▶️ เล่นเพลง';
+        btnPlayPause.setAttribute('aria-pressed', 'false');
+      }
+    });
+
+    // หยุดเพลงอัตโนมัติถ้าหน้าเปลี่ยนหรือออก
+    window.addEventListener('beforeunload', () => {
+      bgAudio.pause();
+    });
+  </script>
 </body>
 </html>
