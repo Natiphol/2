@@ -1,452 +1,212 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>เชิญร่วมงานแต่งงาน</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>งานแต่ง ตั๊ก ❤ ตาล</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;600&display=swap" rel="stylesheet">
   <style>
-    /* Reset & base */
-    * {
-      box-sizing: border-box;
-    }
     body {
+      font-family: 'Sarabun', sans-serif;
       margin: 0;
-      font-family: 'Kanit', sans-serif;
       background: #fefefe;
-      color: #0d2137;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      overflow-x: hidden;
+      color: #333;
     }
-    a {
-      color: #045a8d;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-
-    /* Container */
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 1rem 1.5rem 3rem;
-    }
-
-    /* Section Title */
-    h2 {
-      font-weight: 700;
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      border-bottom: 3px solid #045a8d;
-      padding-bottom: 0.25rem;
-      color: #045a8d;
-    }
-
-    /* 1. หน้าเปิดรูป + เพลง */
-    #hero {
-      position: relative;
-      height: 100vh;
-      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80') center/cover no-repeat;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      color: white;
-      text-shadow: 0 0 10px rgba(0,0,0,0.7);
-      padding: 1rem;
-      text-align: center;
-    }
-    #hero .overlay {
-      position: absolute;
-      top:0; left:0; right:0; bottom:0;
-      background: rgba(0,0,0,0.45);
-      z-index: 1;
-    }
-    #hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 600px;
-    }
-    #hero h1 {
-      font-size: 3rem;
-      margin-bottom: 0.5rem;
-      font-weight: 900;
-    }
-    #hero p {
-      font-size: 1.25rem;
-      margin-bottom: 1.5rem;
-      font-weight: 400;
-    }
-    #play-music {
-      background-color: #045a8d;
-      border: none;
-      color: white;
-      font-weight: 600;
-      padding: 0.75rem 2rem;
-      font-size: 1.1rem;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    #play-music:hover {
-      background-color: #023e5f;
-    }
-    /* iOS fix: auto play not allowed so we trigger play on user gesture */
-    audio {
-      display: none;
-    }
-
-    /* 3. Countdown Timer */
-    #countdown {
-      display: flex;
-      justify-content: center;
-      margin: 2rem 0 3rem;
-      gap: 1rem;
-      font-weight: 700;
-      font-size: 2.5rem;
-      color: #045a8d;
-      font-family: 'Kanit', sans-serif;
-      user-select: none;
-    }
-    .time-segment {
-      background: #e8f0f5;
-      border-radius: 10px;
-      padding: 0.75rem 1.5rem;
-      min-width: 70px;
-      text-align: center;
-      box-shadow: 0 3px 6px rgba(4,90,141,0.2);
-    }
-    .time-segment span {
-      display: block;
-      font-size: 1rem;
-      color: #023e5f;
-      font-weight: 500;
-      margin-top: 0.25rem;
-    }
-
-    /* 4. ความรู้สึกบ่าวสาว */
-    #invitation-message {
-      background: #d6e6f2;
-      border-radius: 12px;
-      padding: 2rem 2rem;
-      margin-bottom: 3rem;
-      box-shadow: 0 4px 12px rgba(4,90,141,0.15);
-      font-size: 1.25rem;
-      color: #023e5f;
-      line-height: 1.5;
-      text-align: center;
-      font-style: italic;
-      font-weight: 500;
-    }
-
-    /* 5. ลิงค์แผนที่ */
-    #map-link {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-    #map-link a {
-      display: inline-block;
-      background: #0472b8;
-      color: white;
-      font-weight: 700;
-      padding: 0.75rem 2rem;
-      border-radius: 50px;
-      box-shadow: 0 4px 10px rgba(4,114,184,0.4);
-      transition: background-color 0.3s ease;
-    }
-    #map-link a:hover {
-      background: #025a82;
-    }
-
-    /* 6. แกลลี่ภาพเลื่อนซ้ายขวา */
-    #gallery {
-      margin-bottom: 3rem;
-    }
-    #gallery h2 {
-      margin-bottom: 1rem;
-    }
-    .gallery-wrapper {
-      overflow-x: auto;
-      scroll-behavior: smooth;
-      display: flex;
-      gap: 1rem;
-      padding-bottom: 1rem;
-      -webkit-overflow-scrolling: touch;
-    }
-    .gallery-wrapper::-webkit-scrollbar {
-      height: 8px;
-    }
-    .gallery-wrapper::-webkit-scrollbar-thumb {
-      background: #045a8d;
-      border-radius: 4px;
-    }
-    .gallery-wrapper::-webkit-scrollbar-track {
-      background: #cde2f0;
-      border-radius: 4px;
-    }
-    .gallery-item {
-      flex: 0 0 auto;
-      width: 180px;
-      height: 120px;
-      border-radius: 12px;
-      box-shadow: 0 3px 8px rgba(4,90,141,0.2);
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-    .gallery-item:hover {
-      transform: scale(1.07);
-      box-shadow: 0 5px 15px rgba(4,90,141,0.4);
-    }
-    .gallery-item img {
+    header img {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 12px;
       display: block;
     }
-    /* จุดไขปลานำทาง */
+    .center {
+      text-align: center;
+    }
+    .audio-section {
+      padding: 2rem;
+    }
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      font-size: 1.5rem;
+      padding: 1rem 0;
+    }
+    .countdown div {
+      background: #e0f7fa;
+      border-radius: 10px;
+      padding: 1rem;
+      min-width: 60px;
+    }
+    .message {
+      padding: 2rem;
+      background: #f3faff;
+      font-size: 1.2rem;
+    }
+    .map {
+      text-align: center;
+      padding: 1rem;
+    }
+    .gallery, .gallery-bw {
+      display: flex;
+      overflow-x: scroll;
+      gap: 1rem;
+      padding: 1rem;
+      scroll-snap-type: x mandatory;
+    }
+    .gallery img, .gallery-bw img {
+      height: 300px;
+      border-radius: 10px;
+      scroll-snap-align: center;
+    }
     .dots {
       text-align: center;
-      margin-top: 0.75rem;
+      margin-top: 0.5rem;
     }
     .dot {
-      display: inline-block;
-      width: 12px;
-      height: 12px;
-      background: #ccc;
+      height: 10px;
+      width: 10px;
+      background-color: #bbb;
       border-radius: 50%;
-      margin: 0 6px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    .dot.active {
-      background: #045a8d;
-    }
-
-    /* 7. รายละเอียดครอบครัว */
-    #family-section {
-      background: #f4f9ff;
-      padding: 2rem 2rem;
-      border-radius: 12px;
-      box-shadow: 0 5px 14px rgba(4,90,141,0.1);
-      margin-bottom: 3rem;
-      color: #023e5f;
-    }
-    #family-section h2 {
-      margin-bottom: 1.5rem;
-      color: #023e5f;
-      font-weight: 800;
-      text-align: center;
-      font-size: 2rem;
-    }
-    .family-list {
-      font-size: 1.15rem;
-      max-width: 600px;
-      margin: 0 auto 1.5rem;
-      line-height: 1.6;
-      font-weight: 600;
-      text-align: center;
-    }
-    .family-list span {
-      color: #045a8d;
-      font-weight: 700;
-    }
-    #family-invite {
-      margin-top: 1rem;
-      font-size: 1.2rem;
-      font-weight: 700;
-      text-align: center;
-      font-style: italic;
-      color: #0472b8;
-      letter-spacing: 0.1em;
-    }
-
-    /* 8. คู่บ่าวสาว */
-    #couple-section {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-    #couple-section h2 {
-      font-size: 2.5rem;
-      font-weight: 900;
-      margin-bottom: 0.5rem;
-      color: #045a8d;
-    }
-    #couple-section p {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #023e5f;
-      letter-spacing: 0.1em;
-    }
-    #couple-section p span {
-      color: #0270b8;
-    }
-    #couple-heart {
-      font-size: 2rem;
-      color: #e63946;
-      margin: 0 0.5rem;
-      vertical-align: middle;
-      animation: pulse 2s infinite;
       display: inline-block;
+      margin: 0 2px;
     }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.3); }
+    .family, .schedule, .theme {
+      padding: 2rem;
     }
-
-    /* 9. กำหนดพิธีการ */
-    #schedule-section {
-      background: #d6e6f2;
-      padding: 2rem 2rem;
-      border-radius: 14px;
-      box-shadow: 0 6px 16px rgba(4,90,141,0.25);
-      max-width: 700px;
-      margin: 0 auto 3rem;
-      color: #023e5f;
-    }
-    #schedule-section h2 {
-      font-weight: 800;
-      font-size: 2rem;
+    .family h2, .schedule h2, .theme h2 {
       text-align: center;
-      margin-bottom: 1.5rem;
-      color: #045a8d;
-    }
-    .schedule-item {
-      font-size: 1.25rem;
-      padding: 0.8rem 1rem;
-      border-bottom: 1px solid #a9c1de;
       font-weight: 600;
-      display: flex;
-      justify-content: space-between;
     }
-    .schedule-item:last-child {
-      border-bottom: none;
-    }
-    .time {
-      color: #045a8d;
-      font-weight: 700;
-      min-width: 120px;
-    }
-    .event {
-      text-align: right;
-      flex-grow: 1;
-      margin-left: 1rem;
-      font-style: italic;
-    }
-
-    /* 10. ธีมสีงาน Blue / Cream / Green */
-    #theme-colors {
-      max-width: 700px;
-      margin: 0 auto 3rem;
-      display: flex;
-      justify-content: space-around;
-      gap: 1rem;
-      font-weight: 700;
-      font-size: 1.2rem;
-      color: #023e5f;
-    }
-    .theme-box {
-      flex: 1;
-      padding: 1rem 0;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(4,90,141,0.2);
+    .family p, .schedule p {
       text-align: center;
-      cursor: default;
-      user-select: none;
-      transition: transform 0.3s ease;
+      margin: 0.5rem 0;
     }
-    .theme-box:hover {
-      transform: scale(1.05);
-    }
-    .blue {
-      background: linear-gradient(135deg, #4286f4, #2a53c6);
-      color: white;
-      box-shadow: 0 4px 16px rgba(66,134,244,0.7);
-    }
-    .cream {
-      background: linear-gradient(135deg, #f9f4e7, #e6d9bf);
-      color: #5a4e3c;
-      box-shadow: 0 4px 12px rgba(230,217,191,0.7);
-    }
-    .green {
-      background: linear-gradient(135deg, #6fd1c5, #3a9d9a);
-      color: white;
-      box-shadow: 0 4px 16px rgba(111,209,197,0.7);
-    }
-
-    /* 11. แกลลี่ภาพบ่าวสาว 10 รูป พร้อมอนิเมชัน */
-    #couple-gallery {
-      max-width: 960px;
-      margin: 0 auto 5rem;
-      padding: 0 1rem;
-    }
-    #couple-gallery h2 {
-      text-align: center;
-      margin-bottom: 1.5rem;
-      color: #045a8d;
-      font-weight: 700;
-      font-size: 2rem;
-    }
-    .couple-gallery-wrapper {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    .theme .colors {
+      display: flex;
+      justify-content: center;
       gap: 1rem;
+      margin-top: 1rem;
     }
-    .couple-gallery-item {
-      overflow: hidden;
-      border-radius: 14px;
-      box-shadow: 0 3px 10px rgba(4,90,141,0.3);
-      cursor: pointer;
-      transform-style: preserve-3d;
-      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
+    .theme .colors div {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
     }
-    .couple-gallery-item img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-      display: block;
-      border-radius: 14px;
-      backface-visibility: hidden;
+    .blue { background-color: #6ca0dc; }
+    .cream { background-color: #f7e9d7; }
+    .green { background-color: #a5d8d2; }
+    .fade-in {
+      animation: fadeIn 1s ease-in-out;
     }
-    /* Hover 3D flip effect */
-    .couple-gallery-item:hover {
-      transform: rotateY(15deg) scale(1.05);
-      box-shadow: 0 8px 18px rgba(4,90,141,0.5);
-      z-index: 5;
-    }
-
-    /* Responsive */
-    @media (max-width: 600px) {
-      #countdown {
-        font-size: 1.8rem;
-        gap: 0.5rem;
-      }
-      #countdown .time-segment {
-        min-width: 50px;
-        padding: 0.5rem 1rem;
-      }
-      #hero h1 {
-        font-size: 2.3rem;
-      }
-      #invitation-message {
-        font-size: 1.1rem;
-      }
-      #schedule-section, #family-section {
-        padding: 1.5rem 1.5rem;
-      }
-      #theme-colors {
-        flex-direction: column;
-        gap: 1rem;
-      }
-      #theme-colors .theme-box {
-        max-width: 300px;
-        margin: 0 auto;
-      }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
   </style>
 </head>
 <body>
+  <!-- 1. รูปภาพหลัก -->
+  <header>
+    <img src="cover.jpg" alt="ภาพปกงานแต่ง">
+  </header>
+
+  <!-- 2. เพลง และข้อความแนะนำ -->
+  <section class="audio-section center">
+    <audio id="bgm" controls autoplay muted playsinline>
+      <source src="bgm.mp3" type="audio/mp3">
+      เบราว์เซอร์ของคุณไม่รองรับเสียง
+    </audio>
+    <p>กดเล่นเพลง แล้วเลื่อนชมรายละเอียดงานด้านล่างได้เลยค่ะ</p>
+  </section>
+
+  <!-- 3. Countdown -->
+  <section class="center">
+    <h2>นับถอยหลังสู่งานมงคล</h2>
+    <div class="countdown" id="countdown"></div>
+  </section>
+
+  <!-- 4. ความรู้สึกจากบ่าวสาว -->
+  <section class="message">
+    <p class="center">ในวันที่พิเศษของเรา ตั๊กและตาลอยากแบ่งปันความสุขนี้กับทุกคนที่เรารัก</p>
+    <p class="center">ขอบคุณที่เป็นส่วนหนึ่งของความทรงจำที่มีความหมาย</p>
+  </section>
+
+  <!-- 5. ลิงก์แผนที่ -->
+  <section class="map">
+    <h3>สถานที่จัดงาน</h3>
+    <iframe src="https://maps.google.com/maps?q=https://maps.app.goo.gl/CaaGCvt2BpcpdcYR6&amp;output=embed" width="90%" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
+  </section>
+
+  <!-- 6. แกลลอรี่ภาพเลื่อนด้านข้าง -->
+  <section class="gallery">
+    <img src="g1.jpg" alt="ภาพ1">
+    <img src="g2.jpg" alt="ภาพ2">
+    <img src="g3.jpg" alt="ภาพ3">
+    <!-- เพิ่มรูปตามต้องการ -->
+  </section>
+  <div class="dots center">
+    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+  </div>
+
+  <!-- 7. รายละเอียดครอบครัว -->
+  <section class="family">
+    <h2>เรียนเชิญร่วมเป็นเกียรติในพิธีมงคลสมรส</h2>
+    <p>นายสีศักดิ์ ศรีโกศล (พ่อ) และ นางสาวหนูพิน เจนวิถี (แม่)</p>
+    <p>นายวรพันธุ์ ชาญชนะโรจน์ (พี่ชาย) และ นางกานต์สินี ชาญชนะโรจน์ (แม่)</p>
+  </section>
+
+  <!-- 8. ชื่อบ่าวสาว -->
+  <section class="center">
+    <h2>💍 นางสาวพัณณิตา ศรีโกศล (ตั๊ก) ❤ นายเนติพล ชาญชนะโรจน์ (ตาล) 💍</h2>
+  </section>
+
+  <!-- 9. กำหนดพิธีการ -->
+  <section class="schedule">
+    <h2>กำหนดพิธีการ</h2>
+    <p>15.30 น. พิธีแห่ขันหมาก</p>
+    <p>16.09 น. พิธีหมั้น</p>
+    <p>17.29 น. พิธีรดน้ำสังข์</p>
+    <p>18.30 น. งานเลี้ยงฉลองมงคลสมรส</p>
+  </section>
+
+  <!-- 10. ธีมสี -->
+  <section class="theme">
+    <h2>ธีมสีงาน</h2>
+    <div class="colors">
+      <div class="blue" title="Blue"></div>
+      <div class="cream" title="Cream"></div>
+      <div class="green" title="Green (ออกฟ้า)"></div>
+    </div>
+  </section>
+
+  <!-- 11. แกลลอรี่บ่าวสาว -->
+  <section class="gallery-bw">
+    <img src="bw1.jpg" alt="บ่าวสาว1" class="fade-in">
+    <img src="bw2.jpg" alt="บ่าวสาว2" class="fade-in">
+    <!-- เพิ่มอีกได้ตามต้องการ -->
+  </section>
+
+  <script>
+    // Countdown script
+    const countdownEl = document.getElementById("countdown");
+    const targetDate = new Date("June 8, 2025 00:00:00").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const diff = targetDate - now;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const secs = Math.floor((diff % (1000 * 60)) / 1000);
+      countdownEl.innerHTML = `
+        <div>${days}<br>วัน</div>
+        <div>${hours}<br>ชม.</div>
+        <div>${mins}<br>นาที</div>
+        <div>${secs}<br>วินาที</div>
+      `;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
+
