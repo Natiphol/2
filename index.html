@@ -369,18 +369,14 @@ transform: scale(1.03);
   <img src="https://i.postimg.cc/9QJgcQPQ/DSC-7255-19670.jpg" alt="บ่าวสาว5" class="fade-in">
 </section>
 
-  <script>
+<script>
 function updateCountdown() {
-  const countdownEl = document.getElementById('countdown');
-  // กำหนดวันที่งานแต่งงาน (ปี-เดือน-วัน ชั่วโมง:นาที:วินาที)
-  const weddingDate = new Date('2025-06-08T15:30:00'); 
-
+  const weddingDate = new Date("2025-06-08T15:30:00"); // แก้ไขเป็นวันเวลาจริงของงาน
   const now = new Date();
   const diff = weddingDate - now;
 
   if (diff <= 0) {
-    countdownEl.innerHTML = 'งานแต่งงานเริ่มแล้ว 🎉';
-    clearInterval(timer);
+    document.getElementById("countdown").innerHTML = "<div>🎉 ถึงวันแต่งงานแล้ว! 🎉</div>";
     return;
   }
 
@@ -389,18 +385,18 @@ function updateCountdown() {
   const minutes = Math.floor((diff / (1000 * 60)) % 60);
   const seconds = Math.floor((diff / 1000) % 60);
 
-  countdownEl.innerHTML = `
+  document.getElementById("countdown").innerHTML = `
     <div><strong>${days}</strong><br>วัน</div>
-    <div><strong>${hours.toString().padStart(2,'0')}</strong><br>ชม.</div>
-    <div><strong>${minutes.toString().padStart(2,'0')}</strong><br>นาที</div>
-    <div><strong>${seconds.toString().padStart(2,'0')}</strong><br>วินาที</div>
+    <div><strong>${hours}</strong><br>ชั่วโมง</div>
+    <div><strong>${minutes}</strong><br>นาที</div>
+    <div><strong>${seconds}</strong><br>วินาที</div>
   `;
 }
 
-updateCountdown(); // เรียกครั้งแรก
-const timer = setInterval(updateCountdown, 1000);
-
-  </script>
+// อัปเดตทุกวินาที
+setInterval(updateCountdown, 1000);
+updateCountdown();
+</script>
 
 </body>
 </html> 
