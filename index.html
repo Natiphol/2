@@ -186,31 +186,76 @@
   </div>
 
   <script>
-    // ฟังก์ชันเปิด Lightbox เมื่อคลิกภาพ
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const closeBtn = document.querySelector('#lightbox .close');
+  // เตรียมอ้างอิง DOM
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const closeBtn = document.querySelector('#lightbox .close');
+  const images = Array.from(document.querySelectorAll('.gallery img, .gallery-bw img'));
 
-    document.querySelectorAll('.gallery img, .gallery-bw img').forEach(img => {
-      img.addEventListener('click', () => {
-        lightbox.style.display = 'flex';
-        lightboxImg.src = img.src;
-        lightboxImg.alt = img.alt;
-      });
+  let currentIndex = 0;
+
+  // ฟังก์ชันเปิดภาพที่ index ที่กำหนด
+  function showImage(index) {
+    if (index >= 0 && index < images.length) {
+      currentIndex = index;
+      lightboxImg.src = images[currentIndex].src;
+      lightboxImg.alt = images[currentIndex].alt;
+    }
+  }
+
+  // คลิกเปิด lightbox
+  images.forEach((img, index) => {
+    img.addEventListener('click', () => {
+      lightbox.style.display = 'flex';
+      showImage(index);
     });
+  });
 
-    closeBtn.addEventListener('click', () => {
+  // ปิด lightbox
+  closeBtn.addEventListener('click', () => {
+    lightbox.style.display = 'none';
+    lightboxImg.src = '';
+  });
+
+  // คลิกพื้นหลังเพื่อปิด
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) {
       lightbox.style.display = 'none';
       lightboxImg.src = '';
-    });
+    }
+  });
 
-    lightbox.addEventListener('click', e => {
-      if (e.target === lightbox) {
+  // กดปุ่มซ้าย/ขวาเพื่อเลื่อนภาพ
+  document.addEventListener('keydown', e => {
+    if (lightbox.style.display === 'flex') {
+      if (e.key === 'ArrowRight') {
+        showImage((currentIndex + 1) % images.length);
+      } else if (e.key === 'ArrowLeft') {
+        showImage((currentIndex - 1 + images.length) % images.length);
+      } else if (e.key === 'Escape') {
         lightbox.style.display = 'none';
         lightboxImg.src = '';
       }
-    });
-  </script>
+    }
+  });
+
+  // เพิ่ม gesture สำหรับมือถือ (ปัดซ้าย/ขวา)
+  let touchStartX = 0;
+
+  lightboxImg.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+  });
+
+  lightboxImg.addEventListener('touchend', e => {
+    let touchEndX = e.changedTouches[0].clientX;
+    if (touchEndX - touchStartX > 50) {
+      showImage((currentIndex - 1 + images.length) % images.length);
+    } else if (touchStartX - touchEndX > 50) {
+      showImage((currentIndex + 1) % images.length);
+    }
+  });
+</script>
+ 
 
   <!-- ข้อมูลครอบครัวผู้จัดงาน -->
   <section class="family">
