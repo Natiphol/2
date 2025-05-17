@@ -10,14 +10,14 @@
       font-family: 'Sarabun', sans-serif;
       background: url('https://www.transparenttextures.com/patterns/watercolor-paper.png') repeat;
       background-color: #f8f6f1;
-      margin: 0; padding: 0;
+      margin: 0; padding-bottom: 80px; /* ให้มีพื้นที่สำหรับแทบล่าง */
       color: #4a4a4a;
     }
     .card {
       max-width: 480px;
       margin: 32px auto;
       background: rgba(255, 255, 255, 0.95);
-      padding: 32px 24px;
+      padding: 32px 24px 48px;
       border-radius: 24px;
       box-shadow: 0 12px 32px rgba(0,0,0,0.1);
       border: 1px solid #ddd;
@@ -32,13 +32,16 @@
       width: 120px;
       border-radius: 12px;
       margin-bottom: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      background: rgba(255 255 255 / 0.3); /* พื้นหลังโปร่งแสงให้กลมกลืน */
+      box-shadow: none; /* เอาเงาออก */
+      display: inline-block;
     }
     .header p {
       font-size: 16px;
       color: #888;
       margin: 0;
       font-weight: 500;
+      white-space: nowrap; /* ไม่ให้ขึ้นบรรทัดใหม่ */
     }
     .divider {
       width: 60px;
@@ -132,16 +135,64 @@
     .blue { background: #305177; }
     .cream { background: #e6dac5; }
     .green { background: #8baaa8; }
+
+    /* แถบเมนูล่าง */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      max-width: 480px;
+      background: #ffffffcc;
+      backdrop-filter: blur(10px);
+      border-top: 1px solid #ccc;
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 0;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+      z-index: 100;
+      font-weight: 600;
+      font-size: 14px;
+      color: #305177;
+      border-radius: 12px 12px 0 0;
+      margin: 0 auto;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .bottom-nav a {
+      text-decoration: none;
+      color: #305177;
+      text-align: center;
+      flex: 1;
+      padding: 6px 0;
+      transition: color 0.3s ease;
+      user-select: none;
+    }
+    .bottom-nav a:hover {
+      color: #bda27c;
+    }
+    .bottom-nav a svg {
+      display: block;
+      margin: 0 auto 4px;
+      width: 20px;
+      height: 20px;
+      fill: #305177;
+      transition: fill 0.3s ease;
+    }
+    .bottom-nav a:hover svg {
+      fill: #bda27c;
+    }
   </style>
 </head>
 <body>
   <audio autoplay loop muted>
     <source src="https://cdn.pixabay.com/download/audio/2022/03/17/audio_b14e71b46d.mp3?filename=wedding-dream-21691.mp3" type="audio/mpeg" />
   </audio>
+
   <div class="card">
     <div class="header">
       <img src="https://i.imgur.com/n0DtfkQ.jpg" alt="โลโก้ ตั๊กตาล" />
-      <p>ขอเรียนเชิญร่วมเป็นเกียรติ<br>ในพิธีมงคลสมรส</p>
+      <p>ขอเรียนเชิญร่วมเป็นเกียรติในพิธีมงคลสมรส</p>
     </div>
     <div class="divider"></div>
 
@@ -187,5 +238,25 @@
       (ขออภัยหากมิได้เรียนเชิญด้วยตนเอง)
     </div>
   </div>
+
+  <nav class="bottom-nav">
+    <a href="#" title="การ์ดงานแต่ง">
+      <svg viewBox="0 0 24 24"><path d="https://natiphol.github.io/2/"/></svg>
+      การ์ดงานแต่ง
+    </a>
+    <a href="#" title="รูปพรีเวดดิ้ง">
+      <svg viewBox="0 0 24 24"><path d="M4 5h16v14H4zM8 10l3 4 4-6 4 5v3H4v-3z"/></svg>
+      รูปพรีเวดดิ้ง
+    </a>
+    <a href="#" title="ส่งเสียงอวยพร">
+      <svg viewBox="0 0 24 24"><path d="https://natiphol.github.io/AudioGuestbook/"/></svg>
+      ส่งเสียงอวยพร
+    </a>
+    <a href="#" title="เขียนคำอวยพร">
+      <svg viewBox="0 0 24 24"><path d="M3 17v4h4l11-11-4-4L3 17z"/></svg>
+      เขียนคำอวยพร
+    </a>
+  </nav>
+
 </body>
 </html>
