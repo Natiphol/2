@@ -1,445 +1,349 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>งานแต่ง ตั๊ก ❤ ตาล</title>
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wedding Invitation</title>
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
+  <!-- GLightbox CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css"/>
   <style>
-  body {
-    font-family: 'Sarabun', sans-serif;
-    margin: 0;
-    background: #fefefe;
-    color: #333;
-  }
+    :root {
+      --cream: #FFF5E1;
+      --teal: #A1D6E2;
+      --blue: #89CFF0;
+      --dark-blue: #2A6F97;
+      --gold: #D4AF37;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      display:flex; flex-direction:column; align-items:center;
+      background: linear-gradient(135deg, var(--cream), var(--teal), var(--blue));
+      font-family: 'IBM Plex Sans Thai', sans-serif;
+      color: var(--dark-blue);
+      padding: 24px 0;
+    }
+    img { display:block; max-width:100%; }
 
-  header img {
-    width: 100%;
-    display: block;
-  }
+    /* reveal-on-scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-  .center {
-    text-align: center;
-  }
+    /* Hero Image */
+    #heroImage {
+      width:90%; max-width:600px; border-radius:8px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.1); margin-bottom:24px;
+    }
 
-  .audio-section {
-    padding: 2rem;
-  }
+    /* Prompt */
+    .scroll-indicator {
+      font-weight:400; font-size:18px;
+      text-align:center; margin-bottom:24px;
+    }
 
-  .countdown {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    font-size: 1.5rem;
-    padding: 1rem 0;
-  }
+    /* Audio Player */
+    .audio-player {
+      background: rgba(255,245,225,0.9); border-radius:16px;
+      box-shadow:0 4px 20px rgba(0,0,0,0.05);
+      width:90%; max-width:400px; padding:24px;
+      text-align:center; margin-bottom:24px;
+    }
+    .play-btn {
+      width:64px; height:64px; border:none; border-radius:50%;
+      background: linear-gradient(135deg, var(--teal), var(--blue));
+      display:inline-flex; align-items:center; justify-content:center;
+      cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.1);
+      transition: transform .2s;
+    }
+    .play-btn:active { transform: scale(.95); }
+    .play-btn svg { width:30px; height:30px; fill:#fff; }
+    .progress-container {
+      width:100%; height:6px; background:#eee; border-radius:3px;
+      margin:20px 0 8px; overflow:hidden; cursor:pointer;
+    }
+    .progress {
+      width:0%; height:100%; background:var(--teal);
+      transition: width .1s linear;
+    }
+    .time { font-size:14px; }
 
-  .countdown div {
-    background: #e0f7fa;
-    border-radius: 10px;
-    padding: 1rem;
-    min-width: 60px;
-  }
+    /* Welcome Message */
+    .message {
+      max-width:90%; font-weight:300; font-size:16px;
+      text-align:center; margin-bottom:40px;
+    }
 
-  .message {
-    padding: 2rem;
-    background: #f3faff;
-    font-size: 1.2rem;
-  }
+    /* Countdown Title */
+    .countdown-title {
+      font-family:'Playfair Display', serif;
+      font-size:2.5rem; font-weight:700;
+      margin-bottom:1rem; color:var(--dark-blue);
+      opacity: 0;
+      animation: fadeInDown 1s ease-out forwards;
+    }
+    @keyframes fadeInDown {
+      from { opacity:0; transform:translateY(-20px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
 
-  .map {
-    text-align: center;
-    padding: 1rem;
-  }
+    /* Countdown Units */
+    .countdown {
+      display:flex; gap:1rem; justify-content:center;
+      flex-wrap:nowrap; overflow-x:auto; padding:0 8px;
+      -ms-overflow-style:none; scrollbar-width:none;
+    }
+    .countdown::-webkit-scrollbar { display:none; }
+    .unit {
+      text-align:center;
+      opacity:0; animation: fadeInUp .8s ease-out forwards;
+    }
+    .unit:nth-child(1) { animation-delay:.3s; }
+    .unit:nth-child(2) { animation-delay:.5s; }
+    .unit:nth-child(3) { animation-delay:.7s; }
+    .unit:nth-child(4) { animation-delay:.9s; }
+    @keyframes fadeInUp {
+      from { opacity:0; transform:translateY(10px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .box {
+      background:var(--cream); border:1px solid var(--gold);
+      padding:1.2rem .8rem; min-width:70px; border-radius:8px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.05);
+    }
+    .number { font-size:2.5rem; font-weight:700; }
+    .label  { margin-top:.5rem; font-size:1rem; font-weight:500; }
 
-  .gallery, .gallery-bw {
-    display: flex;
-    overflow-x: scroll;
-    gap: 1rem;
-    padding: 1rem;
-    scroll-snap-type: x mandatory;
-  }
+    @media(max-width:480px) {
+      .box { min-width:60px; padding:1rem; }
+      .number { font-size:2rem; }
+      .label  { font-size:.9rem; }
+      .countdown-title { font-size:2rem; }
+    }
 
-  .gallery img, .gallery-bw img {
-    height: 300px;
-    border-radius: 10px;
-    scroll-snap-align: center;
-  }
+    /* Tagline */
+    #taglineSection {
+      width:90%; max-width:600px; text-align:center;
+      margin:24px 0 60px;
+      opacity:0; transform:scale(.8) translateY(20px);
+      animation: subtitlePop 1s ease-out forwards;
+      animation-delay:1.5s;
+    }
+    .tagline {
+      font-family:'Playfair Display', serif;
+      font-size:3.5rem; color:var(--dark-blue);
+      border-bottom:2px solid var(--dark-blue);
+      padding-bottom:8px; display:inline-block;
+    }
+    @keyframes subtitlePop {
+      0% { opacity:0; transform:scale(.8) translateY(20px); }
+      60%{ opacity:1; transform:scale(1.1) translateY(0); }
+      100%{opacity:1; transform:scale(1) translateY(0);}
+    }
 
-  .gallery-bw img {
-    cursor: pointer;
-    transition: transform 0.3s;
-  }
+    /* Gallery */
+    .photo-slider {
+      width:90%; max-width:800px; margin-bottom:60px;
+      opacity:0; transform:translateY(20px);
+      transition: opacity 1.5s ease-out, transform 1.5s ease-out;
+    }
+    .photo-slider.visible { opacity:1; transform:translateY(0); }
+    .swiper-slide img {
+      border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1);
+    }
 
-  .gallery-bw img:hover {
-    transform: scale(1.03);
-  }
-
-  .dots {
-    text-align: center;
-    margin-top: 0.5rem;
-  }
-
-  .dot {
-    height: 10px;
-    width: 10px;
-    background-color: #bbb;
-    border-radius: 50%;
-    display: inline-block;
-    margin: 0 2px;
-  }
-
-  .family, .schedule, .theme {
-    padding: 2rem;
-  }
-
-  .family h2, .schedule h2, .theme h2 {
-    text-align: center;
-    font-weight: 600;
-  }
-
-  .family p, .schedule p {
-    text-align: center;
-    margin: 0.5rem 0;
-  }
-
-  .theme .colors {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 1rem;
-  }
-
-  .theme .colors div {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-  }
-
-  .blue { background-color: #6ca0dc; }
-  .cream { background-color: #f7e9d7; }
-  .green { background-color: #a5d8d2; }
-
-  .fade-in {
-    animation: fadeIn 1s ease-in-out;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  /* Lightbox Styles */
-  #lightbox {
-    position: fixed;
-    z-index: 9999;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: rgba(0,0,0,0.9);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    user-select: none;
-    touch-action: none;
-  }
-
-  #lightbox .close {
-    position: absolute;
-    top: 20px;
-    right: 25px;
-    font-size: 3rem;
-    color: white;
-    cursor: pointer;
-    font-weight: 700;
-    z-index: 10001;
-    transition: color 0.3s ease;
-  }
-  #lightbox .close:hover,
-  #lightbox .close:focus {
-    color: #f0c040;
-    outline: none;
-  }
-
-  .lightbox-zoom-wrapper {
-    max-width: 90%;
-    max-height: 80%;
-    overflow: hidden;
-    border-radius: 12px;
-    box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
-    touch-action: none;
-    position: relative;
-  }
-
-  #lightbox-img {
-    display: block;
-    max-width: 100%;
-    max-height: 100%;
-    border-radius: 12px;
-    transition: transform 0.3s ease;
-    will-change: transform;
-    user-select: none;
-    pointer-events: none;
-  }
+    /* Invitation */
+    .divider {
+      width:80%; border-top:1px solid var(--gold); margin:32px 0;
+    }
+    .invitation-section {
+      background:#fffdfa; border:1px solid var(--gold);
+      border-radius:12px; padding:24px;
+      width:90%; max-width:600px; margin-bottom:60px;
+      opacity:0; transform:translateY(20px);
+      transition:opacity 1s ease-out, transform 1s ease-out;
+    }
+    .invitation-section.visible {
+      opacity:1; transform:translateY(0);
+    }
+    .invitation-details {
+      border:1px solid var(--gold); border-radius:8px;
+      padding:16px; margin-bottom:16px; position:relative;
+      background:#fff;
+    }
+    .line {
+      display:flex; align-items:center; gap:0.5rem;
+      margin:8px 0; font-weight:400; font-size:1rem;
+    }
+    .icon {
+      font-size:1.5rem; color:var(--teal);
+    }
+    .invitation-text {
+      font-weight:700; font-size:1.2rem; text-align:center;
+    }
   </style>
 </head>
 <body>
-  <header>
-    <img src="https://i.postimg.cc/6QGx2SKg/DSC087422-1.jpg" alt="ภาพปกงานแต่ง">
-  </header>
 
-  <section class="audio-section center">
-    <audio id="bgm" controls playsinline>
-      <source src="https://natiphol.github.io/mp3/No.mp3" type="audio/mp3">
-      เบราว์เซอร์ของคุณไม่รองรับเสียง
-    </audio>
-    <p style="margin-top: 1rem;">🎶 กดเล่นเพลง แล้วเลื่อนชมรายละเอียดงานด้านล่างได้เลยค่ะ 🎶</p>
-  </section>
+  <!-- Hero Image -->
+  <img id="heroImage" class="reveal" src="https://i.postimg.cc/6QGx2SKg/DSC087422-1.jpg" alt="Wedding Image"/>
 
-  <script>
-    const bgm = document.getElementById('bgm');
-    let hasInteracted = false;
-    function tryPlay() {
-      if (!hasInteracted) {
-        bgm.play().catch(() => {});
-        hasInteracted = true;
-      }
-    }
-    window.addEventListener('click', tryPlay);
-    window.addEventListener('touchstart', tryPlay);
-    window.addEventListener('scroll', tryPlay);
-  </script>
-
-  <section class="center">
-    <h2>นับถอยหลังสู่งานมงคล</h2>
-    <div class="countdown" id="countdown"></div>
-  </section>
-
-  <section class="message">
-    <p class="center">ในวันที่พิเศษของเรา ตั๊กและตาลอยากแบ่งปันความสุขนี้กับทุกคนที่เรารัก</p>
-    <p class="center">ขอบคุณที่เป็นส่วนหนึ่งของความทรงจำที่มีความหมาย</p>
-  </section>
-
-  <section class="gallery">
-    <img src="https://i.postimg.cc/SsTCWWJw/DSC-7529-19944.jpg" alt="ภาพ1">
-    <img src="https://i.postimg.cc/02vVmwcN/DSC-0160.jpg" alt="ภาพ2">
-    <img src="https://i.postimg.cc/cCRT2x4Z/DSC-7266-19681.jpg" alt="ภาพ3">
-  </section>
-  <div class="dots center">
-    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+  <!-- Prompt with slide-in -->
+  <div class="scroll-indicator reveal">
+    กรุณากดเล่นเพลงก่อน แล้วเลื่อนลงดูรายละเอียด
   </div>
 
-  <!-- Lightbox -->
-  <div id="lightbox" style="display: none;">
-    <span class="close" aria-label="ปิด lightbox" role="button" tabindex="0">&times;</span>
-    <div class="lightbox-zoom-wrapper">
-      <img class="lightbox-content" id="lightbox-img" alt="">
+  <!-- Audio Player with slide-in -->
+  <div class="audio-player reveal">
+    <audio id="audio" src="https://natiphol.github.io/mp3/No.mp3"></audio>
+    <button id="playBtn" class="play-btn" aria-label="Play">
+      <svg viewBox="0 0 64 64"><polygon points="16,8 56,32 16,56"/></svg>
+    </button>
+    <div id="progressContainer" class="progress-container">
+      <div id="progress" class="progress"></div>
+    </div>
+    <div class="time"><span id="currentTime">00:00</span> / <span id="duration">00:00</span></div>
+  </div>
+
+  <!-- Welcome Message -->
+  <div class="message">
+    เราสองคนกำลังจะเริ่มต้นบทใหม่ของชีวิต และอยากให้คุณเป็นส่วนหนึ่งในความทรงจำที่สวยงามครั้งนี้
+  </div>
+
+  <!-- Countdown -->
+  <div id="countdownSection" class="reveal">
+    <div class="countdown-title">Countdown to Wedding</div>
+    <div class="countdown">
+      <div class="unit"><div class="box"><span id="days" class="number">00</span></div><div class="label">วัน</div></div>
+      <div class="unit"><div class="box"><span id="hours" class="number">00</span></div><div class="label">ชั่วโมง</div></div>
+      <div class="unit"><div class="box"><span id="minutes" class="number">00</span></div><div class="label">นาที</div></div>
+      <div class="unit"><div class="box"><span id="seconds" class="number">00</span></div><div class="label">วินาที</div></div>
     </div>
   </div>
 
+  <!-- Tagline -->
+  <div id="taglineSection">
+    <div class="tagline">From This Moment, Always</div>
+  </div>
+
+  <!-- Gallery Slider -->
+  <section class="photo-slider reveal">
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><a href="https://i.postimg.cc/SsTCWWJw/DSC-7529-19944.jpg" class="glightbox"><img src="https://i.postimg.cc/SsTCWWJw/DSC-7529-19944.jpg" alt=""/></a></div>
+        <div class="swiper-slide"><a href="https://i.postimg.cc/02vVmwcN/DSC-0160.jpg" class="glightbox"><img src="https://i.postimg.cc/02vVmwcN/DSC-0160.jpg" alt=""/></a></div>
+        <div class="swiper-slide"><a href="https://i.postimg.cc/cCRT2x4Z/DSC-7266-19681.jpg" class="glightbox"><img src="https://i.postimg.cc/cCRT2x4Z/DSC-7266-19681.jpg" alt=""/></a></div>
+      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+  </section>
+
+  <!-- Divider -->
+  <hr class="divider"/>
+
+  <!-- Invitation Section -->
+  <div class="invitation-section reveal">
+    <div class="invitation-details">
+      <div class="line"><span class="icon">👨‍👩‍👦‍👦</span><span>นายสีศักดิ์ ศรีโกศล (พ่อ)</span></div>
+      <div class="line"><span class="icon">👩‍👦‍👦</span><span>นางสาวหนูพิน เจนวิถี (แม่)</span></div>
+      <div class="line"><span class="icon">👦</span><span>นายวรพันธุ์ ชาญชนะโรจน์ (พี่ชาย)</span></div>
+      <div class="line"><span class="icon">👧</span><span>นางกานต์สินี ชาญชนะโรจน์ (แม่)</span></div>
+    </div>
+    <div class="invitation-text">ขอเรียนเชิญร่วมเป็นเกียรติในพิธีมงคลสมรส</div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
   <script>
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImg = document.getElementById('lightbox-img');
-  const closeBtn = document.querySelector('#lightbox .close');
-  const images = Array.from(document.querySelectorAll('.gallery img, .gallery-bw img'));
-  let currentIndex = 0;
+    document.addEventListener('DOMContentLoaded', () => {
+      // reveal-on-scroll
+      document.querySelectorAll('.reveal').forEach(el => {
+        new IntersectionObserver(entries => {
+          entries.forEach(e => {
+            if (e.isIntersecting) {
+              e.target.classList.add('visible');
+              e.target.classList.remove('reveal');
+            }
+          });
+        }, { threshold: 0.1 }).observe(el);
+      });
 
-  let scale = 1;
-  let startX = 0, startY = 0;
-  let originX = 0, originY = 0;
-  let lastTouchDistance = 0;
-  let isPanning = false;
-  let panX = 0, panY = 0;
+      // init Swiper & GLightbox
+      new Swiper('.swiper-container', {
+        slidesPerView:1, spaceBetween:20, loop:true,
+        pagination:{ el:'.swiper-pagination', clickable:true },
+        navigation:{ nextEl:'.swiper-button-next', prevEl:'.swiper-button-prev' },
+      });
+      GLightbox({ selector:'.glightbox', loop:true });
 
-  function resetTransform() {
-    scale = 1;
-    panX = 0;
-    panY = 0;
-    updateTransform();
-  }
+      // audio player
+      const audio = document.getElementById('audio'),
+            playBtn = document.getElementById('playBtn'),
+            progress = document.getElementById('progress'),
+            progressContainer = document.getElementById('progressContainer'),
+            currentTimeEl = document.getElementById('currentTime'),
+            durationEl = document.getElementById('duration');
+      playBtn.addEventListener('click', () => {
+        if (audio.paused) {
+          audio.play();
+          playBtn.innerHTML = `<svg viewBox="0 0 64 64"><rect x="16" y="8" width="12" height="48"/><rect x="36" y="8" width="12" height="48"/></svg>`;
+        } else {
+          audio.pause();
+          playBtn.innerHTML = `<svg viewBox="0 0 64 64"><polygon points="16,8 56,32 16,56"/></svg>`;
+        }
+      });
+      audio.addEventListener('loadedmetadata', () => durationEl.textContent = formatTime(audio.duration));
+      audio.addEventListener('timeupdate', () => {
+        currentTimeEl.textContent = formatTime(audio.currentTime);
+        progress.style.width = (audio.currentTime / audio.duration) * 100 + '%';
+      });
+      progressContainer.addEventListener('click', e => {
+        const rect = progressContainer.getBoundingClientRect();
+        audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
+      });
+      function formatTime(t) {
+        const m = Math.floor(t/60), s = Math.floor(t%60);
+        return String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+      }
 
-  function updateTransform() {
-    lightboxImg.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
-  }
-
-  function getDistance(touches) {
-    const dx = touches[0].clientX - touches[1].clientX;
-    const dy = touches[0].clientY - touches[1].clientY;
-    return Math.hypot(dx, dy);
-  }
-
-  function showImage(index) {
-    if (index >= 0 && index < images.length) {
-      currentIndex = index;
-      lightboxImg.src = images[currentIndex].src;
-      lightboxImg.alt = images[currentIndex].alt || '';
-      resetTransform();
-    }
-  }
-
-  images.forEach((img, index) => {
-    img.style.cursor = 'zoom-in';
-    img.addEventListener('click', () => {
-      lightbox.style.display = 'flex';
-      showImage(index);
-      document.body.style.overflow = 'hidden';
+      // countdown
+      const target = new Date(2025,5,8,0,0,0).getTime();
+      const els = {
+        days: document.getElementById('days'),
+        hours: document.getElementById('hours'),
+        minutes: document.getElementById('minutes'),
+        seconds: document.getElementById('seconds'),
+      };
+      function updateCountdown() {
+        let diff = target - Date.now();
+        if (diff < 0) diff = 0;
+        const d = Math.floor(diff / 86400000); diff -= d*86400000;
+        const h = Math.floor(diff / 3600000); diff -= h*3600000;
+        const m = Math.floor(diff / 60000); diff -= m*60000;
+        const s = Math.floor(diff / 1000);
+        els.days.textContent    = String(d).padStart(2,'0');
+        els.hours.textContent   = String(h).padStart(2,'0');
+        els.minutes.textContent = String(m).padStart(2,'0');
+        els.seconds.textContent = String(s).padStart(2,'0');
+      }
+      updateCountdown();
+      setInterval(updateCountdown,1000);
     });
-  });
-
-  function closeLightbox() {
-    lightbox.style.display = 'none';
-    lightboxImg.src = '';
-    document.body.style.overflow = '';
-  }
-
-  closeBtn.addEventListener('click', closeLightbox);
-  closeBtn.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); closeLightbox(); }
-  });
-
-  lightbox.addEventListener('click', e => {
-    if (e.target === lightbox) closeLightbox();
-  });
-
-  document.addEventListener('keydown', e => {
-    if (lightbox.style.display === 'flex') {
-      if (e.key === 'ArrowRight') showImage((currentIndex + 1) % images.length);
-      else if (e.key === 'ArrowLeft') showImage((currentIndex - 1 + images.length) % images.length);
-      else if (e.key === 'Escape') closeLightbox();
-    }
-  });
-
-  let touchStartX = 0, touchStartY = 0;
-  let pinchZooming = false;
-
-  lightboxImg.addEventListener('touchstart', e => {
-    if (e.touches.length === 1) {
-      touchStartX = e.touches[0].clientX;
-      touchStartY = e.touches[0].clientY;
-      isPanning = scale > 1;
-      startX = panX;
-      startY = panY;
-    } else if (e.touches.length === 2) {
-      pinchZooming = true;
-      lastTouchDistance = getDistance(e.touches);
-      const rect = lightboxImg.getBoundingClientRect();
-      originX = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
-      originY = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
-      lightboxImg.style.transformOrigin = `${originX}px ${originY}px`;
-    }
-  }, { passive: false });
-
-  lightboxImg.addEventListener('touchmove', e => {
-    e.preventDefault();
-    if (e.touches.length === 1 && isPanning) {
-      const dx = e.touches[0].clientX - touchStartX;
-      const dy = e.touches[0].clientY - touchStartY;
-      panX = startX + dx;
-      panY = startY + dy;
-      updateTransform();
-    } else if (e.touches.length === 2 && pinchZooming) {
-      const currentDistance = getDistance(e.touches);
-      let newScale = scale * (currentDistance / lastTouchDistance);
-      newScale = Math.min(Math.max(newScale, 1), 4);
-      scale = newScale;
-      updateTransform();
-      lastTouchDistance = currentDistance;
-    }
-  }, { passive: false });
-
-  lightboxImg.addEventListener('touchend', e => {
-    if (e.touches.length < 2) {
-      pinchZooming = false;
-      isPanning = false;
-      if (scale < 1) { scale = 1; panX = 0; panY = 0; updateTransform(); }
-    }
-  });
-
-  let swipeStartX = 0, swipeEndX = 0;
-  lightboxImg.addEventListener('touchstart', e => {
-    if (e.touches.length === 1 && scale === 1) swipeStartX = e.touches[0].clientX;
-  });
-  lightboxImg.addEventListener('touchend', e => {
-    if (e.changedTouches.length === 1 && scale === 1) {
-      swipeEndX = e.changedTouches[0].clientX;
-      const diffX = swipeEndX - swipeStartX;
-      if (diffX > 50) showImage((currentIndex - 1 + images.length) % images.length);
-      else if (diffX < -50) showImage((currentIndex + 1) % images.length);
-    }
-  });
-  </script>
-
-  <section class="family">
-    <h2>เรียนเชิญร่วมเป็นเกียรติในพิธีมงคลสมรส</h2>
-    <p>นายสีศักดิ์ ศรีโกศล (พ่อ) และ นางสาวหนูพิน เจนวิถี (แม่)</p>
-    <p>นายวรพันธุ์ ชาญชนะโรจน์ (พี่ชาย) และ นางกานต์สินี ชาญชนะโรจน์ (แม่)</p>
-
-  <section class="center">
-    <h2>💍 นางสาวพัณณิตา ศรีโกศล (ตั๊ก)</h2>
-    <div class="heart">❤</div>
-    <h2>นายเนติพล ชาญชนะโรจน์ (ตาล) 💍</h2>
-  </section>
-
-  <section class="schedule">
-    <h2>กำหนดพิธีการ</h2>
-    <p>15.30 น. พิธีแห่ขันหมาก</p>
-    <p>16.09 น. พิธีหมั้น</p>
-    <p>17.29 น. พิธีรดน้ำสังข์</p>
-    <p>18.30 น. งานเลี้ยงฉลองมงคลสมรส</p>
-  </section>
-
-  <section class="theme">
-    <h2>ธีมสีงาน</h2>
-    <div class="colors">
-      <div class="blue" title="Blue"></div>
-      <div class="cream" title="Cream"></div>
-      <div class="green" title="Green (ออกฟ้า)"></div>
-    </div>
-  </section>
-
-<div class="map-container" style="margin: 2rem 0; text-align: center;">
-  <h2 style="font-family: 'Kanit', sans-serif; font-size: 1.5rem; margin-bottom: 1rem;">📍 สถานที่จัดงาน</h2>
-  <iframe 
-    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.3606316544574!2d100.3413!3d13.6959647!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e2bf7336aff221%3A0x24eb06e501fdb781!2z4LmA4Lit4LiZ4Li04LiZ4LmM4Liq4Liy4LijIOC4oeC4quC4peC4suC4meC4tOC4mQ!5e0!3m2!1sth!2sth!4v1715937000000!5m2!1sth!2sth" 
-    width="100%" 
-    height="350" 
-    style="border:0; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);" 
-    allowfullscreen="" 
-    loading="lazy" 
-    referrerpolicy="no-referrer-when-downgrade">
-  </iframe>
-</div>
-
-  <section class="gallery-bw">
-    <img src="https://i.postimg.cc/2yR20bY2/DSC08741-1.jpg" alt="บ่าวสาว1" class="fade-in">
-    <img src="https://i.postimg.cc/ZRywPPGW/DSC08770.jpg" alt="บ่าวสาว2" class="fade-in">
-    <img src="https://i.postimg.cc/wvTDyWTX/DSC-7222-19637.jpg" alt="บ่าวสาว3" class="fade-in">
-    <img src="https://i.postimg.cc/SRn8VJ9j/DSC-7681-20095.jpg" alt="บ่าวสาว4" class="fade-in">
-    <img src="https://i.postimg.cc/9QJgcQPQ/DSC-7255-19670.jpg" alt="บ่าวสาว5" class="fade-in">
-  </section>
-
-  <script>
-    const countdownEl = document.getElementById('countdown');
-    const weddingDate = new Date(2025, 5, 8, 16, 0, 0);
-    function updateCountdown() {
-      const now = new Date();
-      const diff = weddingDate - now;
-      if (diff <= 0) {
-        countdownEl.innerHTML = '<div>งานเริ่มแล้ว 🎉</div>';
-        clearInterval(interval);
-        return;
-      }
-      const days = Math.floor(diff / (1000*60*60*24));
-      const hours = Math.floor((diff/(1000*60*60)) % 24);
-      const minutes = Math.floor((diff/(1000*60)) % 60);
-      const seconds = Math.floor((diff/1000) % 60);
-      countdownEl.innerHTML = `
-        <div><strong>${days}</strong><br>วัน</div>
-        <div><strong>${hours.toString().padStart(2,'0')}</strong><br>ชม.</div>
-        <div><strong>${minutes.toString().padStart(2,'0')}</strong><br>นาที</div>
-        <div><strong>${seconds.toString().padStart(2,'0')}</strong><br>วิ</div>
-      `;
-    }
-    updateCountdown();
-    const interval = setInterval(updateCountdown, 1000);
   </script>
 </body>
 </html>
