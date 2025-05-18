@@ -19,7 +19,6 @@
       --max-width: 600px;
       --section-gap: 48px;
     }
-    /* Reset & Base */
     * { margin:0; padding:0; box-sizing:border-box; }
     body {
       display:flex; flex-direction:column; align-items:center;
@@ -39,18 +38,14 @@
       width:100%; border-radius:8px;
       box-shadow:0 4px 12px rgba(0,0,0,0.1);
     }
-    #animatedImage.visible {
-      opacity:1; transform:translateY(0);
-    }
+    #animatedImage.visible { opacity:1; transform:translateY(0); }
 
     /* 2. Sliding Prompt */
     .scroll-indicator {
       opacity:0; transform:translateX(-100vw);
       transition:opacity 2s ease-out,transform 2s ease-out;
     }
-    .scroll-indicator.visible {
-      opacity:1; transform:translateX(0);
-    }
+    .scroll-indicator.visible { opacity:1; transform:translateX(0); }
     .scroll-indicator .info {
       font-size:1.125rem; font-weight:500;
       text-shadow:0 2px 4px rgba(0,0,0,0.1);
@@ -63,9 +58,7 @@
       background:rgba(255,245,225,0.9); padding:24px;
       border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,0.05);
     }
-    .audio-player.visible {
-      opacity:1; transform:translateX(0);
-    }
+    .audio-player.visible { opacity:1; transform:translateX(0); }
     .play-btn {
       width:64px; height:64px; margin-bottom:16px;
       background:linear-gradient(135deg,var(--teal),var(--blue));
@@ -80,35 +73,37 @@
       width:100%; height:6px; margin:20px 0 8px;
       background:#eee; border-radius:3px; cursor:pointer; overflow:hidden;
     }
-    .progress { width:0%; height:100%; background:var(--teal); transition:width .1s linear; }
+    .progress { width:0; height:100%; background:var(--teal); transition:width .1s linear; }
     .time { font-size:14px; margin-top:8px; }
 
     /* Messages */
     .message p { margin-bottom:.75rem; }
 
-    /* 5. Countdown Section */
+    /* 5. Countdown Section (flex, no wrap) */
     .countdown-section {
       opacity:0; transform:translateY(20px);
       transition:opacity 1.5s ease-out,transform 1.5s ease-out;
     }
-    .countdown-section.visible {
-      opacity:1; transform:translateY(0);
-    }
+    .countdown-section.visible { opacity:1; transform:translateY(0); }
     .countdown-title {
       font-family:'Playfair Display',serif; font-size:3rem;
       margin-bottom:24px;
     }
     .countdown {
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(100px,1fr));
-      gap:16px; justify-items:center;
+      display:flex; justify-content:center;
+      gap:16px; flex-wrap:nowrap; overflow-x:auto;
+      padding:0 8px;
+    }
+    .countdown .unit {
+      display:flex; flex-direction:column;
+      align-items:center; white-space:nowrap;
     }
     .countdown .box {
       background:var(--cream); border:2px solid var(--teal);
-      padding:1.25rem; border-radius:8px; width:100%;
+      padding:1.25rem; border-radius:8px; width:auto;
       box-shadow:0 4px 12px rgba(0,0,0,0.05);
       display:flex; align-items:center; justify-content:center;
-      min-height:5rem; white-space:nowrap;
+      min-width:80px; min-height:5rem;
     }
     .countdown .number { font-size:2.5rem; line-height:1; }
     .countdown .label  { margin-top:.5rem; font-size:1rem; }
@@ -122,9 +117,7 @@
       border-radius:16px; box-shadow:0 8px 24px rgba(0,0,0,0.1);
       position:relative;
     }
-    .invite-card.visible {
-      opacity:1; transform:translateY(0);
-    }
+    .invite-card.visible { opacity:1; transform:translateY(0); }
     .invite-card::before, .invite-card::after {
       content:''; position:absolute; width:40px; height:40px;
       border:2px solid var(--gold-rich); border-radius:50%;
@@ -202,7 +195,6 @@
     .dot:hover,.dot.active {
       opacity:1; box-shadow:0 0 8px var(--teal);
     }
-
     @media(max-width:480px){
       .moment-title { font-size:2rem; }
       .prev,.next { width:36px;height:36px;font-size:20px; }
@@ -243,10 +235,22 @@
   <div id="countdownSection" class="container countdown-section">
     <div class="countdown-title">Countdown to Wedding</div>
     <div class="countdown">
-      <div class="unit"><div class="box"><span id="days" class="number">0</span></div><div class="label">วัน</div></div>
-      <div class="unit"><div class="box"><span id="hours" class="number">00</span></div><div class="label">ชั่วโมง</div></div>
-      <div class="unit"><div class="box"><span id="minutes" class="number">00</span></div><div class="label">นาที</div></div>
-      <div class="unit"><div class="box"><span id="seconds" class="number">00</span></div><div class="label">วินาที</div></div>
+      <div class="unit">
+        <div class="box"><span id="days" class="number">0</span></div>
+        <div class="label">วัน</div>
+      </div>
+      <div class="unit">
+        <div class="box"><span id="hours" class="number">00</span></div>
+        <div class="label">ชั่วโมง</div>
+      </div>
+      <div class="unit">
+        <div class="box"><span id="minutes" class="number">00</span></div>
+        <div class="label">นาที</div>
+      </div>
+      <div class="unit">
+        <div class="box"><span id="seconds" class="number">00</span></div>
+        <div class="label">วินาที</div>
+      </div>
     </div>
   </div>
 
@@ -259,8 +263,8 @@
   <div class="container">
     <div id="inviteCard" class="invite-card">
       <div class="names">
-        <p><span class="name">นายสีศักดิ์ ศรีโกศล</span><span class="icon">❤</span><span class="name">นางสาวหนูพิน เจนวิถี</span> (พ่อ–แม่)</p>
-        <p><span class="name">นายวรพันธุ์ ชาญชนะโรจน์</span><span class="icon">❤</span><span class="name">นางกานต์สินี ชาญชนะโรจน์</span> (พี่ชาย–พี่สะใภ้)</p>
+        <p><span class="name">นายสีศักดิ์ ศรีโกศล</span><span class="icon"></span><span class="name">นางสาวหนูพิน เจนวิถี</span> (พ่อ–แม่)</p>
+        <p><span class="name">นายวรพันธุ์ ชาญชนะโรจน์</span><span class="icon"></span><span class="name">นางกานต์สินี ชาญชนะโรจน์</span> (พี่ชาย–แม่)</p>
       </div>
       <div class="line"></div>
       <p class="invite-text">ขอเรียนเชิญร่วมเป็นเกียรติในพิธีมงคลสมรส</p>
@@ -273,27 +277,13 @@
     <div class="moment-gallery">
       <button class="prev" aria-label="Previous">&lsaquo;</button>
       <div class="slides">
-        <div class="slide">
-          <a href="https://i.postimg.cc/SsTCWWJw/DSC-7529-19944.jpg" class="moment-slide">
-            <img src="https://i.postimg.cc/SsTCWWJw/DSC-7529-19944.jpg" alt="Moment 1"/>
-          </a>
-        </div>
-        <div class="slide">
-          <a href="https://i.postimg.cc/02vVmwcN/DSC-0160.jpg" class="moment-slide">
-            <img src="https://i.postimg.cc/02vVmwcN/DSC-0160.jpg" alt="Moment 2"/>
-          </a>
-        </div>
-        <div class="slide">
-          <a href="https://i.postimg.cc/cCRT2x4Z/DSC-7266-19681.jpg" class="moment-slide">
-            <img src="https://i.postimg.cc/cCRT2x4Z/DSC-7266-19681.jpg" alt="Moment 3"/>
-          </a>
-        </div>
+        <div class="slide"><a href="https://i.postimg.cc/SsTCWWJw/DSC-7529-19944.jpg" class="moment-slide"><img src="https://i.postimg.cc/SsTCWWJw/DSC-7529-19944.jpg" alt="Moment 1"/></a></div>
+        <div class="slide"><a href="https://i.postimg.cc/02vVmwcN/DSC-0160.jpg" class="moment-slide"><img src="https://i.postimg.cc/02vVmwcN/DSC-0160.jpg" alt="Moment 2"/></a></div>
+        <div class="slide"><a href="https://i.postimg.cc/cCRT2x4Z/DSC-7266-19681.jpg" class="moment-slide"><img src="https://i.postimg.cc/cCRT2x4Z/DSC-7266-19681.jpg" alt="Moment 3"/></a></div>
       </div>
       <button class="next" aria-label="Next">&rsaquo;</button>
     </div>
-    <div class="dot-container">
-      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-    </div>
+    <div class="dot-container"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
   </section>
 
   <!-- GLightbox JS & Core Script -->
@@ -352,7 +342,7 @@
         }
       });
       audio.addEventListener('loadedmetadata',()=>{ durationEl.textContent=formatTime(audio.duration); });
-      audio.addEventListener('timeupdate',()=> {
+      audio.addEventListener('timeupdate',()=>{
         currentTimeEl.textContent=formatTime(audio.currentTime);
         progress.style.width=(audio.currentTime/audio.duration)*100+'%';
       });
@@ -398,6 +388,7 @@
       setInterval(updateCountdown,1000);
 
       // Moment Always Slider & Lightbox
+      let startX=0;
       const slidesContainer = document.querySelector('.slides'),
             slides = document.querySelectorAll('.slide'),
             dots = document.querySelectorAll('.dot'),
