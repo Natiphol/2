@@ -25,7 +25,7 @@
       display:flex; flex-direction:column; align-items:center;
       background:linear-gradient(135deg,var(--cream),var(--teal),var(--blue));
       font-family:'IBM Plex Sans Thai',sans-serif; color:var(--dark-blue);
-      padding:var(--section-gap) 16px; line-height:1.6;
+      padding:var(--section-gap)16px; line-height:1.6;
     }
     .container {
       width:100%; max-width:var(--max-width);
@@ -40,40 +40,46 @@
       width:100%; border-radius:8px;
       box-shadow:0 4px 12px rgba(0,0,0,0.1);
     }
-    #animatedImage.visible { opacity:1; transform:translateY(0); }
+    #animatedImage.visible {
+      opacity:1; transform:translateY(0);
+    }
 
     /* 2. Sliding Prompt */
-    .scroll-indicator {
+    #indicator {
       opacity:0; transform:translateX(-100vw);
       transition:opacity 2s ease-out,transform 2s ease-out;
     }
-    .scroll-indicator.visible { opacity:1; transform:translateX(0); }
-    .scroll-indicator .info {
+    #indicator.visible {
+      opacity:1; transform:translateX(0);
+    }
+    #indicator .info {
       font-size:1.125rem; font-weight:500; color:var(--dark-blue);
       text-shadow:0 2px 4px rgba(0,0,0,0.1);
     }
 
     /* 3. Audio Player */
-    .audio-player {
+    #audioPlayer {
       opacity:0; transform:translateX(100vw);
       transition:opacity 2s ease-out,transform 2s ease-out;
       background:rgba(255,245,225,0.9); padding:24px;
       border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,0.05);
     }
-    .audio-player.visible { opacity:1; transform:translateX(0); }
+    #audioPlayer.visible {
+      opacity:1; transform:translateX(0);
+    }
     .play-btn {
       width:64px; height:64px; margin-bottom:16px;
       background:linear-gradient(135deg,var(--teal),var(--blue));
       border:none; border-radius:50%;
       display:inline-flex; align-items:center; justify-content:center;
       cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.1);
-      transition:transform 0.2s;
+      transition:transform .2s;
     }
     .play-btn:active { transform:scale(0.95); }
     .play-btn svg { width:30px; height:30px; fill:#fff; }
     .progress-container {
-      width:100%; height:6px; margin:20px 0 8px;
-      background:#eee; border-radius:3px; cursor:pointer; overflow:hidden;
+      width:100%; height:6px; background:#eee; border-radius:3px;
+      margin:20px 0 8px; cursor:pointer; overflow:hidden;
     }
     .progress { width:0; height:100%; background:var(--teal); transition:width .1s linear; }
     .time { font-size:14px; margin-top:8px; }
@@ -81,12 +87,14 @@
     /* 4. Messages */
     .message p { margin-bottom:.75rem; }
 
-    /* 5. Countdown Section */
+    /* 5. Countdown */
     .countdown-section {
       opacity:0; transform:translateY(20px);
       transition:opacity 1.5s ease-out,transform 1.5s ease-out;
     }
-    .countdown-section.visible { opacity:1; transform:translateY(0); }
+    .countdown-section.visible {
+      opacity:1; transform:translateY(0);
+    }
     .countdown-title {
       font-family:'Playfair Display',serif; font-size:2.5rem;
       margin-bottom:16px;
@@ -109,7 +117,7 @@
     .countdown .number { font-size:2rem; line-height:1; }
     .countdown .label  { margin-top:.25rem; font-size:.875rem; }
 
-    /* 6. Invitation Card – Luxe UI */
+    /* 6. Invitation Card */
     .invite-card {
       opacity:0; transform:translateY(20px);
       transition:opacity .8s ease,transform .8s ease;
@@ -118,7 +126,9 @@
       border-radius:16px; box-shadow:0 8px 24px rgba(0,0,0,0.1);
       position:relative;
     }
-    .invite-card.visible { opacity:1; transform:translateY(0); }
+    .invite-card.visible {
+      opacity:1; transform:translateY(0);
+    }
     .invite-card::before, .invite-card::after {
       content:''; position:absolute; width:32px; height:32px;
       border:2px solid var(--gold-rich); border-radius:50%;
@@ -144,7 +154,7 @@
       font-size:1.2rem; font-weight:300;
     }
 
-    /* 7. Moment Always – Luxe UI */
+    /* 7. Moment Always */
     .moment-section {
       margin-top:48px; padding:16px;
       background:rgba(255,245,225,0.8); border-radius:12px;
@@ -196,12 +206,12 @@
     }
 
     /* Media Queries */
-    @media (max-width:768px) {
+    @media(max-width:768px) {
       .countdown-title { font-size:2rem; }
       .invite-card { padding:20px; }
       .moment-section { padding:12px; }
     }
-    @media (max-width:480px) {
+    @media(max-width:480px) {
       html { font-size:14px; }
       .countdown { gap:6px; padding:0 4px; }
       .countdown .box { min-width:50px; padding:.75rem; }
@@ -223,8 +233,8 @@
   </div>
 
   <!-- 3. Audio Player -->
-  <div class="container audio-player">
-    <audio id="audio" src="https://natiphol.github.io/mp3/No.mp3"></audio>
+  <div id="audioPlayer" class="container audio-player">
+    <audio id="audio" src="https://natiphol.github.io/mp3/No.mp3" preload="metadata"></audio>
     <button id="playBtn" class="play-btn" aria-label="Play">
       <svg viewBox="0 0 64 64"><polygon points="16,8 56,32 16,56"/></svg>
     </button>
@@ -244,22 +254,10 @@
   <div id="countdownSection" class="container countdown-section">
     <div class="countdown-title">Countdown to Wedding</div>
     <div class="countdown">
-      <div class="unit">
-        <div class="box"><span id="days" class="number">0</span></div>
-        <div class="label">วัน</div>
-      </div>
-      <div class="unit">
-        <div class="box"><span id="hours" class="number">00</span></div>
-        <div class="label">ชั่วโมง</div>
-      </div>
-      <div class="unit">
-        <div class="box"><span id="minutes" class="number">00</span></div>
-        <div class="label">นาที</div>
-      </div>
-      <div class="unit">
-        <div class="box"><span id="seconds" class="number">00</span></div>
-        <div class="label">วินาที</div>
-      </div>
+      <div class="unit"><div class="box"><span id="days" class="number">0</span></div><div class="label">วัน</div></div>
+      <div class="unit"><div class="box"><span id="hours" class="number">00</span></div><div class="label">ชั่วโมง</div></div>
+      <div class="unit"><div class="box"><span id="minutes" class="number">00</span></div><div class="label">นาที</div></div>
+      <div class="unit"><div class="box"><span id="seconds" class="number">00</span></div><div class="label">วินาที</div></div>
     </div>
   </div>
 
@@ -270,10 +268,10 @@
 
   <!-- 7. Invitation Card -->
   <div class="container">
-    <div id="inviteCard" class="invite-card">
+    <div class="invite-card">
       <div class="names">
-        <p><span class="name">นายสีศักดิ์ ศรีโกศล</span><span class="name">นางสาวหนูพิน เจนวิถี</span> (พ่อ–แม่)</p>
-        <p><span class="name">นายวรพันธุ์ ชาญชนะโรจน์</span><span class="name">นางกานต์สินี ชาญชนะโรจน์</span> (พี่ชาย–แม่)</p>
+        <p><span class="name">นายสีศักดิ์ ศรีโกศล</span><span class="icon">❤</span><span class="name">นางสาวหนูพิน เจนวิถี</span> (พ่อ–แม่)</p>
+        <p><span class="name">นายวรพันธุ์ ชาญชนะโรจน์</span><span class="icon">❤</span><span class="name">นางกานต์สินี ชาญชนะโรจน์</span> (พี่ชาย–พี่สะใภ้)</p>
       </div>
       <div class="line"></div>
       <p class="invite-text">ขอเรียนเชิญร่วมเป็นเกียรติในพิธีมงคลสมรส</p>
@@ -299,18 +297,22 @@
   <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      // Observer
       const observer = new IntersectionObserver(entries => {
         entries.forEach(e => {
-          if (e.isIntersecting) e.target.classList.add('visible');
+          if(e.isIntersecting) {
+            e.target.classList.add('visible');
+            observer.unobserve(e.target);
+          }
         });
       }, { threshold: 0.2 });
 
       ['animatedImage','indicator','audioPlayer','countdownSection','inviteCard'].forEach(id => {
-        const el = document.getElementById(id) || document.querySelector(`.${id}`);
-        if (el) observer.observe(el);
+        const el = document.getElementById(id);
+        if(el) observer.observe(el);
       });
 
-      // Audio Player Logic
+      // Audio player logic
       const audio = document.getElementById('audio'),
             playBtn = document.getElementById('playBtn'),
             progress = document.getElementById('progress'),
@@ -319,7 +321,7 @@
             durationEl = document.getElementById('duration');
 
       playBtn.addEventListener('click', () => {
-        if (audio.paused) {
+        if(audio.paused) {
           audio.play();
           playBtn.innerHTML = `<svg viewBox="0 0 64 64"><rect x="16" y="8" width="12" height="48"/><rect x="36" y="8" width="12" height="48"/></svg>`;
           playBtn.setAttribute('aria-label','Pause');
@@ -335,58 +337,47 @@
         progress.style.width=(audio.currentTime/audio.duration)*100+'%';
       });
       progressContainer.addEventListener('click',e=>{
-        const rect = progressContainer.getBoundingClientRect();
-        audio.currentTime = ((e.clientX-rect.left)/rect.width)*audio.duration;
+        const rect=progressContainer.getBoundingClientRect();
+        audio.currentTime=((e.clientX-rect.left)/rect.width)*audio.duration;
       });
       function formatTime(t){ const m=Math.floor(t/60), s=Math.floor(t%60); return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0'); }
 
-      // Countdown Logic
-      const target = new Date(2025,5,8,0,0,0).getTime();
-      const els = {
-        days:    document.getElementById('days'),
-        hours:   document.getElementById('hours'),
-        minutes: document.getElementById('minutes'),
-        seconds: document.getElementById('seconds'),
-      };
+      // Countdown logic
+      const target=new Date(2025,5,8).getTime();
+      const els={ days:document.getElementById('days'),
+                  hours:document.getElementById('hours'),
+                  minutes:document.getElementById('minutes'),
+                  seconds:document.getElementById('seconds') };
       function updateCountdown(){
-        let diff = target - Date.now();
-        if (diff < 0) diff = 0;
-        const d = Math.floor(diff/(1000*60*60*24));
-        diff -= d*1000*60*60*24;
-        const h = Math.floor(diff/(1000*60*60));
-        diff -= h*1000*60*60;
-        const m = Math.floor(diff/(1000*60));
-        diff -= m*1000*60;
-        const s = Math.floor(diff/1000);
-        setValue('days',d);
-        setValue('hours',String(h).padStart(2,'0'));
-        setValue('minutes',String(m).padStart(2,'0'));
-        setValue('seconds',String(s).padStart(2,'0'));
+        let diff=target-Date.now(); if(diff<0)diff=0;
+        const d=Math.floor(diff/(1000*60*60*24)); diff-=d*1000*60*60*24;
+        const h=Math.floor(diff/(1000*60*60)); diff-=h*1000*60*60;
+        const m=Math.floor(diff/(1000*60)); diff-=m*1000*60;
+        const s=Math.floor(diff/1000);
+        setValue('days',d); setValue('hours',String(h).padStart(2,'0'));
+        setValue('minutes',String(m).padStart(2,'0')); setValue('seconds',String(s).padStart(2,'0'));
       }
-      function setValue(id,val){
-        const el = els[id];
-        if(el.textContent!==String(val)){
-          el.textContent = val;
+      function setValue(id,v){
+        const el=els[id]; if(el.textContent!==String(v)){
+          el.textContent=v;
           el.classList.remove('animate');
           void el.offsetWidth;
           el.classList.add('animate');
         }
       }
-      updateCountdown();
-      setInterval(updateCountdown,1000);
+      updateCountdown(); setInterval(updateCountdown,1000);
 
-      // Moment Always Slider & Lightbox
-      let startX=0;
-      const slidesContainer = document.querySelector('.slides'),
-            slides = document.querySelectorAll('.slide'),
-            dots = document.querySelectorAll('.dot'),
-            prevBtn = document.querySelector('.prev'),
-            nextBtn = document.querySelector('.next');
-      let slideIndex=1;
+      // Moment Always slider
+      let startX=0, slideIndex=1;
+      const slidesContainer=document.querySelector('.slides'),
+            slides=document.querySelectorAll('.slide'),
+            dots=document.querySelectorAll('.dot'),
+            prevBtn=document.querySelector('.prev'),
+            nextBtn=document.querySelector('.next');
       function showSlides(n){
         if(n>slides.length) slideIndex=1;
         if(n<1) slideIndex=slides.length;
-        slidesContainer.style.transform = `translateX(${-(slideIndex-1)*100}%)`;
+        slidesContainer.style.transform=`translateX(${-(slideIndex-1)*100}%)`;
         dots.forEach((d,i)=>d.classList.toggle('active',i===slideIndex-1));
       }
       prevBtn.addEventListener('click',()=>showSlides(--slideIndex));
