@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="เชิญร่วมงานแต่งงาน ตั๊ก ❤ ตาล 8 มิถุนายน 2025 พร้อมเพลงประกอบ และ countdown สวยงาม"/>
   <title>Wedding Invitation – Audio, Prompt & Elegant Countdown</title>
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;600;700&family=Playfair+Display:wght@300;400;700&display=swap" rel="stylesheet"/>
@@ -25,7 +26,8 @@
       display:flex; flex-direction:column; align-items:center;
       background:linear-gradient(135deg,var(--cream),var(--teal),var(--blue));
       font-family:'IBM Plex Sans Thai',sans-serif; color:var(--dark-blue);
-      padding:var(--section-gap)16px; line-height:1.6;
+      padding: var(--section-gap) 16px;   /* fixed padding syntax */
+      line-height:1.6;
     }
     .container {
       width:100%; max-width:var(--max-width);
@@ -116,6 +118,16 @@
     }
     .countdown .number { font-size:2rem; line-height:1; }
     .countdown .label  { margin-top:.25rem; font-size:.875rem; }
+
+    /* animation for countdown digits */
+    @keyframes pulse {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    .number.animate {
+      animation: pulse 0.3s ease;
+    }
 
     /* 6. Invitation Card */
     .invite-card {
@@ -224,7 +236,9 @@
 
   <!-- 1. Scroll Image -->
   <div class="container">
-    <img id="animatedImage" src="https://i.postimg.cc/6QGx2SKg/DSC087422-1.jpg" alt="Wedding Image"/>
+    <img id="animatedImage" loading="lazy"
+         src="https://i.postimg.cc/6QGx2SKg/DSC087422-1.jpg"
+         alt="Wedding Image"/>
   </div>
 
   <!-- 2. Sliding Prompt -->
@@ -251,13 +265,25 @@
   </div>
 
   <!-- 5. Countdown Section -->
-  <div id="countdownSection" class="container countdown-section">
+  <div id="countdownSection" class="container countdown-section" aria-live="polite">
     <div class="countdown-title">Countdown to Wedding</div>
     <div class="countdown">
-      <div class="unit"><div class="box"><span id="days" class="number">0</span></div><div class="label">วัน</div></div>
-      <div class="unit"><div class="box"><span id="hours" class="number">00</span></div><div class="label">ชั่วโมง</div></div>
-      <div class="unit"><div class="box"><span id="minutes" class="number">00</span></div><div class="label">นาที</div></div>
-      <div class="unit"><div class="box"><span id="seconds" class="number">00</span></div><div class="label">วินาที</div></div>
+      <div class="unit">
+        <div class="box"><span id="days" class="number">0</span></div>
+        <div class="label">วัน</div>
+      </div>
+      <div class="unit">
+        <div class="box"><span id="hours" class="number">00</span></div>
+        <div class="label">ชั่วโมง</div>
+      </div>
+      <div class="unit">
+        <div class="box"><span id="minutes" class="number">00</span></div>
+        <div class="label">นาที</div>
+      </div>
+      <div class="unit">
+        <div class="box"><span id="seconds" class="number">00</span></div>
+        <div class="label">วินาที</div>
+      </div>
     </div>
   </div>
 
@@ -268,10 +294,18 @@
 
   <!-- 7. Invitation Card -->
   <div class="container">
-    <div class="invite-card">
+    <div id="inviteCard" class="invite-card">
       <div class="names">
-        <p><span class="name">นายสีศักดิ์ ศรีโกศล</span><span class="icon">❤</span><span class="name">นางสาวหนูพิน เจนวิถี</span> (พ่อ–แม่)</p>
-        <p><span class="name">นายวรพันธุ์ ชาญชนะโรจน์</span><span class="icon">❤</span><span class="name">นางกานต์สินี ชาญชนะโรจน์</span> (พี่ชาย–แม่)</p>
+        <p>
+          <span class="name">นายสีศักดิ์ ศรีโกศล</span>
+          <span class="name">นางสาวหนูพิน เจนวิถี</span>
+          (พ่อ–แม่)
+        </p>
+        <p>
+          <span class="name">นายวรพันธุ์ ชาญชนะโรจน์</span>
+          <span class="name">นางกานต์สินี ชาญชนะโรจน์</span>
+          (พี่ชาย–แม่)
+        </p>
       </div>
       <div class="line"></div>
       <p class="invite-text">ขอเรียนเชิญร่วมเป็นเกียรติในพิธีมงคลสมรส</p>
@@ -284,33 +318,48 @@
     <div class="moment-gallery">
       <button class="prev" aria-label="Previous">&lsaquo;</button>
       <div class="slides">
-        <div class="slide"><a href="https://i.postimg.cc/SsTCWWJw/DSC-7529-19944.jpg" class="moment-slide"><img src="https://i.postimg.cc/SsTCWWJw/DSC-7529-19944.jpg" alt="Moment 1"/></a></div>
-        <div class="slide"><a href="https://i.postimg.cc/02vVmwcN/DSC-0160.jpg" class="moment-slide"><img src="https://i.postimg.cc/02vVmwcN/DSC-0160.jpg" alt="Moment 2"/></a></div>
-        <div class="slide"><a href="https://i.postimg.cc/cCRT2x4Z/DSC-7266-19681.jpg" class="moment-slide"><img src="https://i.postimg.cc/cCRT2x4Z/DSC-7266-19681.jpg" alt="Moment 3"/></a></div>
+        <div class="slide">
+          <a href="https://i.postimg.cc/SsTCWWJw/DSC-7529-19944.jpg" class="moment-slide">
+            <img loading="lazy" src="https://i.postimg.cc/SsTCWWJw/DSC-7529-19944.jpg" alt="Moment 1"/>
+          </a>
+        </div>
+        <div class="slide">
+          <a href="https://i.postimg.cc/02vVmwcN/DSC-0160.jpg" class="moment-slide">
+            <img loading="lazy" src="https://i.postimg.cc/02vVmwcN/DSC-0160.jpg" alt="Moment 2"/>
+          </a>
+        </div>
+        <div class="slide">
+          <a href="https://i.postimg.cc/cCRT2x4Z/DSC-7266-19681.jpg" class="moment-slide">
+            <img loading="lazy" src="https://i.postimg.cc/cCRT2x4Z/DSC-7266-19681.jpg" alt="Moment 3"/>
+          </a>
+        </div>
       </div>
       <button class="next" aria-label="Next">&rsaquo;</button>
     </div>
-    <div class="dot-container"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+    <div class="dot-container">
+      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+    </div>
   </section>
 
   <!-- GLightbox JS & Core Script -->
   <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Observer
+      // Intersection Observer for reveal-on-scroll
       const observer = new IntersectionObserver(entries => {
         entries.forEach(e => {
-          if(e.isIntersecting) {
+          if (e.isIntersecting) {
             e.target.classList.add('visible');
             observer.unobserve(e.target);
           }
         });
       }, { threshold: 0.2 });
 
-      ['animatedImage','indicator','audioPlayer','countdownSection','inviteCard'].forEach(id => {
-        const el = document.getElementById(id);
-        if(el) observer.observe(el);
-      });
+      ['animatedImage','indicator','audioPlayer','countdownSection','inviteCard']
+        .forEach(id => {
+          const el = document.getElementById(id);
+          if (el) observer.observe(el);
+        });
 
       // Audio player logic
       const audio = document.getElementById('audio'),
@@ -320,8 +369,11 @@
             currentTimeEl = document.getElementById('currentTime'),
             durationEl = document.getElementById('duration');
 
+      // Disable progress seeking until metadata loaded
+      progressContainer.style.pointerEvents = 'none';
+
       playBtn.addEventListener('click', () => {
-        if(audio.paused) {
+        if (audio.paused) {
           audio.play();
           playBtn.innerHTML = `<svg viewBox="0 0 64 64"><rect x="16" y="8" width="12" height="48"/><rect x="36" y="8" width="12" height="48"/></svg>`;
           playBtn.setAttribute('aria-label','Pause');
@@ -331,64 +383,89 @@
           playBtn.setAttribute('aria-label','Play');
         }
       });
-      audio.addEventListener('loadedmetadata',()=>{ durationEl.textContent=formatTime(audio.duration); });
-      audio.addEventListener('timeupdate',()=>{
-        currentTimeEl.textContent=formatTime(audio.currentTime);
-        progress.style.width=(audio.currentTime/audio.duration)*100+'%';
+
+      audio.addEventListener('loadedmetadata', () => {
+        durationEl.textContent = formatTime(audio.duration);
+        progressContainer.style.pointerEvents = '';  // enable seeking
       });
-      progressContainer.addEventListener('click',e=>{
-        const rect=progressContainer.getBoundingClientRect();
-        audio.currentTime=((e.clientX-rect.left)/rect.width)*audio.duration;
+
+      audio.addEventListener('timeupdate', () => {
+        currentTimeEl.textContent = formatTime(audio.currentTime);
+        progress.style.width = (audio.currentTime / audio.duration) * 100 + '%';
       });
-      function formatTime(t){ const m=Math.floor(t/60), s=Math.floor(t%60); return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0'); }
+
+      progressContainer.addEventListener('click', e => {
+        const rect = progressContainer.getBoundingClientRect();
+        audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
+      });
+
+      function formatTime(t) {
+        const m = Math.floor(t / 60),
+              s = Math.floor(t % 60);
+        return String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+      }
 
       // Countdown logic
-      const target=new Date(2025,5,8).getTime();
-      const els={ days:document.getElementById('days'),
-                  hours:document.getElementById('hours'),
-                  minutes:document.getElementById('minutes'),
-                  seconds:document.getElementById('seconds') };
-      function updateCountdown(){
-        let diff=target-Date.now(); if(diff<0)diff=0;
-        const d=Math.floor(diff/(1000*60*60*24)); diff-=d*1000*60*60*24;
-        const h=Math.floor(diff/(1000*60*60)); diff-=h*1000*60*60;
-        const m=Math.floor(diff/(1000*60)); diff-=m*1000*60;
-        const s=Math.floor(diff/1000);
-        setValue('days',d); setValue('hours',String(h).padStart(2,'0'));
-        setValue('minutes',String(m).padStart(2,'0')); setValue('seconds',String(s).padStart(2,'0'));
+      const target = new Date(2025, 5, 8).getTime(); // June is month 5 in JS Date
+      const els = {
+        days: document.getElementById('days'),
+        hours: document.getElementById('hours'),
+        minutes: document.getElementById('minutes'),
+        seconds: document.getElementById('seconds')
+      };
+
+      function updateCountdown() {
+        let diff = target - Date.now();
+        if (diff < 0) diff = 0;
+        const d = Math.floor(diff / (1000*60*60*24)); diff -= d * 1000*60*60*24;
+        const h = Math.floor(diff / (1000*60*60)); diff -= h * 1000*60*60;
+        const m = Math.floor(diff / (1000*60)); diff -= m * 1000*60;
+        const s = Math.floor(diff / 1000);
+        setValue('days', d);
+        setValue('hours', String(h).padStart(2,'0'));
+        setValue('minutes', String(m).padStart(2,'0'));
+        setValue('seconds', String(s).padStart(2,'0'));
       }
-      function setValue(id,v){
-        const el=els[id]; if(el.textContent!==String(v)){
-          el.textContent=v;
+
+      function setValue(id, v) {
+        const el = els[id];
+        if (el.textContent !== String(v)) {
+          el.textContent = v;
           el.classList.remove('animate');
           void el.offsetWidth;
           el.classList.add('animate');
         }
       }
-      updateCountdown(); setInterval(updateCountdown,1000);
+
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
 
       // Moment Always slider
-      let startX=0, slideIndex=1;
-      const slidesContainer=document.querySelector('.slides'),
-            slides=document.querySelectorAll('.slide'),
-            dots=document.querySelectorAll('.dot'),
-            prevBtn=document.querySelector('.prev'),
-            nextBtn=document.querySelector('.next');
-      function showSlides(n){
-        if(n>slides.length) slideIndex=1;
-        if(n<1) slideIndex=slides.length;
-        slidesContainer.style.transform=`translateX(${-(slideIndex-1)*100}%)`;
-        dots.forEach((d,i)=>d.classList.toggle('active',i===slideIndex-1));
+      let startX = 0, slideIndex = 1;
+      const slidesContainer = document.querySelector('.slides'),
+            slides = document.querySelectorAll('.slide'),
+            dots = document.querySelectorAll('.dot'),
+            prevBtn = document.querySelector('.prev'),
+            nextBtn = document.querySelector('.next');
+
+      function showSlides(n) {
+        if (n > slides.length) slideIndex = 1;
+        if (n < 1) slideIndex = slides.length;
+        slidesContainer.style.transform = `translateX(${-(slideIndex-1)*100}%)`;
+        dots.forEach((d,i) => d.classList.toggle('active', i === slideIndex-1));
       }
-      prevBtn.addEventListener('click',()=>showSlides(--slideIndex));
-      nextBtn.addEventListener('click',()=>showSlides(++slideIndex));
-      dots.forEach((dot,i)=>dot.addEventListener('click',()=>{ slideIndex=i+1; showSlides(slideIndex); }));
-      slidesContainer.parentElement.addEventListener('touchstart',e=>startX=e.changedTouches[0].clientX);
-      slidesContainer.parentElement.addEventListener('touchend',e=>{
-        const endX=e.changedTouches[0].clientX;
-        if(startX-endX>50) showSlides(++slideIndex);
-        else if(endX-startX>50) showSlides(--slideIndex);
+
+      prevBtn.addEventListener('click', () => showSlides(--slideIndex));
+      nextBtn.addEventListener('click', () => showSlides(++slideIndex));
+      dots.forEach((dot,i) => dot.addEventListener('click', () => { slideIndex = i+1; showSlides(slideIndex); }));
+
+      slidesContainer.parentElement.addEventListener('touchstart', e => startX = e.changedTouches[0].clientX);
+      slidesContainer.parentElement.addEventListener('touchend', e => {
+        const endX = e.changedTouches[0].clientX;
+        if (startX - endX > 50) showSlides(++slideIndex);
+        else if (endX - startX > 50) showSlides(--slideIndex);
       });
+
       showSlides(slideIndex);
       GLightbox({ selector:'.moment-slide', loop:true, touchNavigation:true, slideEffect:'slide' });
     });
