@@ -113,7 +113,7 @@
 </head>
 <body>
 
- 
+  <a href="https://natiphol.github.io/OnlineWeddingInvitation/" class="back-button">← กลับสู่การ์ดเชิญออนไลน์</a>
 
   <div class="container">
     <h1>ตอบรับคำเชิญร่วมงานแต่งงาน</h1>
@@ -121,6 +121,14 @@
     <form action="https://formspree.io/f/mldbvjkz" method="POST" novalidate>
       <label for="name">ชื่อ - นามสกุล</label>
       <input type="text" id="name" name="name" required placeholder="กรอกชื่อ-นามสกุล" />
+
+      <label for="side">ฝ่าย</label>
+      <select id="side" name="side" required>
+        <option value="" disabled selected>-- กรุณาเลือกฝ่าย --</option>
+        <option value="เจ้าบ่าว">เจ้าบ่าว</option>
+        <option value="เจ้าสาว">เจ้าสาว</option>
+        <option value="อื่นๆ">อื่นๆ</option>
+      </select>
 
       <label for="attending">ท่านจะเข้าร่วมงานหรือไม่</label>
       <select id="attending" name="attending" required>
@@ -133,7 +141,6 @@
       <input type="number" id="guests" name="guests" min="0" value="0" />
 
       <button type="submit">ส่งคำตอบรับ</button>
-       <a href="https://natiphol.github.io/OnlineWeddingInvitation/" class="back-button">← กลับสู่การ์ดเชิญออนไลน์</a>
     </form>
   </div>
 
