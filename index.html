@@ -3,143 +3,124 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ตอบรับคำเชิญร่วมงานแต่งงาน</title>
+  <title>ตอบรับคำเชิญ RSVP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Merriweather&family=Kanit&display=swap');
-
     body {
-      font-family: 'Merriweather', serif;
-      background: linear-gradient(135deg, #fefefe 0%, #f9f5f0 100%);
-      color: #5a4631;
-      padding: 30px 20px;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      font-family: 'Kanit', sans-serif;
+      background: #fdf6ec;
+      margin: 0;
+      padding: 0;
+      color: #5b4421;
     }
+
     .container {
-      max-width: 500px;
-      width: 100%;
-      background: #fffef9;
-      border-radius: 20px;
-      box-shadow:
-        0 4px 20px rgba(90, 70, 49, 0.2),
-        inset 0 0 30px rgba(250, 235, 190, 0.5);
-      padding: 40px 50px;
-      border: 1.5px solid #d8c48c;
-      text-align: center;
+      max-width: 480px;
+      margin: 60px auto;
+      padding: 40px 30px;
+      background: #fff8f0;
+      border-radius: 18px;
+      box-shadow: 0 12px 28px rgba(171, 132, 51, 0.25);
+      border: 1px solid #d9cbb3;
     }
+
     h1 {
-      font-family: 'Merriweather', serif;
+      text-align: center;
       font-weight: 700;
-      font-size: 2.3rem;
-      margin-bottom: 30px;
-      color: #a0803e;
-      text-shadow: 1px 1px 3px rgba(160,128,62,0.4);
+      font-size: 1.8rem;
+      color: #a67c32;
+      margin-bottom: 28px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      text-shadow: 0 0 2px rgba(166,124,50,0.7);
     }
+
     label {
       display: block;
-      margin-top: 20px;
+      margin: 20px 0 8px 0;
       font-weight: 600;
-      font-size: 1.1rem;
-      text-align: left;
-      color: #7a6a3e;
-      letter-spacing: 0.02em;
-      font-family: 'Kanit', sans-serif;
+      font-size: 1rem;
+      color: #7a6239;
+      letter-spacing: 0.05em;
     }
-    input[type="text"],
-    input[type="number"],
-    select,
-    textarea {
+
+    input, select {
       width: 100%;
-      padding: 14px 16px;
-      margin-top: 8px;
-      border: 1.8px solid #d8c48c;
-      border-radius: 12px;
-      font-size: 16px;
-      font-family: 'Kanit', sans-serif;
-      background: #fffef9;
-      box-shadow: inset 0 1px 4px rgba(255 255 255 / 0.7);
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      padding: 12px 14px;
+      font-size: 1rem;
+      border: 1.8px solid #d9cbb3;
+      border-radius: 10px;
+      background: #fffaf2;
+      color: #5b4421;
+      transition: border-color 0.3s ease;
+      box-sizing: border-box;
+      font-weight: 500;
     }
-    input[type="text"]:focus,
-    input[type="number"]:focus,
-    select:focus,
-    textarea:focus {
-      border-color: #a0803e;
-      box-shadow: 0 0 8px 2px rgba(160,128,62,0.4);
+
+    input:focus, select:focus {
       outline: none;
-      background: #fffdf5;
+      border-color: #a67c32;
+      box-shadow: 0 0 6px #d4b661aa;
+      background: #fffef9;
     }
-    textarea {
-      resize: vertical;
-      min-height: 100px;
-    }
-    button[type="submit"] {
-      margin-top: 35px;
+
+    button {
       width: 100%;
-      padding: 15px;
-      background: linear-gradient(135deg, #bfa94a, #8a6c15);
-      color: #fffbe6;
-      font-size: 20px;
-      font-weight: 700;
+      padding: 14px 0;
+      margin-top: 30px;
+      background: linear-gradient(90deg, #b59032, #f4de9b);
       border: none;
-      border-radius: 15px;
+      border-radius: 32px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #4b3a13;
       cursor: pointer;
-      box-shadow: 0 5px 12px rgba(186, 155, 45, 0.8);
-      transition: background 0.3s ease;
-      font-family: 'Merriweather', serif;
-      letter-spacing: 0.04em;
-      text-shadow: 0 0 5px rgba(255,255,255,0.5);
+      box-shadow: 0 6px 15px #d4b66199;
+      transition: background 0.3s ease, transform 0.3s ease;
+      letter-spacing: 1px;
     }
-    button[type="submit"]:hover {
-      background: linear-gradient(135deg, #d4be5e, #b1911a);
+
+    button:hover {
+      background: linear-gradient(90deg, #f4de9b, #b59032);
+      transform: scale(1.05);
+      box-shadow: 0 8px 22px #d4b661cc;
     }
-    .back-btn {
-      display: inline-block;
-      margin: 30px auto 0 auto;
-      padding: 12px 30px;
-      font-family: 'Kanit', sans-serif;
+
+    .back-button {
+      display: block;
+      width: max-content;
+      margin: 25px auto 0 auto;
+      padding: 12px 26px;
+      background: linear-gradient(90deg, #f4de9b, #b59032);
+      color: #4b3a13;
       font-weight: 600;
       font-size: 1rem;
       text-decoration: none;
-      border: 2px solid #a0803e;
-      border-radius: 15px;
-      color: #7a6a3e;
-      box-shadow: 0 0 8px rgba(160,128,62,0.3);
-      transition: all 0.3s ease;
-      user-select: none;
-    }
-    .back-btn:hover {
-      background-color: #a0803e;
-      color: #fffbe6;
-      box-shadow: 0 0 15px 3px rgba(160,128,62,0.7);
-      text-decoration: none;
+      border-radius: 30px;
+      box-shadow: 0 4px 12px #b59032cc;
+      text-align: center;
+      transition: background 0.3s ease, transform 0.3s ease;
+      font-family: 'Kanit', sans-serif;
+      letter-spacing: 0.06em;
     }
 
-    /* Responsive */
-    @media (max-width: 550px) {
-      .container {
-        padding: 30px 20px;
-        border-radius: 16px;
-      }
-      h1 {
-        font-size: 1.8rem;
-      }
-      button[type="submit"] {
-        font-size: 18px;
-        padding: 14px;
-      }
+    .back-button:hover {
+      background: linear-gradient(90deg, #b59032, #f4de9b);
+      transform: scale(1.07);
+      box-shadow: 0 6px 18px #b59032ff;
     }
   </style>
 </head>
 <body>
-  <div class="container" role="main" aria-labelledby="pageTitle">
-    <h1 id="pageTitle">ตอบรับคำเชิญร่วมงานแต่งงาน</h1>
 
-    <form action="https://formspree.io/f/mnndrprz" method="POST" aria-label="แบบฟอร์มตอบรับคำเชิญ">
+ 
+
+  <div class="container">
+    <h1>ตอบรับคำเชิญร่วมงานแต่งงาน</h1>
+
+    <form action="https://formspree.io/f/mldbvjkz" method="POST" novalidate>
       <label for="name">ชื่อ - นามสกุล</label>
-      <input type="text" id="name" name="name" required autocomplete="name" />
+      <input type="text" id="name" name="name" required placeholder="กรอกชื่อ-นามสกุล" />
 
       <label for="attending">ท่านจะเข้าร่วมงานหรือไม่</label>
       <select id="attending" name="attending" required>
@@ -151,20 +132,10 @@
       <label for="guests">จำนวนผู้ติดตาม (ถ้ามี)</label>
       <input type="number" id="guests" name="guests" min="0" value="0" />
 
-      <label for="message">ข้อความถึงเจ้าบ่าวเจ้าสาว (ถ้ามี)</label>
-      <textarea
-        id="message"
-        name="message"
-        rows="4"
-        placeholder="ส่งความยินดีหรือความในใจได้ที่นี่..."
-      ></textarea>
-
       <button type="submit">ส่งคำตอบรับ</button>
+       <a href="https://natiphol.github.io/OnlineWeddingInvitation/" class="back-button">← กลับสู่การ์ดเชิญออนไลน์</a>
     </form>
-
-    <a href="https://natiphol.github.io/OnlineWeddingInvitation/" class="back-btn"
-      >กลับไปยังการ์ดเชิญออนไลน์</a
-    >
   </div>
+
 </body>
 </html>
