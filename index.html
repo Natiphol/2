@@ -184,13 +184,15 @@
       content:''; display:block; width:60px; height:3px;
       background:var(--teal); margin:8px auto 0; border-radius:2px;
     }
-    /* เพิ่มให้ iOS รองรับการ scroll/momentum */
+    /* iOS-friendly swipe zone */
     .moment-gallery {
       position:relative; overflow:hidden;
       background:linear-gradient(135deg,rgba(255,255,255,0.6),rgba(209,234,238,0.6));
       border-radius:8px; padding:8px;
-      touch-action: pan-y;
-      -webkit-overflow-scrolling: touch;
+      /* ปิด default gestures เพื่อให้ touch events ทำงานเต็มที่ */
+      touch-action: none;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
     }
     .slides { display:flex; transition:transform .5s ease; }
     .slide { flex:0 0 100%; padding:4px; }
@@ -239,19 +241,16 @@
   </style>
 </head>
 <body>
-
   <!-- 1. Scroll Image -->
   <div class="container">
     <img id="animatedImage" loading="lazy"
          src="https://i.postimg.cc/6QGx2SKg/DSC087422-1.jpg"
          alt="Wedding Image"/>
   </div>
-
   <!-- 2. Sliding Prompt -->
   <div id="indicator" class="container">
     <span class="info">กรุณากดเล่นเพลงก่อน แล้วเลื่อนลงดูรายละเอียด</span>
   </div>
-
   <!-- 3. Audio Player -->
   <div id="audioPlayer" class="container">
     <audio id="audio" src="https://natiphol.github.io/mp3/No.mp3" preload="metadata"></audio>
@@ -263,13 +262,11 @@
     </div>
     <div class="time"><span id="currentTime">00:00</span> / <span id="duration">00:00</span></div>
   </div>
-
   <!-- 4. Opening Message -->
   <div class="container message">
     <p>เราสองคนกำลังจะเริ่มต้นบทใหม่ของชีวิตและอยากให้คุณเป็นส่วนหนึ่งในความทรงจำที่สวยงามครั้งนี้</p>
     <p>Our journey begins with love, and it becomes more meaningful with your support. Please join us as we celebrate the beginning of our forever.</p>
   </div>
-
   <!-- 5. Countdown Section -->
   <div id="countdownSection" class="container countdown-section" aria-live="polite">
     <div class="countdown-title">Countdown to Wedding</div>
@@ -292,12 +289,10 @@
       </div>
     </div>
   </div>
-
   <!-- 6. Mid Message -->
   <div class="container message">
     <p>As the days draw closer, our hearts grow more excited. We can’t wait to celebrate our love with you.</p>
   </div>
-
   <!-- 7. Invitation Card -->
   <div class="container">
     <div id="inviteCard" class="invite-card">
@@ -319,7 +314,6 @@
       <p class="invite-text">ขอเรียนเชิญร่วมเป็นเกียรติในพิธีมงคลสมรส</p>
     </div>
   </div>
-
   <!-- 8. Moment Always Section -->
   <section id="momentAlways" class="container moment-section">
     <div class="moment-title">Moment Always</div>
@@ -353,7 +347,7 @@
   <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Intersection Observer for reveal-on-scroll
+      // Intersection Observer
       const observer = new IntersectionObserver(entries => {
         entries.forEach(e => {
           if (e.isIntersecting) {
@@ -362,21 +356,19 @@
           }
         });
       }, { threshold: 0.2 });
-
       ['animatedImage','indicator','audioPlayer','countdownSection','inviteCard','momentAlways']
         .forEach(id => {
           const el = document.getElementById(id);
           if (el) observer.observe(el);
         });
 
-      // Audio player logic (ไม่เปลี่ยน)
+      // Audio Player (ไม่เปลี่ยน)
       const audio = document.getElementById('audio'),
             playBtn = document.getElementById('playBtn'),
             progress = document.getElementById('progress'),
             progressContainer = document.getElementById('progressContainer'),
             currentTimeEl = document.getElementById('currentTime'),
             durationEl = document.getElementById('duration');
-
       progressContainer.style.pointerEvents = 'none';
       playBtn.addEventListener('click', () => {
         if (audio.paused) {
@@ -406,85 +398,82 @@
         return String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
       }
 
-      // Countdown logic (ไม่เปลี่ยน)
-      const target = new Date(2025, 5, 8).getTime();
-      const els = {
-        days: document.getElementById('days'),
-        hours: document.getElementById('hours'),
-        minutes: document.getElementById('minutes'),
-        seconds: document.getElementById('seconds')
-      };
+      // Countdown (ไม่เปลี่ยน)
+      const target = new Date(2025,5,8).getTime(),
+            els = {
+              days: document.getElementById('days'),
+              hours: document.getElementById('hours'),
+              minutes: document.getElementById('minutes'),
+              seconds: document.getElementById('seconds')
+            };
       function updateCountdown() {
         let diff = target - Date.now();
         if (diff < 0) diff = 0;
-        const d = Math.floor(diff / (1000*60*60*24)); diff -= d * 1000*60*60*24;
-        const h = Math.floor(diff / (1000*60*60)); diff -= h * 1000*60*60;
-        const m = Math.floor(diff / (1000*60)); diff -= m * 1000*60;
-        const s = Math.floor(diff / 1000);
+        const d = Math.floor(diff/(1000*60*60*24));
+        diff -= d*1000*60*60*24;
+        const h = Math.floor(diff/(1000*60*60));
+        diff -= h*1000*60*60;
+        const m = Math.floor(diff/(1000*60));
+        diff -= m*1000*60;
+        const s = Math.floor(diff/1000);
         setValue('days', d);
         setValue('hours', String(h).padStart(2,'0'));
         setValue('minutes', String(m).padStart(2,'0'));
         setValue('seconds', String(s).padStart(2,'0'));
       }
-      function setValue(id, v) {
+      function setValue(id,v){
         const el = els[id];
-        if (el.textContent !== String(v)) {
-          el.textContent = v;
+        if(el.textContent!==String(v)){
+          el.textContent=v;
           el.classList.remove('animate');
           void el.offsetWidth;
           el.classList.add('animate');
         }
       }
       updateCountdown();
-      setInterval(updateCountdown, 1000);
+      setInterval(updateCountdown,1000);
 
-      // Moment Always slider: รองรับ Pointer Events + Touch fallback
-      let startX = 0, slideIndex = 1;
+      // Moment Always slider – ใช้ Touch Events อย่างเดียว (iOS รับรอง)
+      let startX=0, slideIndex=1;
       const slidesContainer = document.querySelector('.slides'),
-            sliderEl = slidesContainer.parentElement,
-            slides = document.querySelectorAll('.slide'),
-            dots = document.querySelectorAll('.dot'),
-            prevBtn = document.querySelector('.prev'),
-            nextBtn = document.querySelector('.next');
+            sliderEl      = slidesContainer.parentElement,
+            slides        = document.querySelectorAll('.slide'),
+            dots          = document.querySelectorAll('.dot'),
+            prevBtn       = document.querySelector('.prev'),
+            nextBtn       = document.querySelector('.next');
 
-      function showSlides(n) {
-        if (n > slides.length) slideIndex = 1;
-        else if (n < 1) slideIndex = slides.length;
+      function showSlides(n){
+        if(n>slides.length) slideIndex=1;
+        else if(n<1)       slideIndex=slides.length;
+        else               slideIndex=n;
         slidesContainer.style.transform = `translateX(${-(slideIndex-1)*100}%)`;
-        dots.forEach((d,i) => d.classList.toggle('active', i === slideIndex-1));
+        dots.forEach((d,i)=> d.classList.toggle('active', i===slideIndex-1));
       }
 
-      if (window.PointerEvent) {
-        sliderEl.addEventListener('pointerdown', e => {
-          startX = e.clientX;
-          sliderEl.setPointerCapture(e.pointerId);
-        });
-        sliderEl.addEventListener('pointerup', e => {
-          const endX = e.clientX;
-          if (startX - endX > 50) showSlides(++slideIndex);
-          else if (endX - startX > 50) showSlides(--slideIndex);
-        });
-      } else {
-        sliderEl.addEventListener('touchstart', e => {
-          e.preventDefault();
-          startX = e.changedTouches[0].clientX;
-        }, { passive: false });
-        sliderEl.addEventListener('touchend', e => {
-          e.preventDefault();
-          const endX = e.changedTouches[0].clientX;
-          if (startX - endX > 50) showSlides(++slideIndex);
-          else if (endX - startX > 50) showSlides(--slideIndex);
-        }, { passive: false });
-      }
+      // ผูก touch listeners เพื่อป้องกันการ scroll อื่นๆ
+      sliderEl.addEventListener('touchstart', e => {
+        e.preventDefault();
+        startX = e.changedTouches[0].clientX;
+      }, { passive: false });
+      sliderEl.addEventListener('touchmove', e => {
+        e.preventDefault();
+      }, { passive: false });
+      sliderEl.addEventListener('touchend', e => {
+        e.preventDefault();
+        const endX = e.changedTouches[0].clientX;
+        if (startX - endX > 50)      showSlides(slideIndex+1);
+        else if (endX - startX > 50) showSlides(slideIndex-1);
+      }, { passive: false });
 
-      prevBtn.addEventListener('click', () => showSlides(--slideIndex));
-      nextBtn.addEventListener('click', () => showSlides(++slideIndex));
-      dots.forEach((dot,i) => dot.addEventListener('click', () => { slideIndex = i+1; showSlides(slideIndex); }));
+      // ปุ่ม Prev/Next/ Dot
+      prevBtn.addEventListener('click', ()=> showSlides(slideIndex-1));
+      nextBtn.addEventListener('click', ()=> showSlides(slideIndex+1));
+      dots.forEach((dot,i)=> dot.addEventListener('click', ()=> showSlides(i+1)));
 
       showSlides(slideIndex);
 
       // GLightbox
-      if (typeof GLightbox === 'function') {
+      if (typeof GLightbox==='function') {
         GLightbox({ selector:'.moment-slide', loop:true, touchNavigation:true, slideEffect:'slide' });
       }
     });
