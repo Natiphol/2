@@ -1,103 +1,98 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ตอบรับคำเชิญ RSVP</title>
-  <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ตอบรับคำเชิญร่วมงานแต่งงาน</title>
   <style>
     body {
-      font-family: 'Kanit', sans-serif;
-      background: #fffaf5;
-      margin: 0;
-      padding: 0;
-      color: #3e2f1c;
+      font-family: "Kanit", sans-serif;
+      background: #f9f9f9;
+      color: #333;
+      padding: 20px;
     }
-
     .container {
-      max-width: 500px;
-      margin: 50px auto;
-      padding: 30px;
-      background: #fff8ee;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      max-width: 450px;
+      margin: 40px auto;
+      background: white;
+      padding: 25px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
     }
-
     h1 {
       text-align: center;
-      color: #a77b43;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
+      color: #0a3d62;
     }
-
     label {
       display: block;
-      margin: 15px 0 5px;
+      margin-top: 15px;
       font-weight: 600;
     }
-
-    input, select, textarea {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ddd0c0;
-      border-radius: 8px;
-      box-sizing: border-box;
-    }
-
+    input[type="text"],
+    input[type="number"],
+    select,
     textarea {
-      resize: vertical;
+      width: 100%;
+      padding: 10px 12px;
+      margin-top: 6px;
+      border: 1.8px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      font-family: inherit;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
     }
-
-    button {
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #4a90e2;
+      outline: none;
+    }
+    button[type="submit"] {
+      margin-top: 25px;
       width: 100%;
       padding: 12px;
-      background: linear-gradient(to right, #d5a86c, #f5e1c0);
+      background-color: #0a3d62;
+      color: white;
+      font-size: 18px;
+      font-weight: 700;
       border: none;
-      color: #3e2f1c;
-      font-size: 16px;
-      font-weight: bold;
-      border-radius: 30px;
-      margin-top: 20px;
+      border-radius: 10px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: background-color 0.3s ease;
     }
-
-    button:hover {
-      background: linear-gradient(to right, #f5e1c0, #d5a86c);
-      transform: scale(1.03);
+    button[type="submit"]:hover {
+      background-color: #084a8a;
     }
-
-    .back-button {
-      display: inline-block;
-      margin: 20px auto;
-      padding: 10px 20px;
-      background: linear-gradient(to right, #f5e1c0, #e0c3a3);
-      color: #3e2f1c;
-      font-size: 16px;
-      font-family: 'Kanit', sans-serif;
-      text-decoration: none;
-      border-radius: 30px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      transition: all 0.3s ease;
+    .back-btn {
       display: block;
+      margin: 25px auto 0 auto;
+      text-align: center;
+      color: #0a3d62;
+      text-decoration: none;
+      font-weight: 600;
+      border: 2px solid #0a3d62;
+      padding: 8px 18px;
+      border-radius: 12px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      max-width: 200px;
     }
-
-    .back-button:hover {
-      background: linear-gradient(to right, #e0c3a3, #f5e1c0);
-      transform: scale(1.05);
+    .back-btn:hover {
+      background-color: #0a3d62;
+      color: white;
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
-
-
-
   <div class="container">
     <h1>ตอบรับคำเชิญร่วมงานแต่งงาน</h1>
 
-    <form action="https://your-form-endpoint.com" method="POST">
+    <form action="https://formspree.io/f/mnndrprz" method="POST">
       <label for="name">ชื่อ - นามสกุล</label>
-      <input type="text" id="name" name="name" required>
+      <input type="text" id="name" name="name" required />
 
       <label for="attending">ท่านจะเข้าร่วมงานหรือไม่</label>
       <select id="attending" name="attending" required>
@@ -107,16 +102,22 @@
       </select>
 
       <label for="guests">จำนวนผู้ติดตาม (ถ้ามี)</label>
-      <input type="number" id="guests" name="guests" min="0" value="0">
+      <input type="number" id="guests" name="guests" min="0" value="0" />
 
       <label for="message">ข้อความถึงเจ้าบ่าวเจ้าสาว (ถ้ามี)</label>
-      <textarea id="message" name="message" rows="4" placeholder="ส่งความยินดีหรือความในใจได้ที่นี่..."></textarea>
+      <textarea
+        id="message"
+        name="message"
+        rows="4"
+        placeholder="ส่งความยินดีหรือความในใจได้ที่นี่..."
+      ></textarea>
 
       <button type="submit">ส่งคำตอบรับ</button>
-  <!-- ปุ่มกลับสู่การ์ดเชิญ -->
-  <a href="https://natiphol.github.io/OnlineWeddingInvitation/" class="back-button">← กลับสู่การ์ดเชิญออนไลน์</a>
     </form>
-  </div>
 
+    <a href="https://natiphol.github.io/OnlineWeddingInvitation/" class="back-btn"
+      >กลับไปยังการ์ดเชิญออนไลน์</a
+    >
+  </div>
 </body>
 </html>
