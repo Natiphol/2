@@ -22,10 +22,10 @@
       border-radius: 18px;
       box-shadow: 0 12px 28px rgba(171, 132, 51, 0.25);
       border: 1px solid #d9cbb3;
+      text-align: center;
     }
 
     h1 {
-      text-align: center;
       font-weight: 700;
       font-size: 1.8rem;
       color: #a67c32;
@@ -42,6 +42,7 @@
       font-size: 1rem;
       color: #7a6239;
       letter-spacing: 0.05em;
+      text-align: left;
     }
 
     input, select {
@@ -109,16 +110,22 @@
       transform: scale(1.07);
       box-shadow: 0 6px 18px #b59032ff;
     }
+
+    .thank-you-message {
+      font-size: 1.15rem;
+      color: #7a6239;
+      line-height: 1.5;
+      margin-top: 30px;
+      white-space: pre-line;
+    }
   </style>
 </head>
 <body>
 
- 
-
   <div class="container">
     <h1>ตอบรับคำเชิญร่วมงานแต่งงาน</h1>
 
-    <form action="https://formspree.io/f/mldbvjkz" method="POST" novalidate>
+    <form id="rsvp-form" action="https://formspree.io/f/mldbvjkz" method="POST" novalidate>
       <label for="name">ชื่อ - นามสกุล</label>
       <input type="text" id="name" name="name" required placeholder="กรอกชื่อ-นามสกุล" />
 
@@ -141,9 +148,43 @@
       <input type="number" id="guests" name="guests" min="0" value="0" />
 
       <button type="submit">ส่งคำตอบรับ</button>
- <a href="https://natiphol.github.io/OnlineWeddingInvitation/" class="back-button">← กลับสู่การ์ดเชิญออนไลน์</a>
+      <a href="https://natiphol.github.io/OnlineWeddingInvitation/" class="back-button">← กลับสู่การ์ดเชิญออนไลน์</a>
     </form>
+
+    <div id="thank-you" class="thank-you-message" style="display:none;">
+      ขอบคุณมากสำหรับการตอบรับคำเชิญของคุณค่ะ
+      เรารู้สึกยินดีและตื่นเต้นที่จะได้พบคุณในวันสำคัญนี้
+      โปรดเตรียมตัวให้พร้อมและมาร่วมสร้างความทรงจำดี ๆ ด้วยกันนะคะ
+    </div>
   </div>
+
+<script>
+  const form = document.getElementById('rsvp-form');
+  const thankYou = document.getElementById('thank-you');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' },
+      });
+
+      if (response.ok) {
+        form.style.display = 'none';
+        thankYou.style.display = 'block';
+      } else {
+        alert('เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง');
+      }
+    } catch (error) {
+      alert('เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง');
+    }
+  });
+</script>
 
 </body>
 </html>
