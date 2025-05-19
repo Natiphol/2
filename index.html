@@ -47,17 +47,24 @@
     }
 
     /* 2. Sliding Prompt */
-    #indicator {
-      opacity:0; transform:translateX(-100vw);
-      transition:opacity 2s ease-out,transform 2s ease-out;
-    }
-    #indicator.visible {
-      opacity:1; transform:translateX(0);
-    }
-    #indicator .info {
-      font-size:1.125rem; font-weight:500; color:var(--dark-blue);
-      text-shadow:0 2px 4px rgba(0,0,0,0.1);
-    }
+  /* 2. Sliding Prompt: สไลด์เข้ามาจากทางซ้าย */
+#indicator {
+  opacity: 0;
+  transform: translateX(-100vw);   /* เลื่อนออกไปทางซ้าย 100% ของ viewport */
+  transition: opacity 2s ease-out, transform 2s ease-out;
+}
+
+#indicator.visible {
+  opacity: 1;
+  transform: translateX(0);        /* กลับสู่ตำแหน่งปกติ */
+}
+
+#indicator .info {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--dark-blue);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
 
     /* 3. Audio Player */
     #audioPlayer {
