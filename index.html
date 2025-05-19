@@ -1,115 +1,121 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ตอบรับคำเชิญ RSVP</title>
-  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;500&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
   <style>
     body {
-      margin: 0;
       font-family: 'Kanit', sans-serif;
-      background: linear-gradient(to bottom, #fffaf5, #f0f0ff);
-      color: #333;
-      padding: 20px;
+      background: #fffaf5;
+      margin: 0;
+      padding: 0;
+      color: #3e2f1c;
     }
+
     .container {
       max-width: 500px;
-      margin: 0 auto;
-      background: white;
+      margin: 50px auto;
       padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      background: #fff8ee;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
     }
-    h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      color: #4b3c88;
+
+    h1 {
       text-align: center;
-      margin-bottom: 10px;
+      color: #a77b43;
+      margin-bottom: 20px;
     }
-    p.sub {
-      text-align: center;
-      font-size: 1rem;
-      margin-bottom: 30px;
-    }
+
     label {
       display: block;
-      margin-top: 15px;
-      font-weight: 500;
+      margin: 15px 0 5px;
+      font-weight: 600;
     }
-    input, select, textarea, button {
+
+    input, select, textarea {
       width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      font-family: 'Kanit', sans-serif;
-      font-size: 1rem;
+      padding: 12px;
+      border: 1px solid #ddd0c0;
+      border-radius: 8px;
+      box-sizing: border-box;
     }
+
+    textarea {
+      resize: vertical;
+    }
+
     button {
-      background-color: #4b3c88;
-      color: white;
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(to right, #d5a86c, #f5e1c0);
+      border: none;
+      color: #3e2f1c;
+      font-size: 16px;
       font-weight: bold;
-      cursor: pointer;
+      border-radius: 30px;
       margin-top: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
+
     button:hover {
-      background-color: #6a57c8;
+      background: linear-gradient(to right, #f5e1c0, #d5a86c);
+      transform: scale(1.03);
     }
-    .thank-you-message {
-      display: none;
+
+    .back-button {
+      display: inline-block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background: linear-gradient(to right, #f5e1c0, #e0c3a3);
+      color: #3e2f1c;
+      font-size: 16px;
+      font-family: 'Kanit', sans-serif;
+      text-decoration: none;
+      border-radius: 30px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       text-align: center;
-      padding: 20px;
-    }
-    .thank-you-message.active {
+      transition: all 0.3s ease;
       display: block;
+    }
+
+    .back-button:hover {
+      background: linear-gradient(to right, #e0c3a3, #f5e1c0);
+      transform: scale(1.05);
     }
   </style>
 </head>
 <body>
+
+  <!-- ปุ่มกลับสู่การ์ดเชิญ -->
+  <a href="https://natiphol.github.io/OnlineWeddingInvitation/" class="back-button">← กลับสู่การ์ดเชิญออนไลน์</a>
+
   <div class="container">
-    <h2>ขอเรียนเชิญร่วมเป็นเกียรติในพิธีมงคลสมรส</h2>
-    <p class="sub">กรุณาตอบรับคำเชิญภายในวันที่ 1 มิถุนายน 2568<br>Your presence would make our day complete.</p>
+    <h1>ตอบรับคำเชิญร่วมงานแต่งงาน</h1>
 
-    <form id="rsvpForm">
-      <label for="fullname">ชื่อ - สกุล (Name):</label>
-      <input type="text" id="fullname" name="fullname" required>
+    <form action="https://your-form-endpoint.com" method="POST">
+      <label for="name">ชื่อ - นามสกุล</label>
+      <input type="text" id="name" name="name" required>
 
-      <label for="attendance">ท่านสามารถเข้าร่วมงานได้หรือไม่?</label>
-      <select id="attendance" name="attendance" required>
+      <label for="attending">ท่านจะเข้าร่วมงานหรือไม่</label>
+      <select id="attending" name="attending" required>
         <option value="">-- กรุณาเลือก --</option>
-        <option value="สามารถเข้าร่วมได้">สามารถเข้าร่วมได้</option>
-        <option value="ไม่สามารถเข้าร่วมได้">ไม่สามารถเข้าร่วมได้</option>
+        <option value="มาร่วมงาน">มาร่วมงาน</option>
+        <option value="ไม่สามารถมาร่วมได้">ไม่สามารถมาร่วมได้</option>
       </select>
 
-      <label for="guestcount">จำนวนผู้ร่วมงาน (รวมตัวท่าน):</label>
-      <input type="number" id="guestcount" name="guestcount" min="1" max="10" value="1">
+      <label for="guests">จำนวนผู้ติดตาม (ถ้ามี)</label>
+      <input type="number" id="guests" name="guests" min="0" value="0">
 
-      <label for="message">ข้อความถึงเจ้าบ่าวเจ้าสาว (Optional):</label>
-      <textarea id="message" name="message" rows="3"></textarea>
+      <label for="message">ข้อความถึงเจ้าบ่าวเจ้าสาว (ถ้ามี)</label>
+      <textarea id="message" name="message" rows="4" placeholder="ส่งความยินดีหรือความในใจได้ที่นี่..."></textarea>
 
-      <button type="submit">💌 ส่งคำตอบ (RSVP)</button>
+      <button type="submit">ส่งคำตอบรับ</button>
     </form>
-
-    <div class="thank-you-message" id="thankYouMessage">
-      <h3>ขอบพระคุณที่ตอบรับคำเชิญ</h3>
-      <p>เรารอคอยวันที่จะได้พบกันในวันพิเศษของเรา</p>
-    </div>
   </div>
 
-  <script>
-    const form = document.getElementById('rsvpForm');
-    const thankYou = document.getElementById('thankYouMessage');
-
-    form.addEventListener('submit', function(event) {
-      event.preventDefault();
-
-      // ทำส่งข้อมูลไป Google Apps Script ได้ตรงนี้ ถ้าต้องการ
-
-      form.style.display = 'none';
-      thankYou.classList.add('active');
-    });
-  </script>
 </body>
 </html>
