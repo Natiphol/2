@@ -26,8 +26,9 @@
       display:flex; flex-direction:column; align-items:center;
       background:linear-gradient(135deg,var(--cream),var(--teal),var(--blue));
       font-family:'IBM Plex Sans Thai',sans-serif; color:var(--dark-blue);
-      padding: var(--section-gap) 16px;   /* fixed padding syntax */
+      padding: var(--section-gap) 16px;
       line-height:1.6;
+      overflow-x: hidden; /* ซ่อน scrollbar ฝั่งซ้าย–ขวา */
     }
     .container {
       width:100%; max-width:var(--max-width);
@@ -46,25 +47,25 @@
       opacity:1; transform:translateY(0);
     }
 
-    /* 2. Sliding Prompt */
-  /* 2. Sliding Prompt: สไลด์เข้ามาจากทางซ้าย */
-#indicator {
-  opacity: 0;
-  transform: translateX(-100vw);   /* เลื่อนออกไปทางซ้าย 100% ของ viewport */
-  transition: opacity 2s ease-out, transform 2s ease-out;
-}
-
-#indicator.visible {
-  opacity: 1;
-  transform: translateX(0);        /* กลับสู่ตำแหน่งปกติ */
-}
-
-#indicator .info {
-  font-size: 1.125rem;
-  font-weight: 500;
-  color: var(--dark-blue);
-  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
+    /* 2. Sliding Prompt: สไลด์เข้ามาจากซ้าย */
+    #indicator {
+      display: block;
+      width: 100vw;
+      margin-left: calc((100% - 100vw) / 2);
+      opacity: 0;
+      transform: translateX(-100vw);
+      transition: opacity 2s ease-out, transform 2s ease-out;
+    }
+    #indicator.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    #indicator .info {
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: var(--dark-blue);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
 
     /* 3. Audio Player */
     #audioPlayer {
@@ -125,8 +126,6 @@
     }
     .countdown .number { font-size:2rem; line-height:1; }
     .countdown .label  { margin-top:.25rem; font-size:.875rem; }
-
-    /* animation for countdown digits */
     @keyframes pulse {
       0%   { transform: scale(1); }
       50%  { transform: scale(1.1); }
@@ -305,11 +304,13 @@
       <div class="names">
         <p>
           <span class="name">นายสีศักดิ์ ศรีโกศล</span>
+          <span class="icon">❤</span>
           <span class="name">นางสาวหนูพิน เจนวิถี</span>
           (พ่อ–แม่)
         </p>
         <p>
           <span class="name">นายวรพันธุ์ ชาญชนะโรจน์</span>
+          <span class="icon">❤</span>
           <span class="name">นางกานต์สินี ชาญชนะโรจน์</span>
           (พี่ชาย–แม่)
         </p>
@@ -362,6 +363,7 @@
         });
       }, { threshold: 0.2 });
 
+      // Observe elements
       ['animatedImage','indicator','audioPlayer','countdownSection','inviteCard']
         .forEach(id => {
           const el = document.getElementById(id);
@@ -376,7 +378,6 @@
             currentTimeEl = document.getElementById('currentTime'),
             durationEl = document.getElementById('duration');
 
-      // Disable progress seeking until metadata loaded
       progressContainer.style.pointerEvents = 'none';
 
       playBtn.addEventListener('click', () => {
@@ -390,37 +391,26 @@
           playBtn.setAttribute('aria-label','Play');
         }
       });
-
       audio.addEventListener('loadedmetadata', () => {
         durationEl.textContent = formatTime(audio.duration);
-        progressContainer.style.pointerEvents = '';  // enable seeking
+        progressContainer.style.pointerEvents = '';
       });
-
       audio.addEventListener('timeupdate', () => {
         currentTimeEl.textContent = formatTime(audio.currentTime);
         progress.style.width = (audio.currentTime / audio.duration) * 100 + '%';
       });
-
       progressContainer.addEventListener('click', e => {
         const rect = progressContainer.getBoundingClientRect();
         audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
       });
-
       function formatTime(t) {
-        const m = Math.floor(t / 60),
-              s = Math.floor(t % 60);
+        const m = Math.floor(t / 60), s = Math.floor(t % 60);
         return String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
       }
 
       // Countdown logic
-      const target = new Date(2025, 5, 8).getTime(); // June is month 5 in JS Date
-      const els = {
-        days: document.getElementById('days'),
-        hours: document.getElementById('hours'),
-        minutes: document.getElementById('minutes'),
-        seconds: document.getElementById('seconds')
-      };
-
+      const target = new Date(2025, 5, 8).getTime();
+      const els = ['days','hours','minutes','seconds'].reduce((o,id)=>(o[id]=document.getElementById(id),o),{});
       function updateCountdown() {
         let diff = target - Date.now();
         if (diff < 0) diff = 0;
@@ -433,46 +423,40 @@
         setValue('minutes', String(m).padStart(2,'0'));
         setValue('seconds', String(s).padStart(2,'0'));
       }
-
-      function setValue(id, v) {
+      function setValue(id,v){
         const el = els[id];
-        if (el.textContent !== String(v)) {
-          el.textContent = v;
+        if (el.textContent!==String(v)) {
+          el.textContent=v;
           el.classList.remove('animate');
           void el.offsetWidth;
           el.classList.add('animate');
         }
       }
-
       updateCountdown();
-      setInterval(updateCountdown, 1000);
+      setInterval(updateCountdown,1000);
 
       // Moment Always slider
-      let startX = 0, slideIndex = 1;
-      const slidesContainer = document.querySelector('.slides'),
-            slides = document.querySelectorAll('.slide'),
-            dots = document.querySelectorAll('.dot'),
-            prevBtn = document.querySelector('.prev'),
-            nextBtn = document.querySelector('.next');
-
+      let startX=0, slideIndex=1;
+      const slidesContainer=document.querySelector('.slides'),
+            slides=document.querySelectorAll('.slide'),
+            dots=document.querySelectorAll('.dot'),
+            prevBtn=document.querySelector('.prev'),
+            nextBtn=document.querySelector('.next');
       function showSlides(n) {
-        if (n > slides.length) slideIndex = 1;
-        if (n < 1) slideIndex = slides.length;
-        slidesContainer.style.transform = `translateX(${-(slideIndex-1)*100}%)`;
-        dots.forEach((d,i) => d.classList.toggle('active', i === slideIndex-1));
+        if (n>slides.length) slideIndex=1;
+        if (n<1) slideIndex=slides.length;
+        slidesContainer.style.transform=`translateX(${-(slideIndex-1)*100}%)`;
+        dots.forEach((d,i)=>d.classList.toggle('active',i===slideIndex-1));
       }
-
-      prevBtn.addEventListener('click', () => showSlides(--slideIndex));
-      nextBtn.addEventListener('click', () => showSlides(++slideIndex));
-      dots.forEach((dot,i) => dot.addEventListener('click', () => { slideIndex = i+1; showSlides(slideIndex); }));
-
-      slidesContainer.parentElement.addEventListener('touchstart', e => startX = e.changedTouches[0].clientX);
-      slidesContainer.parentElement.addEventListener('touchend', e => {
-        const endX = e.changedTouches[0].clientX;
-        if (startX - endX > 50) showSlides(++slideIndex);
-        else if (endX - startX > 50) showSlides(--slideIndex);
+      prevBtn.addEventListener('click',()=>showSlides(--slideIndex));
+      nextBtn.addEventListener('click',()=>showSlides(++slideIndex));
+      dots.forEach((dot,i)=>dot.addEventListener('click',()=>{ slideIndex=i+1; showSlides(slideIndex); }));
+      slidesContainer.parentElement.addEventListener('touchstart',e=>startX=e.changedTouches[0].clientX);
+      slidesContainer.parentElement.addEventListener('touchend',e=>{
+        const endX=e.changedTouches[0].clientX;
+        if(startX-endX>50) showSlides(++slideIndex);
+        else if(endX-startX>50) showSlides(--slideIndex);
       });
-
       showSlides(slideIndex);
       GLightbox({ selector:'.moment-slide', loop:true, touchNavigation:true, slideEffect:'slide' });
     });
