@@ -114,6 +114,10 @@
       margin-top: 30px;
       white-space: pre-line;
     }
+    /* ซ่อน container ของจำนวนผู้ติดตาม ตั้งแต่เริ่ม */
+    #guestsContainer {
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -140,8 +144,11 @@
         <option value="ไม่สามารถมาร่วมได้">ไม่สามารถมาร่วมได้</option>
       </select>
 
-      <label for="guests">จำนวนผู้ติดตาม (ถ้ามี)</label>
-      <input type="number" id="guests" name="guests" min="0" value="0" />
+      <!-- ห่อ label+input จำนวนผู้ติดตามใน container นี้ -->
+      <div id="guestsContainer">
+        <label for="guests">จำนวนผู้ติดตาม (ถ้ามี)</label>
+        <input type="number" id="guests" name="guests" min="0" value="0" />
+      </div>
 
       <button type="submit">ส่งคำตอบรับ</button>
     </form>
@@ -158,6 +165,25 @@
   </div>
 
   <script>
+    const attendingSelect = document.getElementById('attending');
+    const guestsContainer = document.getElementById('guestsContainer');
+
+    // ฟังก์ชันตรวจค่าและสลับการแสดงผล
+    function toggleGuestsField() {
+      if (attendingSelect.value === 'มาร่วมงาน') {
+        guestsContainer.style.display = 'block';
+      } else {
+        guestsContainer.style.display = 'none';
+      }
+    }
+
+    // เมื่อโหลดหน้า ให้เช็คสถานะแรก
+    document.addEventListener('DOMContentLoaded', () => {
+      toggleGuestsField();
+      attendingSelect.addEventListener('change', toggleGuestsField);
+    });
+
+    // โค้ด submit form เดิม
     const form = document.getElementById('rsvp-form');
     const thankYou = document.getElementById('thank-you');
 
