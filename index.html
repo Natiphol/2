@@ -1,143 +1,356 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>การ์ดงานแต่ง</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wedding Invitation – Mobile‐Friendly UX</title>
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;700&family=Playfair+Display:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
   <style>
-    /* === ธีมสีหลัก === */
     :root {
-      --color-blue:      #0091EA;
-      --color-cream:     #FFF8E1;
-      --color-turquoise: #26A69A;
+      --blue:       #89CFF0;
+      --cream:      #FFF5E1;
+      --teal:       #A1D6E2;
+      --dark-blue:  #2A6F97;
+      --bg-alpha:   rgba(255,245,225,0.9);
+      --radius:     12px;
+      --spacing:    1rem;
     }
 
-    /* === รีเซ็ตพื้นฐาน === */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    html, body {
-      height: 100%;
-    }
-
-    /* === พื้นหลังทั่วไป === */
+    /* Reset & Base */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
     body {
-      font-family: sans-serif;
-      color: #333;
-      background: linear-gradient(
-        to bottom right,
-        var(--color-blue)      0%,
-        var(--color-turquoise) 50%,
-        var(--color-cream)     100%
-      );
-      background-attachment: fixed;
+      background: linear-gradient(135deg, var(--cream), var(--teal), var(--blue));
+      font-family: 'IBM Plex Sans Thai', sans-serif;
+      color: var(--dark-blue);
+      line-height: 1.5;
+      padding-bottom: 2 * var(--spacing);
     }
-
-    /* === เมนู (ยังไม่ใส่ลิงก์) === */
-    .main-nav {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      padding: 1rem;
-      background-color: rgba(255,255,255,0.8);
-    }
-
-    /* === คอนเทนต์หลัก (เตรียมส่วนอื่น ๆ ต่อ) === */
-    .site-main {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1rem;
-      padding: 1rem;
-    }
-    @media (min-width: 768px) {
-      .main-nav { flex-direction: row; }
-      .site-main { grid-template-columns: 1fr 2fr; }
-    }
-    @media (min-width: 1024px) {
-      .site-main { grid-template-columns: 1fr 3fr; }
-    }
-
-    /* === 1. รูปภาพต้องเต็มรูป === */
-    .hero img {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
-
-    /* === Container สำหรับข้อความและเครื่องเล่น === */
-    .intro {
+    main {
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 1rem;
+      gap: calc(var(--spacing) * 2);
+    }
+    .container {
+      width: 90%;
+      max-width: 420px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
-    /* === 2. ข้อความสไลด์เข้าตรงกลาง อยู่บนเครื่องเล่น === */
-    .suggest-text {
+    /* 1. Hero Image */
+    .hero {
+      width: 100%;
+      margin-top: var(--spacing);
+    }
+
+    /* 2. Sliding Prompt & Audio */
+    .prompt-container {
+      position: relative;
+      overflow: hidden;
+      padding-top: var(--spacing);
+    }
+    .scroll-indicator {
+      display: inline-block;
+      padding: 0.75rem 1.25rem;
+      background: var(--bg-alpha);
+      border-radius: var(--radius);
+      font-size: 1.1rem;
+      font-weight: 500;
       transform: translateX(-100vw);
       opacity: 0;
-      animation: slideInLeft 1s ease-out forwards;
-      font-size: 1.2rem;
-      background: rgba(255,255,255,0.8);
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
+      transition: transform 1s ease-out, opacity 1s ease-out;
+      margin-bottom: var(--spacing);
+    }
+    .scroll-indicator.visible {
+      transform: translateX(0);
+      opacity: 1;
     }
 
-    /* === 3. เครื่องเล่นสไลด์เข้าตรงกลาง ใต้ข้อความ === */
-    .audio-container {
+    .audio-player {
+      background: var(--bg-alpha);
+      border-radius: var(--radius);
+      padding: calc(var(--spacing) * 1.5);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
       transform: translateX(100vw);
       opacity: 0;
-      animation: slideInRight 1s ease-out 1s forwards;
-      margin-top: 1rem;
+      transition: transform 1s ease-out 0.5s, opacity 1s ease-out 0.5s;
     }
-    .audio-container audio {
-      width: 250px;
-      max-width: 100%;
-      border-radius: 4px;
+    .audio-player.visible {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    .play-btn {
+      width: 56px; height: 56px;
+      border: none; border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), var(--blue));
+      display: inline-flex; align-items: center; justify-content: center;
+      cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+    .play-btn:active { transform: scale(0.95); }
+    .play-btn svg { width: 24px; height: 24px; fill: #fff; }
+    .progress-container {
+      width: 100%; height: 6px;
+      background: #eee; border-radius: 3px;
+      margin: var(--spacing) 0;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .progress { width: 0%; height: 100%; background: var(--teal); }
+    .time { font-size: 0.9rem; color: var(--dark-blue); }
+
+    /* Message Section */
+    .message {
+      font-size: 1rem;
+      line-height: 1.6;
+      padding: 0 var(--spacing);
+      color: var(--dark-blue);
     }
 
-    /* === Keyframes สำหรับอนิเมชัน === */
-    @keyframes slideInLeft {
-      to { transform: translateX(0); opacity: 1; }
+    /* Countdown */
+    .countdown-section {
+      width: 100%;
+      max-width: 420px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: transform 1s ease-out, opacity 1s ease-out;
     }
-    @keyframes slideInRight {
-      to { transform: translateX(0); opacity: 1; }
+    .countdown-section.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .countdown-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      margin-bottom: var(--spacing);
+      color: var(--dark-blue);
+      animation: fadeInDown 1s ease-out both;
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .countdown {
+      display: flex;
+      justify-content: space-around;
+      gap: var(--spacing);
+    }
+    .unit {
+      text-align: center;
+    }
+    .box {
+      background: var(--cream);
+      border: 2px solid var(--teal);
+      padding: 1rem;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      display: inline-block;
+      animation: fadeInUp 0.8s ease both;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .label {
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--dark-blue);
+    }
+
+    /* Mobile tweaks */
+    @media (min-width: 480px) {
+      .play-btn { width: 64px; height: 64px; }
+      .play-btn svg { width: 30px; height: 30px; }
+      .countdown-title { font-size: 2.2rem; }
+      .number { font-size: 3rem; }
     }
   </style>
 </head>
 <body>
-  <!-- เมนู (เพิ่มลิงก์ต่อได้) -->
-  <header>
-    <nav class="main-nav">
-      <!-- <a href="#...">เมนู</a> -->
-    </nav>
-  </header>
+  <main>
+    <!-- Hero Image -->
+    <section class="hero">
+      <img
+        id="animatedImage"
+        src="https://i.postimg.cc/6QGx2SKg/DSC087422-1.jpg"
+        alt="Wedding invitation background"
+      />
+    </section>
 
-  <!-- รูปเต็มรูป -->
-  <div class="hero">
-    <img src="https://i.postimg.cc/6QGx2SKg/DSC087422-1.jpg" alt="ภาพงานแต่ง">
-  </div>
+    <!-- Prompt & Audio -->
+    <section class="prompt-container container">
+      <div id="indicator" class="scroll-indicator">
+        กรุณากดเล่นเพลงก่อน แล้วเลื่อนลงดูรายละเอียด
+      </div>
+      <div class="audio-player" id="audioPlayer">
+        <audio id="audio" src="https://natiphol.github.io/mp3/No.mp3"></audio>
+        <button id="playBtn" class="play-btn" aria-label="Play">
+          <svg viewBox="0 0 64 64">
+            <polygon points="16,8 56,32 16,56"></polygon>
+          </svg>
+        </button>
+        <div id="progressContainer" class="progress-container">
+          <div id="progress" class="progress"></div>
+        </div>
+        <div class="time">
+          <span id="currentTime">00:00</span> /
+          <span id="duration">00:00</span>
+        </div>
+      </div>
+    </section>
 
-  <!-- ข้อความและโปรแกรมเล่นเสียง -->
-  <div class="intro">
-    <!-- ข้อความ สไลด์เข้าตรงกลาง อยู่บนเครื่องเล่น -->
-    <div class="suggest-text">
-      กรุณากดเล่นเพลงก่อน แล้วเลื่อนลงดูรายละเอียด
-    </div>
-    <!-- เครื่องเล่น สไลด์เข้าตรงกลาง ใต้ข้อความ -->
-    <div class="audio-container">
-      <audio controls>
-        <source src="https://natiphol.github.io/mp3/No.mp3" type="audio/mpeg">
-        Your browser does not support audio.
-      </audio>
-    </div>
-  </div>
+    <!-- Personal Message -->
+    <section class="message container">
+      <p>เราสองคนกำลังจะเริ่มต้นบทใหม่ของชีวิต และอยากให้คุณเป็นส่วนหนึ่งในความทรงจำที่สวยงามครั้งนี้</p>
+    </section>
 
-  <!-- ส่วนเนื้อหาอื่น ๆ -->
-  <main class="site-main">
-    <!-- ใส่ <section>…</section> ตามต้องการ -->
+    <!-- Countdown -->
+    <section id="countdownSection" class="countdown-section container">
+      <div class="countdown-title">Countdown to Wedding</div>
+      <div class="countdown">
+        <div class="unit">
+          <div class="box"><span id="days" class="number">0</span></div>
+          <div class="label">วัน</div>
+        </div>
+        <div class="unit">
+          <div class="box"><span id="hours" class="number">00</span></div>
+          <div class="label">ชั่วโมง</div>
+        </div>
+        <div class="unit">
+          <div class="box"><span id="minutes" class="number">00</span></div>
+          <div class="label">นาที</div>
+        </div>
+        <div class="unit">
+          <div class="box"><span id="seconds" class="number">00</span></div>
+          <div class="label">วินาที</div>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Intersection Observer for reveal animations
+      const img = document.getElementById('animatedImage');
+      const indicator = document.getElementById('indicator');
+      const audioPlayer = document.getElementById('audioPlayer');
+      const countdownSection = document.getElementById('countdownSection');
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            if (e.target === img) {
+              img.classList.add('visible');
+              indicator.classList.add('visible');
+              audioPlayer.classList.add('visible');
+              io.unobserve(img);
+            }
+            if (e.target === countdownSection) {
+              countdownSection.classList.add('visible');
+              io.unobserve(countdownSection);
+            }
+          }
+        });
+      }, { threshold: 0.2 });
+      io.observe(img);
+      io.observe(countdownSection);
+
+      // Audio controls
+      const audio = document.getElementById('audio');
+      const playBtn = document.getElementById('playBtn');
+      const progress = document.getElementById('progress');
+      const progressContainer = document.getElementById('progressContainer');
+      const currentTimeEl = document.getElementById('currentTime');
+      const durationEl = document.getElementById('duration');
+
+      playBtn.addEventListener('click', () => {
+        if (audio.paused) {
+          audio.play();
+          playBtn.innerHTML = `
+            <svg viewBox="0 0 64 64">
+              <rect x="16" y="8" width="12" height="48"></rect>
+              <rect x="36" y="8" width="12" height="48"></rect>
+            </svg>`;
+          playBtn.setAttribute('aria-label', 'Pause');
+        } else {
+          audio.pause();
+          playBtn.innerHTML = `
+            <svg viewBox="0 0 64 64">
+              <polygon points="16,8 56,32 16,56"></polygon>
+            </svg>`;
+          playBtn.setAttribute('aria-label', 'Play');
+        }
+      });
+
+      audio.addEventListener('loadedmetadata', () => {
+        durationEl.textContent = formatTime(audio.duration);
+      });
+      audio.addEventListener('timeupdate', () => {
+        currentTimeEl.textContent = formatTime(audio.currentTime);
+        progress.style.width = (audio.currentTime / audio.duration) * 100 + '%';
+      });
+      progressContainer.addEventListener('click', e => {
+        const rect = progressContainer.getBoundingClientRect();
+        audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
+      });
+      function formatTime(t) {
+        const m = Math.floor(t / 60), s = Math.floor(t % 60);
+        return String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+      }
+
+      // Countdown logic
+      const target = new Date(2025, 5, 8).getTime();
+      const els = {
+        days:    document.getElementById('days'),
+        hours:   document.getElementById('hours'),
+        minutes: document.getElementById('minutes'),
+        seconds: document.getElementById('seconds'),
+      };
+      function updateCountdown() {
+        let diff = target - Date.now();
+        if (diff < 0) diff = 0;
+        const d = Math.floor(diff / (1000*60*60*24));
+        diff -= d * (1000*60*60*24);
+        const h = Math.floor(diff / (1000*60*60));
+        diff -= h * (1000*60*60);
+        const m = Math.floor(diff / (1000*60));
+        diff -= m * (1000*60);
+        const s = Math.floor(diff / 1000);
+        setValue('days', d);
+        setValue('hours', String(h).padStart(2,'0'));
+        setValue('minutes', String(m).padStart(2,'0'));
+        setValue('seconds', String(s).padStart(2,'0'));
+      }
+      function setValue(id, val) {
+        const el = els[id];
+        if (el.textContent !== String(val)) {
+          el.textContent = val;
+          el.classList.remove('animate');
+          void el.offsetWidth;
+          el.classList.add('animate');
+        }
+      }
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    });
+  </script>
 </body>
 </html>
