@@ -26,7 +26,7 @@
       display:flex; flex-direction:column; align-items:center;
       background:linear-gradient(135deg,var(--cream),var(--teal),var(--blue));
       font-family:'IBM Plex Sans Thai',sans-serif; color:var(--dark-blue);
-      padding: var(--section-gap) 16px;   /* fixed padding syntax */
+      padding: var(--section-gap) 16px;
       line-height:1.6;
     }
     .container {
@@ -119,7 +119,6 @@
     .countdown .number { font-size:2rem; line-height:1; }
     .countdown .label  { margin-top:.25rem; font-size:.875rem; }
 
-    /* animation for countdown digits */
     @keyframes pulse {
       0%   { transform: scale(1); }
       50%  { transform: scale(1.1); }
@@ -154,7 +153,7 @@
     .invite-card .names .name {
       font-weight:600; font-size:1rem; color:var(--dark-blue);
     }
-    .invite-card .names .icon {
+    .invite-card .icon {
       margin:0 6px; color:var(--gold-rich);
       font-size:1.1rem; vertical-align:middle;
     }
@@ -171,6 +170,11 @@
       margin-top:48px; padding:16px;
       background:rgba(255,245,225,0.8); border-radius:12px;
       box-shadow:0 4px 16px rgba(0,0,0,0.1);
+      opacity:0; transform:translateY(20px);
+      transition:opacity .8s ease,transform .8s ease;
+    }
+    .moment-section.visible {
+      opacity:1; transform:translateY(0);
     }
     .moment-title {
       font-family:'Playfair Display',serif; font-size:2rem;
@@ -217,7 +221,6 @@
       opacity:1; box-shadow:0 0 6px var(--teal);
     }
 
-    /* Media Queries */
     @media(max-width:768px) {
       .countdown-title { font-size:2rem; }
       .invite-card { padding:20px; }
@@ -242,12 +245,12 @@
   </div>
 
   <!-- 2. Sliding Prompt -->
-  <div id="indicator" class="container scroll-indicator">
+  <div id="indicator" class="container">
     <span class="info">กรุณากดเล่นเพลงก่อน แล้วเลื่อนลงดูรายละเอียด</span>
   </div>
 
   <!-- 3. Audio Player -->
-  <div id="audioPlayer" class="container audio-player">
+  <div id="audioPlayer" class="container">
     <audio id="audio" src="https://natiphol.github.io/mp3/No.mp3" preload="metadata"></audio>
     <button id="playBtn" class="play-btn" aria-label="Play">
       <svg viewBox="0 0 64 64"><polygon points="16,8 56,32 16,56"/></svg>
@@ -357,7 +360,8 @@
         });
       }, { threshold: 0.2 });
 
-      ['animatedImage','indicator','audioPlayer','countdownSection','inviteCard']
+      // เพิ่ม momentAlways เข้าไปใน observer list
+      ['animatedImage','indicator','audioPlayer','countdownSection','inviteCard','momentAlways']
         .forEach(id => {
           const el = document.getElementById(id);
           if (el) observer.observe(el);
@@ -371,7 +375,6 @@
             currentTimeEl = document.getElementById('currentTime'),
             durationEl = document.getElementById('duration');
 
-      // Disable progress seeking until metadata loaded
       progressContainer.style.pointerEvents = 'none';
 
       playBtn.addEventListener('click', () => {
@@ -388,7 +391,7 @@
 
       audio.addEventListener('loadedmetadata', () => {
         durationEl.textContent = formatTime(audio.duration);
-        progressContainer.style.pointerEvents = '';  // enable seeking
+        progressContainer.style.pointerEvents = '';
       });
 
       audio.addEventListener('timeupdate', () => {
@@ -408,7 +411,8 @@
       }
 
       // Countdown logic
-      const target = new Date(2025, 5, 8).getTime(); // June is month 5 in JS Date
+      // เดือนใน JS Date นับจาก 0 => 5 = มิถุนายน
+      const target = new Date(2025, 5, 8).getTime();
       const els = {
         days: document.getElementById('days'),
         hours: document.getElementById('hours'),
@@ -469,7 +473,10 @@
       });
 
       showSlides(slideIndex);
-      GLightbox({ selector:'.moment-slide', loop:true, touchNavigation:true, slideEffect:'slide' });
+
+      if (typeof GLightbox === 'function') {
+        GLightbox({ selector:'.moment-slide', loop:true, touchNavigation:true, slideEffect:'slide' });
+      }
     });
   </script>
 </body>
