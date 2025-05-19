@@ -184,10 +184,13 @@
       content:''; display:block; width:60px; height:3px;
       background:var(--teal); margin:8px auto 0; border-radius:2px;
     }
+    /* เพิ่มให้ iOS รองรับการ scroll/momentum */
     .moment-gallery {
       position:relative; overflow:hidden;
       background:linear-gradient(135deg,rgba(255,255,255,0.6),rgba(209,234,238,0.6));
       border-radius:8px; padding:8px;
+      touch-action: pan-y;
+      -webkit-overflow-scrolling: touch;
     }
     .slides { display:flex; transition:transform .5s ease; }
     .slide { flex:0 0 100%; padding:4px; }
@@ -360,14 +363,13 @@
         });
       }, { threshold: 0.2 });
 
-      // เพิ่ม momentAlways เข้าไปใน observer list
       ['animatedImage','indicator','audioPlayer','countdownSection','inviteCard','momentAlways']
         .forEach(id => {
           const el = document.getElementById(id);
           if (el) observer.observe(el);
         });
 
-      // Audio player logic
+      // Audio player logic (ไม่เปลี่ยน)
       const audio = document.getElementById('audio'),
             playBtn = document.getElementById('playBtn'),
             progress = document.getElementById('progress'),
@@ -376,7 +378,6 @@
             durationEl = document.getElementById('duration');
 
       progressContainer.style.pointerEvents = 'none';
-
       playBtn.addEventListener('click', () => {
         if (audio.paused) {
           audio.play();
@@ -388,30 +389,24 @@
           playBtn.setAttribute('aria-label','Play');
         }
       });
-
       audio.addEventListener('loadedmetadata', () => {
         durationEl.textContent = formatTime(audio.duration);
         progressContainer.style.pointerEvents = '';
       });
-
       audio.addEventListener('timeupdate', () => {
         currentTimeEl.textContent = formatTime(audio.currentTime);
         progress.style.width = (audio.currentTime / audio.duration) * 100 + '%';
       });
-
       progressContainer.addEventListener('click', e => {
         const rect = progressContainer.getBoundingClientRect();
         audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
       });
-
       function formatTime(t) {
-        const m = Math.floor(t / 60),
-              s = Math.floor(t % 60);
+        const m = Math.floor(t / 60), s = Math.floor(t % 60);
         return String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
       }
 
-      // Countdown logic
-      // เดือนใน JS Date นับจาก 0 => 5 = มิถุนายน
+      // Countdown logic (ไม่เปลี่ยน)
       const target = new Date(2025, 5, 8).getTime();
       const els = {
         days: document.getElementById('days'),
@@ -419,7 +414,6 @@
         minutes: document.getElementById('minutes'),
         seconds: document.getElementById('seconds')
       };
-
       function updateCountdown() {
         let diff = target - Date.now();
         if (diff < 0) diff = 0;
@@ -432,7 +426,6 @@
         setValue('minutes', String(m).padStart(2,'0'));
         setValue('seconds', String(s).padStart(2,'0'));
       }
-
       function setValue(id, v) {
         const el = els[id];
         if (el.textContent !== String(v)) {
@@ -442,13 +435,13 @@
           el.classList.add('animate');
         }
       }
-
       updateCountdown();
       setInterval(updateCountdown, 1000);
 
-      // Moment Always slider
+      // Moment Always slider: รองรับ Pointer Events + Touch fallback
       let startX = 0, slideIndex = 1;
       const slidesContainer = document.querySelector('.slides'),
+            sliderEl = slidesContainer.parentElement,
             slides = document.querySelectorAll('.slide'),
             dots = document.querySelectorAll('.dot'),
             prevBtn = document.querySelector('.prev'),
@@ -456,24 +449,41 @@
 
       function showSlides(n) {
         if (n > slides.length) slideIndex = 1;
-        if (n < 1) slideIndex = slides.length;
+        else if (n < 1) slideIndex = slides.length;
         slidesContainer.style.transform = `translateX(${-(slideIndex-1)*100}%)`;
         dots.forEach((d,i) => d.classList.toggle('active', i === slideIndex-1));
+      }
+
+      if (window.PointerEvent) {
+        sliderEl.addEventListener('pointerdown', e => {
+          startX = e.clientX;
+          sliderEl.setPointerCapture(e.pointerId);
+        });
+        sliderEl.addEventListener('pointerup', e => {
+          const endX = e.clientX;
+          if (startX - endX > 50) showSlides(++slideIndex);
+          else if (endX - startX > 50) showSlides(--slideIndex);
+        });
+      } else {
+        sliderEl.addEventListener('touchstart', e => {
+          e.preventDefault();
+          startX = e.changedTouches[0].clientX;
+        }, { passive: false });
+        sliderEl.addEventListener('touchend', e => {
+          e.preventDefault();
+          const endX = e.changedTouches[0].clientX;
+          if (startX - endX > 50) showSlides(++slideIndex);
+          else if (endX - startX > 50) showSlides(--slideIndex);
+        }, { passive: false });
       }
 
       prevBtn.addEventListener('click', () => showSlides(--slideIndex));
       nextBtn.addEventListener('click', () => showSlides(++slideIndex));
       dots.forEach((dot,i) => dot.addEventListener('click', () => { slideIndex = i+1; showSlides(slideIndex); }));
 
-      slidesContainer.parentElement.addEventListener('touchstart', e => startX = e.changedTouches[0].clientX);
-      slidesContainer.parentElement.addEventListener('touchend', e => {
-        const endX = e.changedTouches[0].clientX;
-        if (startX - endX > 50) showSlides(++slideIndex);
-        else if (endX - startX > 50) showSlides(--slideIndex);
-      });
-
       showSlides(slideIndex);
 
+      // GLightbox
       if (typeof GLightbox === 'function') {
         GLightbox({ selector:'.moment-slide', loop:true, touchNavigation:true, slideEffect:'slide' });
       }
