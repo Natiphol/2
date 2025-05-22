@@ -6,7 +6,7 @@
   <title>Tuck &amp; Tan RSVP</title>
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-  <!-- Ionicons for nav -->
+  <!-- Ionicons for mic -->
   <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   <style>
@@ -103,10 +103,14 @@
       background:var(--card-bg); backdrop-filter:blur(12px);
       display:flex; justify-content:space-around; align-items:center;
       box-shadow:0 -2px 8px rgba(0,0,0,0.05);
+      z-index:999;
     }
     .bottom-nav button {
       background:none; border:none; font-size:1.6rem; cursor:pointer;
       transition:transform .2s;
+    }
+    .bottom-nav img {
+      width:24px; height:24px; object-fit:contain;
     }
     .bottom-nav .primary {
       width:48px; height:48px; background:var(--primary-grad);
@@ -174,15 +178,22 @@
   </main>
 
   <nav class="bottom-nav">
-    <button id="nav-home">🏠</button>
-    <button id="nav-search">🔍</button>
-    <button id="nav-add" class="primary">＋</button>
-    <button id="nav-heart">❤️</button>
-    <button id="nav-profile"><ion-icon name="mic-outline"></ion-icon></button>
+    <button onclick="location.href='https://natiphol22.github.io/WishesGallery/'">
+      <img src="https://natiphol22.github.io/WishesGallery/" alt="home">
+    </button>
+    <button onclick="location.href='https://natiphol.github.io/2/'">
+      <img src="https://natiphol.github.io/2/" alt="search">
+    </button>
+    <button class="primary">＋</button>
+    <button onclick="location.href='https://natiphol22.github.io/Text/'">
+      <img src="https://natiphol22.github.io/Text/" alt="letter">
+    </button>
+    <button onclick="location.href='https://natiphol.github.io/AudioGuestbook/'">
+      <ion-icon name="mic-outline"></ion-icon>
+    </button>
   </nav>
 
   <script>
-    // toggle guest count field
     const attending = document.getElementById('attending');
     const guestsC = document.getElementById('guestsContainer');
     attending.addEventListener('change', () => {
@@ -194,7 +205,6 @@
       }
     });
 
-    // form submission via AJAX
     const form = document.getElementById('rsvp-form');
     const thank = document.getElementById('thank-you');
     form.addEventListener('submit', async e => {
@@ -210,10 +220,10 @@
           form.style.display = 'none';
           thank.style.display = 'block';
         } else {
-          alert('เกิดข้อผิดพลาดในการส่ง กรุณาลองใหม่อีกครั้ง');
+          alert('มีข้อผิดพลาดในการส่งฟอร์ม');
         }
       } catch (err) {
-        alert('ไม่สามารถส่งข้อมูลได้ในขณะนี้');
+        alert('ไม่สามารถส่งข้อมูลได้ กรุณาลองใหม่อีกครั้ง');
       }
     });
   </script>
