@@ -3,194 +3,236 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ตอบรับคำเชิญ RSVP</title>
-  <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
+  <title>Tuck &amp; Tan RSVP</title>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <!-- Ionicons for nav -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   <style>
     :root {
-      --blue: #b59032;
-      --blue-light: #f4de9b;
-      --dark-blue: #7a6239;
-      --radius: 18px;
-      --spacing: 1rem;
+      --bg: #f0f2f5;
+      --text: #262626;
+      --card-bg: #ffffff;
+      --input-bg: #fafafa;
+      --radius: 12px;
+      --shadow: 0 8px 24px rgba(0,0,0,0.1);
+      --nav-height: 60px;
+      --primary-grad: linear-gradient(135deg,#405de6,#5851db);
     }
-    * { box-sizing: border-box; }
-    body {
-      font-family: 'Kanit', sans-serif;
-      background: #fdf6ec;
-      margin: 0; padding: 0;
-      color: #5b4421;
+    * { box-sizing: border-box; margin:0; padding:0 }
+    html, body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Poppins', sans-serif;
+      max-width: 480px; margin:0 auto;
+      min-height:100vh;
+      padding-bottom:calc(var(--nav-height)+env(safe-area-inset-bottom));
     }
+    header {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:1rem; background:var(--card-bg); box-shadow:var(--shadow);
+    }
+    header h1 {
+      font-family:'Pacifico',cursive; font-size:1.8rem; cursor:default;
+    }
+    header .top-heart svg {
+      width:28px; height:28px; fill:#e0245e;
+    }
+    main { padding:1rem }
     .container {
-      max-width: 480px;
-      margin: 60px auto;
-      padding: 40px 30px;
-      background: #fff8f0;
-      border-radius: var(--radius);
-      box-shadow: 0 12px 28px rgba(171,132,51,0.25);
-      border: 1px solid #d9cbb3;
-      text-align: center;
+      background:var(--card-bg);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:1.5rem;
+      margin-bottom:1rem;
     }
-    h1 {
-      font-weight:700; font-size:1.8rem;
-      color: var(--blue); margin-bottom:28px;
-      text-transform:uppercase; letter-spacing:1.2px;
-      text-shadow:0 0 2px rgba(166,124,50,0.7);
+    h2 {
+      font-family:'Pacifico',cursive;
+      font-size:1.6rem;
+      text-align:center;
+      margin-bottom:1rem;
     }
     label {
-      display:block; text-align:left;
-      margin:20px 0 8px; font-weight:600;
-      color: var(--dark-blue);
+      display:block; margin-top:1rem; font-weight:500;
     }
-    select, input {
-      width:100%; padding:12px 14px;
-      font-size:1rem; border:1.8px solid #d9cbb3;
-      border-radius:10px; background:#fffaf2;
-      transition:border-color .3s; margin-bottom:var(--spacing);
+    input, select {
+      width:100%; padding:.8rem 1rem; margin-top:.3rem;
+      border:1px solid #ddd; border-radius:var(--radius);
+      background:var(--input-bg);
+      font-size:1rem;
     }
-    select:focus, input:focus {
-      outline:none; border-color: var(--blue);
-      box-shadow:0 0 6px #d4b661aa; background:#fffef9;
+    input:focus, select:focus {
+      outline:none; border-color:#405de6; box-shadow:0 0 4px rgba(64,93,230,0.4);
     }
-    button {
-      width:100%; padding:14px 0; margin-top:30px;
-      background: linear-gradient(90deg, var(--blue), var(--blue-light));
+    button[type="submit"] {
+      width:100%; padding:.9rem 0; margin-top:1.5rem;
+      background:var(--primary-grad); color:#fff;
       border:none; border-radius:32px;
-      font-weight:700; font-size:1.1rem; color:#4b3a13;
-      cursor:pointer; box-shadow:0 6px 15px #d4b66199;
-      transition: background .3s, transform .3s;
+      font-size:1rem; font-weight:600; cursor:pointer;
+      box-shadow:var(--shadow); transition:transform .2s;
     }
-    button:hover {
-      background: linear-gradient(90deg, var(--blue-light), var(--blue));
-      transform: scale(1.05); box-shadow:0 8px 22px #d4b661cc;
+    button[type="submit"]:hover {
+      transform:translateY(-2px);
     }
     .back-button {
-      display:block; width:max-content;
-      margin:25px auto 0; padding:12px 26px;
-      background: linear-gradient(90deg, var(--blue-light), var(--blue));
-      color:#4b3a13; font-weight:600; font-size:1rem;
-      text-decoration:none; border-radius:30px;
-      box-shadow:0 4px 12px #b59032cc;
-      transition: background .3s, transform .3s;
+      display:block; text-align:center;
+      margin:1.5rem auto 0; padding:.8rem 1.2rem;
+      background:var(--primary-grad); color:#fff;
+      border-radius:30px; text-decoration:none;
+      width:max-content; font-weight:500;
+      box-shadow:var(--shadow); transition:transform .2s;
     }
-    .back-button:hover {
-      background: var(--blue); color:#fff;
-      transform: scale(1.07); box-shadow:0 6px 18px #b59032ff;
+    .back-button:hover { transform:scale(1.05); }
+
+    .thank-you {
+      display:none; margin-top:1.5rem;
+      text-align:center; font-size:1rem; line-height:1.5;
     }
-    .thank-you-message {
-      font-size:1.15rem; color: var(--dark-blue);
-      line-height:1.5; margin-top:30px; white-space:pre-line;
-    }
-    /* slide-down container */
+
+    /* slide-down */
     #guestsContainer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height .5s ease;
+      max-height:0; overflow:hidden; transition:max-height .4s ease;
     }
     #guestsContainer.open {
-      max-height: 200px; /* enough to show content */
+      max-height:150px;
     }
-    #guestsContainer label {
-      margin-top: var(--spacing);
+
+    .bottom-nav {
+      position:fixed; bottom:0; left:50%; transform:translateX(-50%);
+      width:100%; height:var(--nav-height);
+      background:var(--card-bg); backdrop-filter:blur(12px);
+      display:flex; justify-content:space-around; align-items:center;
+      box-shadow:0 -2px 8px rgba(0,0,0,0.05);
     }
-    @media (max-width: 500px) {
-      .container { margin: 20px auto; padding: 20px 15px; }
+    .bottom-nav button {
+      background:none; border:none; font-size:1.6rem; cursor:pointer;
+      transition:transform .2s;
     }
+    .bottom-nav .primary {
+      width:48px; height:48px; background:var(--primary-grad);
+      color:#fff; border-radius:50%; display:flex;
+      align-items:center; justify-content:center; font-size:2rem;
+      box-shadow:var(--shadow);
+    }
+    .bottom-nav button:hover { transform:scale(1.1); }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <h1>ตอบรับคำเชิญร่วมงานแต่งงาน</h1>
+  <header>
+    <h1>Tuck &amp; Tan</h1>
+    <span class="top-heart">
+      <svg viewBox="0 0 24 24"><path d="
+        M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.50
+        2 5.42 4.42 3 7.50 3c1.74 0 3.41.81 4.50 2.09
+        C13.09 3.81 14.76 3 16.50 3 19.58 3 22 5.42
+        22 8.50c0 3.78-3.40 6.86-8.55 11.54L12 21.35z"
+        fill="#e0245e"/></svg>
+    </span>
+  </header>
 
-    <form id="rsvp-form" action="https://formspree.io/f/mldbvjkz" method="POST" novalidate>
-      <label for="name">ชื่อ - นามสกุล หรือ ชื่อเล่น</label>
-      <input type="text" id="name" name="name" required placeholder="กรอกชื่อ-นามสกุล หรือ ชื่อเล่น">
+  <main>
+    <div class="container">
+      <h2>RSVP งานแต่งงาน</h2>
+      <form id="rsvp-form" action="https://formspree.io/f/mldbvjkz" method="POST" novalidate>
+        <label for="name">ชื่อ - นามสกุล / ชื่อเล่น</label>
+        <input type="text" id="name" name="name" required placeholder="กรอกชื่อของคุณ">
 
-      <label for="side">ทีมเจ้าบ่าว / ทีมเจ้าสาว</label>
-      <select id="side" name="side" required>
-        <option value="" disabled selected>-- กรุณาเลือกทีม --</option>
-        <option value="เจ้าบ่าว">ทีมเจ้าบ่าว</option>
-        <option value="เจ้าสาว">ทีมเจ้าสาว</option>
-        <option value="อื่นๆ">อื่นๆ</option>
-      </select>
-
-      <label for="attending">ท่านจะเข้าร่วมงานหรือไม่</label>
-      <select id="attending" name="attending" required>
-        <option value="" disabled selected>-- กรุณาเลือก --</option>
-        <option value="มาร่วมงาน">มาร่วมงาน</option>
-        <option value="ไม่สามารถมาร่วมได้">ไม่สามารถมาร่วมได้</option>
-      </select>
-
-      <div id="guestsContainer">
-        <label for="guests">จำนวนผู้ร่วมงาน (เลือก 1–10) 1 คือท่านแล้ว </label>
-        <select id="guests" name="guests">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
+        <label for="side">ทีม</label>
+        <select id="side" name="side" required>
+          <option value="" disabled selected>-- เลือกทีม --</option>
+          <option value="เจ้าบ่าว">ทีมเจ้าบ่าว</option>
+          <option value="เจ้าสาว">ทีมเจ้าสาว</option>
+          <option value="อื่นๆ">อื่นๆ</option>
         </select>
+
+        <label for="attending">เข้าร่วมงานหรือไม่</label>
+        <select id="attending" name="attending" required>
+          <option value="" disabled selected>-- กรุณาเลือก --</option>
+          <option value="มาร่วมงาน">มาร่วมแสดงความยินดีและเข้าร่วมงานพิธี + งานเลี้ยงฉลองมงคลสมรสดี</option>
+          <option value="มาร่วมงาน ">มาร่วมงานพิธีแสดงความยินดีเท่านั้น</option>
+          <option value="มาร่วมงาน ">มาร่วมงาน งานเลี้ยงฉลองมงคลสมรส</option>
+          <option value="ไม่สามารถมาร่วมได้">ไม่สามารถมาร่วมงานได้ แต่ขอแสดงความยินดีด้วยใจจริง</option>
+        </select>
+
+        <div id="guestsContainer">
+          <label for="guests">จำนวนผู้ร่วมงาน (1 ท่านขึ้นไป)</label>
+          <select id="guests" name="guests">
+            <option>1</option><option>2</option><option>3</option><option>4</option>
+            <option>5</option><option>6</option><option>7</option><option>8</option>
+            <option>9</option><option>10</option>
+          </select>
+        </div>
+
+        <button type="submit">ส่งคำตอบรับ</button>
+      </form>
+
+      <div id="thank-you" class="thank-you">
+        ขอบคุณสำหรับคำตอบของคุณ!  
+        รอพบกันในวันสำคัญนะคะ 😊  
+        <br><br>
+        <a href="https://natiphol.github.io/OnlineWeddingInvitation/" class="back-button">
+          ← กลับสู่การ์ดเชิญ
+        </a>
       </div>
-
-      <button type="submit">ส่งคำตอบรับ</button>
-    </form>
-  <a href="https://natiphol.github.io/OnlineWeddingInvitation/" class="back-button">
-        ← กลับสู่การ์ดเชิญออนไลน์
-    <div id="thank-you" class="thank-you-message" style="display:none">
-      ขอบคุณมากสำหรับการตอบรับคำเชิญของคุณค่ะ  
-      เรารู้สึกยินดีและตื่นเต้นที่จะได้พบคุณในวันสำคัญนี้  
-      โปรดเตรียมตัวให้พร้อมและมาร่วมสร้างความทรงจำดี ๆ ด้วยกันนะคะ
-
-      <a href="https://natiphol.github.io/OnlineWeddingInvitation/" class="back-button">
-        ← กลับสู่การ์ดเชิญออนไลน์
-      </a>
     </div>
-  </div>
+  </main>
+
+  <nav class="bottom-nav">
+    <button id="nav-home">🏠</button>
+    <button id="nav-search">🔍</button>
+    <button id="nav-add" class="primary">＋</button>
+    <button id="nav-heart">❤️</button>
+    <button id="nav-profile"><ion-icon name="mic-outline"></ion-icon></button>
+  </nav>
 
   <script>
-    const attendingSelect = document.getElementById('attending');
-    const guestsContainer = document.getElementById('guestsContainer');
-    const form = document.getElementById('rsvp-form');
-    const thankYou = document.getElementById('thank-you');
-
-    function toggleGuestsField() {
-      if (attendingSelect.value === 'มาร่วมงาน') {
-        guestsContainer.classList.add('open');
+    // toggle guest count field
+    const attending = document.getElementById('attending');
+    const guestsC   = document.getElementById('guestsContainer');
+    attending.addEventListener('change', ()=>{
+      if (
+        attending.value === 'มาร่วมแสดงความยินดีและเข้าร่วมงานพิธี + งานเลี้ยงฉลองมงคลสมรสดี' ||
+        attending.value === 'มาร่วมงานพิธีแสดงความยินดีเท่านั้น'
+        attending.value === 'มาร่วมงานเลี้ยงฉลองมงคลสมรสช่วงเย็น'
+      ) {
+        guestsC.classList.add('open');
       } else {
-        guestsContainer.classList.remove('open');
+        guestsC.classList.remove('open');
       }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      toggleGuestsField();
-      attendingSelect.addEventListener('change', toggleGuestsField);
-
-      form.addEventListener('submit', async e => {
-        e.preventDefault();
-        const formData = new FormData(form);
-        try {
-          const res = await fetch(form.action, {
-            method: 'POST',
-            body: formData,
-            headers: { 'Accept': 'application/json' },
-          });
-          if (res.ok) {
-            form.style.display = 'none';
-            thankYou.style.display = 'block';
-          } else {
-            alert('เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง');
-          }
-        } catch {
-          alert('เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง');
-        }
-      });
     });
-  </script>
 
+    // form submission via AJAX
+    const form = document.getElementById('rsvp-form');
+    const thank = document.getElementById('thank-you');
+    form.addEventListener('submit', async e=>{
+      e.preventDefault();
+      const data = new FormData(form);
+      try {
+        const res = await fetch(form.action, {
+          method:'POST',
+          body:data,
+          headers:{'Accept':'application/json'}
+        });
+        if(res.ok) {
+          form.style.display='none';
+          thank.style.display='block';
+        } else {
+          alert('ส่งไม่สำเร็จ โปรดลองอีกครั้ง');
+        }
+      } catch {
+        alert('เกิดข้อผิดพลาด โปรดลองอีกครั้ง');
+      }
+    });
+
+    // bottom nav links
+    document.getElementById('nav-home').onclick = ()=>{
+      window.location.href='https://natiphol22.github.io/WishesGallery/';
+    };
+    document.getElementById('nav-search').onclick = ()=>{
+      window.location.href='https://natiphol.github.io/2/';
+    };
+  </script>
 </body>
 </html>
