@@ -122,4 +122,100 @@
   <header>
     <h1>Tuck &amp; Tan</h1>
     <span class="top-heart">
-      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.50 2 5.42 4.42 3 7.50 3c1
+      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.50 2 5.42 4.42 3 7.50 3c1.74 0 3.41.81 4.50 2.09C13.09 3.81 14.76 3 16.50 3 19.58 3 22 5.42 22 8.50c0 3.78-3.40 6.86-8.55 11.54L12 21.35z" fill="#e0245e"/></svg>
+    </span>
+  </header>
+
+  <main>
+    <div class="container">
+      <h2>RSVP งานแต่งงาน</h2>
+      <form id="rsvp-form" action="https://formspree.io/f/mldbvjkz" method="POST" novalidate>
+        <label for="name">ชื่อ - นามสกุล / ชื่อเล่น</label>
+        <input type="text" id="name" name="name" required placeholder="กรอกชื่อของคุณ">
+
+        <label for="side">ทีม</label>
+        <select id="side" name="side" required>
+          <option value="" disabled selected>-- เลือกทีม --</option>
+          <option value="เจ้าบ่าว">ทีมเจ้าบ่าว</option>
+          <option value="เจ้าสาว">ทีมเจ้าสาว</option>
+          <option value="อื่นๆ">อื่นๆ</option>
+        </select>
+
+        <label for="attending">เข้าร่วมงานหรือไม่</label>
+        <select id="attending" name="attending" required>
+          <option value="" disabled selected>-- กรุณาเลือก --</option>
+          <option value="พิธี+เลี้ยง">มาร่วมแสดงความยินดีและเข้าร่วมงานพิธี + งานเลี้ยงฉลองมงคลสมรสดี</option>
+          <option value="พิธี">มาร่วมงานพิธีแสดงความยินดีเท่านั้น</option>
+          <option value="เลี้ยง">มาร่วมงานเลี้ยงฉลองมงคลสมรสช่วงเย็น</option>
+          <option value="ไม่มา">ไม่สามารถมาร่วมงานได้ แต่ขอแสดงความยินดีด้วยใจจริง</option>
+        </select>
+
+        <div id="guestsContainer">
+          <label for="guests">จำนวนผู้ร่วมงาน (1 ท่านขึ้นไป)</label>
+          <select id="guests" name="guests">
+            <option>1</option><option>2</option><option>3</option><option>4</option>
+            <option>5</option><option>6</option><option>7</option><option>8</option>
+            <option>9</option><option>10</option>
+          </select>
+        </div>
+
+        <button type="submit">ส่งคำตอบรับ</button>
+      </form>
+
+      <div id="thank-you" class="thank-you">
+        ขอบคุณสำหรับคำตอบของคุณ!  
+        รอพบกันในวันสำคัญนะคะ 😊  
+        <br><br>
+        <a href="https://natiphol.github.io/OnlineWeddingInvitation/" class="back-button">
+          ← กลับสู่การ์ดเชิญ
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <nav class="bottom-nav">
+    <button id="nav-home">🏠</button>
+    <button id="nav-search">🔍</button>
+    <button id="nav-add" class="primary">＋</button>
+    <button id="nav-heart">❤️</button>
+    <button id="nav-profile"><ion-icon name="mic-outline"></ion-icon></button>
+  </nav>
+
+  <script>
+    // toggle guest count field
+    const attending = document.getElementById('attending');
+    const guestsC = document.getElementById('guestsContainer');
+    attending.addEventListener('change', () => {
+      const value = attending.value;
+      if (value === 'พิธี+เลี้ยง' || value === 'พิธี' || value === 'เลี้ยง') {
+        guestsC.classList.add('open');
+      } else {
+        guestsC.classList.remove('open');
+      }
+    });
+
+    // form submission via AJAX
+    const form = document.getElementById('rsvp-form');
+    const thank = document.getElementById('thank-you');
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const data = new FormData(form);
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          form.style.display = 'none';
+          thank.style.display = 'block';
+        } else {
+          alert('เกิดข้อผิดพลาดในการส่ง กรุณาลองใหม่อีกครั้ง');
+        }
+      } catch (err) {
+        alert('ไม่สามารถส่งข้อมูลได้ในขณะนี้');
+      }
+    });
+  </script>
+</body>
+</html>
