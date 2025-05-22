@@ -6,7 +6,7 @@
   <title>Tuck &amp; Tan RSVP</title>
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-  <!-- Ionicons for mic -->
+  <!-- Ionicons for mic icon -->
   <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   <style>
@@ -24,7 +24,7 @@
     html, body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Poppins', 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
       max-width: 480px; margin:0 auto;
       min-height:100vh;
       padding-bottom:calc(var(--nav-height)+env(safe-area-inset-bottom));
@@ -84,33 +84,26 @@
       box-shadow:var(--shadow); transition:transform .2s;
     }
     .back-button:hover { transform:scale(1.05); }
-
     .thank-you {
       display:none; margin-top:1.5rem;
       text-align:center; font-size:1rem; line-height:1.5;
     }
-
     #guestsContainer {
       max-height:0; overflow:hidden; transition:max-height .4s ease;
     }
     #guestsContainer.open {
       max-height:150px;
     }
-
     .bottom-nav {
       position:fixed; bottom:0; left:50%; transform:translateX(-50%);
       width:100%; height:var(--nav-height);
       background:var(--card-bg); backdrop-filter:blur(12px);
       display:flex; justify-content:space-around; align-items:center;
       box-shadow:0 -2px 8px rgba(0,0,0,0.05);
-      z-index:999;
     }
     .bottom-nav button {
       background:none; border:none; font-size:1.6rem; cursor:pointer;
       transition:transform .2s;
-    }
-    .bottom-nav img {
-      width:24px; height:24px; object-fit:contain;
     }
     .bottom-nav .primary {
       width:48px; height:48px; background:var(--primary-grad);
@@ -126,7 +119,12 @@
   <header>
     <h1>Tuck &amp; Tan</h1>
     <span class="top-heart">
-      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.50 2 5.42 4.42 3 7.50 3c1.74 0 3.41.81 4.50 2.09C13.09 3.81 14.76 3 16.50 3 19.58 3 22 5.42 22 8.50c0 3.78-3.40 6.86-8.55 11.54L12 21.35z" fill="#e0245e"/></svg>
+      <svg viewBox="0 0 24 24">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.50
+                 2 5.42 4.42 3 7.50 3c1.74 0 3.41.81 4.50 2.09
+                 C13.09 3.81 14.76 3 16.50 3 19.58 3 22 5.42 22 8.50
+                 c0 3.78-3.40 6.86-8.55 11.54L12 21.35z" fill="#e0245e"/>
+      </svg>
     </span>
   </header>
 
@@ -148,10 +146,18 @@
         <label for="attending">เข้าร่วมงานหรือไม่</label>
         <select id="attending" name="attending" required>
           <option value="" disabled selected>-- กรุณาเลือก --</option>
-          <option value="พิธี+เลี้ยง">มาร่วมแสดงความยินดีและเข้าร่วมงานพิธี + งานเลี้ยงฉลองมงคลสมรสดี</option>
-          <option value="พิธี">มาร่วมงานพิธีแสดงความยินดีเท่านั้น</option>
-          <option value="เลี้ยง">มาร่วมงานเลี้ยงฉลองมงคลสมรสช่วงเย็น</option>
-          <option value="ไม่มา">ไม่สามารถมาร่วมงานได้ แต่ขอแสดงความยินดีด้วยใจจริง</option>
+          <option value="พิธี+เลี้ยง">
+            มาร่วมแสดงความยินดีและเข้าร่วมงานพิธี + งานเลี้ยงฉลองมงคลสมรส
+          </option>
+          <option value="พิธี">
+            มาร่วมงานพิธีแสดงความยินดีเท่านั้น
+          </option>
+          <option value="เลี้ยง">
+            มาร่วมงานเลี้ยงฉลองมงคลสมรสช่วงเย็น
+          </option>
+          <option value="ไม่มา">
+            ไม่สามารถมาร่วมงานได้ แต่ขอแสดงความยินดีด้วยใจจริง
+          </option>
         </select>
 
         <div id="guestsContainer">
@@ -178,33 +184,28 @@
   </main>
 
   <nav class="bottom-nav">
-    <button onclick="location.href='https://natiphol22.github.io/WishesGallery/'">
-      <img src="https://natiphol22.github.io/WishesGallery/" alt="home">
-    </button>
-    <button onclick="location.href='https://natiphol.github.io/2/'">
-      <img src="https://natiphol.github.io/2/" alt="search">
-    </button>
-    <button class="primary">＋</button>
-    <button onclick="location.href='https://natiphol22.github.io/Text/'">
-      <img src="https://natiphol22.github.io/Text/" alt="letter">
-    </button>
-    <button onclick="location.href='https://natiphol.github.io/AudioGuestbook/'">
+    <button id="nav-home" onclick="location.href='https://natiphol22.github.io/WishesGallery/'">🏠</button>
+    <button id="nav-search" onclick="location.href='https://natiphol.github.io/2/'">🔍</button>
+    <button id="nav-add" class="primary" onclick="location.href='https://natiphol22.github.io/WishesGallery/add.html'">＋</button>
+    <button id="nav-letter" onclick="location.href='https://natiphol22.github.io/Text/'">✉️</button>
+    <button id="nav-profile" onclick="location.href='https://natiphol.github.io/AudioGuestbook/'">
       <ion-icon name="mic-outline"></ion-icon>
     </button>
   </nav>
 
   <script>
+    // toggle guest count field
     const attending = document.getElementById('attending');
     const guestsC = document.getElementById('guestsContainer');
     attending.addEventListener('change', () => {
-      const value = attending.value;
-      if (value === 'พิธี+เลี้ยง' || value === 'พิธี' || value === 'เลี้ยง') {
+      if (['พิธี+เลี้ยง','พิธี','เลี้ยง'].includes(attending.value)) {
         guestsC.classList.add('open');
       } else {
         guestsC.classList.remove('open');
       }
     });
 
+    // form submission via AJAX
     const form = document.getElementById('rsvp-form');
     const thank = document.getElementById('thank-you');
     form.addEventListener('submit', async e => {
@@ -220,10 +221,10 @@
           form.style.display = 'none';
           thank.style.display = 'block';
         } else {
-          alert('มีข้อผิดพลาดในการส่งฟอร์ม');
+          alert('เกิดข้อผิดพลาดในการส่ง กรุณาลองใหม่อีกครั้ง');
         }
-      } catch (err) {
-        alert('ไม่สามารถส่งข้อมูลได้ กรุณาลองใหม่อีกครั้ง');
+      } catch {
+        alert('ไม่สามารถส่งข้อมูลได้ในขณะนี้');
       }
     });
   </script>
